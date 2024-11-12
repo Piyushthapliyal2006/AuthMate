@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { login } from '../store/authSlice';
 
 const InputField = ({ label, type, name, value, onChange, required, autoComplete }) => (
     <div>
@@ -23,53 +25,49 @@ const InputField = ({ label, type, name, value, onChange, required, autoComplete
 );
 
 export default function Login() {
-    const navigate = useNavigate(); // Initialize the useNavigate hook
-    const [formData, setFormData] = useState({
-        email: '',
-        password: '',
-    });
-    const [message, setMessage] = useState('');
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({ email: '', password: '' });
+    const [authState, setAuthState] = useState({ message: '', error: '', loading: false });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
+
+        // Clear any previous error messages when user starts typing
+        if (authState.error) {
+            setAuthState((prev) => ({ ...prev, error: '' }));
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setMessage('');
-        setError('');
-        setLoading(true);
-
-        const data = JSON.stringify({
-            email: formData.email,
-            password: formData.password,
-        });
-
-        const config = {
-            method: 'post',
-            maxBodyLength: Infinity,
-            url: 'http://127.0.0.1:8000/auth/jwt/create/',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            data: data,
-        };
+        setAuthState({ message: '', error: '', loading: true });
 
         try {
-            const response = await axios.request(config);
-            const { refresh, access } = response.data; // Get tokens from response
-            localStorage.setItem('refreshToken', refresh); // Store refresh token
-            localStorage.setItem('accessToken', access);   // Store access token
-            setMessage('Login successful!'); // Display success message
-            navigate('/dashboard'); // Redirect to dashboard
+            const { email, password } = formData;
+
+            // Send API request to authenticate the user
+            const response = await axios.post('http://127.0.0.1:8000/auth/jwt/create/', { email, password });
+
+            // Log the API response for debugging
+            console.log(response.data); // Check if access and refresh tokens are here
+
+            const { access, refresh } = response.data;
+
+            if (!access || !refresh) {
+                throw new Error('Access or Refresh token is missing in the response');
+            }
+
+            // Dispatch login action with both tokens
+            dispatch(login({ access, refresh }));
+
+            setAuthState({ message: 'Login successful!', error: '', loading: false });
+            navigate('/dashboard');
         } catch (err) {
-            const errorMsg = err.response?.data?.non_field_errors?.[0] || 'An error occurred. Please try again.';
-            setError(errorMsg);
-        } finally {
-            setLoading(false);
+            console.error('Login error:', err);
+            const errorMsg = err?.response?.data?.non_field_errors?.[0] || 'An error occurred. Please try again.';
+            setAuthState({ message: '', error: errorMsg, loading: false });
         }
     };
 
@@ -108,22 +106,17 @@ export default function Login() {
                             required
                             autoComplete="current-password"
                         />
-                        <div className="text-sm">
-                            <Link to="/users/reset_password" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                                Forgot password?
-                            </Link>
-                        </div>
 
-                        {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
-                        {message && <p className="mt-2 text-sm text-green-600">{message}</p>}
+                        {authState.error && <p className="mt-2 text-sm text-red-600">{authState.error}</p>}
+                        {authState.message && <p className="mt-2 text-sm text-green-600">{authState.message}</p>}
 
                         <div>
                             <button
                                 type="submit"
                                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                disabled={loading}
+                                disabled={authState.loading}
                             >
-                                {loading ? 'Logging In...' : 'Log In'}
+                                {authState.loading ? 'Logging In...' : 'Log In'}
                             </button>
                         </div>
                     </form>

@@ -5,6 +5,7 @@ export default function Projects() {
     const [projects, setProjects] = useState([]);
     const [sortOrder, setSortOrder] = useState('latest'); // 'latest' or 'oldest'
     const [searchTerm, setSearchTerm] = useState('');
+    const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
 
     // Function to fetch projects from the API
     const fetchProjects = useCallback(async () => {
@@ -40,50 +41,89 @@ export default function Projects() {
             });
     }, [projects, searchTerm, sortOrder]);
 
+    // Load saved settings from localStorage
+    useEffect(() => {
+        const savedSortOrder = localStorage.getItem('sortOrder');
+        const savedViewMode = localStorage.getItem('viewMode');
+
+        if (savedSortOrder) {
+            setSortOrder(savedSortOrder);
+        }
+        if (savedViewMode) {
+            setViewMode(savedViewMode);
+        }
+    }, []);
+
+    // Save settings to localStorage when they change
+    const handleSortOrderChange = (e) => {
+        const newSortOrder = e.target.value;
+        setSortOrder(newSortOrder);
+        localStorage.setItem('sortOrder', newSortOrder); // Save to localStorage
+    };
+
+    const handleViewModeToggle = () => {
+        const newViewMode = viewMode === 'grid' ? 'list' : 'grid';
+        setViewMode(newViewMode);
+        localStorage.setItem('viewMode', newViewMode); // Save to localStorage
+    };
+
     return (
-        <div>
+        <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
             {/* Search Bar */}
-            <div className="mb-4 p-8">
+            <div className="mb-6 flex items-center space-x-4">
                 <input
                     type="text"
                     placeholder="Search projects..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="p-2 border border-gray-300 rounded"
+                    className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                 />
             </div>
 
             {/* Sorting Dropdown */}
-            <div className="mb-4 p-8">
-                <label htmlFor="sortOrder" className="mr-2">Sort by:</label>
+            <div className="mb-6 flex items-center space-x-4">
+                <label htmlFor="sortOrder" className="text-sm font-medium text-gray-700">Sort by:</label>
                 <select
                     id="sortOrder"
                     value={sortOrder}
-                    onChange={(e) => setSortOrder(e.target.value)}
-                    className="p-2 border border-gray-300 rounded"
+                    onChange={handleSortOrderChange}
+                    className="p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                 >
                     <option value="latest">Latest to Oldest</option>
                     <option value="oldest">Oldest to Latest</option>
                 </select>
             </div>
 
-            {/* Project List */}
-            <ul role="list" className="divide-y divide-gray-100 p-8">
+            {/* Toggle Switch for View Mode */}
+            <div className="mb-6 flex items-center space-x-4">
+                <label htmlFor="viewMode" className="text-sm font-medium text-gray-700">View Mode:</label>
+                <button
+                    onClick={handleViewModeToggle}
+                    className="p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                >
+                    {viewMode === 'grid' ? 'Switch to List View' : 'Switch to Grid View'}
+                </button>
+            </div>
+
+            {/* Project List/Grid */}
+            <div className={viewMode === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-6'}>
                 {filteredProjects.length > 0 ? (
                     filteredProjects.map((project) => (
-                        <li key={project.id} className="flex justify-between gap-x-6 py-5">
-                            <div className="min-w-0 flex-auto">
-                                <p className="text-sm font-semibold text-gray-900">{project.project_name}</p>
-                                <p className="mt-1 text-xs text-gray-500">
+                        <div key={project.id} className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                            <div className="p-6">
+                                <h3 className="text-lg font-semibold text-gray-900">{project.project_name}</h3>
+                                <p className="mt-2 text-sm text-gray-500">
                                     Created at: {new Date(project.created_at).toLocaleString()}
                                 </p>
                             </div>
-                        </li>
+                        </div>
                     ))
                 ) : (
-                    <li className="py-5 text-gray-500">No projects found.</li>
+                    <div className="col-span-full text-center text-gray-500 p-6">
+                        <p>No projects found. Try adjusting your search or sorting criteria.</p>
+                    </div>
                 )}
-            </ul>
+            </div>
         </div>
     );
 }

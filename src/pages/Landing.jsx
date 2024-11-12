@@ -5,6 +5,7 @@ import Feature from '../components/Feature';
 import Cta from '../components/Cta';
 import Team from '../components/Team';
 import BlogSection from '../components/BlogSection';
+import Footer from '../components/Footer';
 
 
 
@@ -16,6 +17,7 @@ function Landing() {
       <Cta />
       <Team />
       <BlogSection />
+      <Footer />
     </>
   )
 }

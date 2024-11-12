@@ -5,38 +5,59 @@ export default function ProjectCreateForm({ onClose }) {
     const [projectName, setProjectName] = useState('');
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState(''); // 'success' or 'error'
+    const [loading, setLoading] = useState(false); // Loading state to disable the submit button
+
+    // Helper function to get token
+    const getToken = () => localStorage.getItem('accessToken');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const token = getToken(); // Fetch the token from localStorage
+        // const apiUrl = process.env.REACT_APP_API_URL; // Ensure you have the API URL in your .env file
 
-        const token = localStorage.getItem('accessToken'); // Replace with your actual key
+        // if (!apiUrl) {
+        //     setMessage('API URL is not defined in environment variables.');
+        //     setMessageType('error');
+        //     return;
+        // }
 
+        if (!token) {
+            setMessage('You need to be logged in to create a project.');
+            setMessageType('error');
+            return;
+        }
+
+        setLoading(true); // Set loading state to true while request is in progress
         try {
-            const response = await axios.post('http://127.0.0.1:8000/projects/', {
-                project_name: projectName,
-            }, {
-                headers: {
-                    'Authorization': `Bearer ${token}`, // Use the token from local storage
-                    'Content-Type': 'application/json',
-                },
-            });
+            const response = await axios.post(
+                `http://127.0.0.1:8000/projects/`, 
+                { project_name: projectName },
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
 
             console.log(response.data);
             setMessage('Project created successfully!');
             setMessageType('success');
-            setProjectName(''); // Clear input
+            setProjectName(''); // Clear the project name input after success
         } catch (error) {
             console.error(error);
-            setMessage('Failed to create project. Please try again.');
+            setMessage(error?.response?.data?.detail || 'Failed to create project. Please try again.');
             setMessageType('error');
+        } finally {
+            setLoading(false); // Reset loading state after request is done
         }
     };
 
     const handleCancel = () => {
-        setProjectName(''); // Clear the project name input
-        setMessage(''); // Clear any displayed message
-        setMessageType(''); // Reset the message type
-        onClose(); // Close the form if a callback is provided
+        setProjectName(''); // Clear project name
+        setMessage(''); // Clear any message
+        setMessageType(''); // Reset message type
+        onClose(); // Close the form if onClose callback is provided
     };
 
     // Clear message after 5 seconds
@@ -46,8 +67,7 @@ export default function ProjectCreateForm({ onClose }) {
                 setMessage('');
                 setMessageType('');
             }, 5000);
-
-            return () => clearTimeout(timer);
+            return () => clearTimeout(timer); // Cleanup the timer on unmount
         }
     }, [message]);
 
@@ -81,16 +101,17 @@ export default function ProjectCreateForm({ onClose }) {
                 <div className="mt-6 flex items-center justify-end gap-x-6">
                     <button
                         type="button"
-                        onClick={handleCancel} // Call handleCancel on click
+                        onClick={handleCancel} // Handle cancel click
                         className="text-sm font-semibold text-gray-900"
                     >
                         Cancel
                     </button>
                     <button
                         type="submit"
+                        disabled={loading} // Disable button when loading
                         className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
-                        Save
+                        {loading ? 'Saving...' : 'Save'} {/* Show "Saving..." when loading */}
                     </button>
                 </div>
             </div>

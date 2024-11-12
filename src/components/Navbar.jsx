@@ -1,21 +1,35 @@
-// src/Navbar.jsx
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link, useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';  // Import useDispatch inside the component
+import { logout } from '../store/authSlice'; // Importing the logout action
 
-const navigation = [
-  { name: 'Dashboard', href: '/dashboard' },
-  { name: 'Team', href: '/team' },
-  { name: 'Projects', href: '/projects' },
-  { name: 'Calendar', href: '/calendar' },
-];
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
-}
+function Navbar() {
+  const dispatch = useDispatch(); // Correctly use useDispatch here inside the component
 
-export default function Navbar() {
-  const location = useLocation(); // Get the current location
+  // Handle the logout action
+  const handleLogout = () => {
+    // Clear the access and refresh tokens from localStorage
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+
+    // Dispatch the logout action to clear auth state in Redux
+    dispatch(logout());
+  };
+
+  const navigation = [
+    { name: 'Dashboard', href: '/dashboard' },
+    { name: 'Team', href: '/team' },
+    { name: 'Projects', href: '/projects' },
+    { name: 'Calendar', href: '/calendar' },
+  ];
+
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(' ');
+  }
+
+  const location = useLocation(); // Get the current location for active link highlighting
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -87,7 +101,9 @@ export default function Navbar() {
                   <Link to="/settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</Link>
                 </MenuItem>
                 <MenuItem>
-                  <Link to="/logout" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign out</Link>
+                  <Link onClick={handleLogout} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ">
+                    Logout
+                  </Link>
                 </MenuItem>
               </MenuItems>
             </Menu>
@@ -116,3 +132,5 @@ export default function Navbar() {
     </Disclosure>
   );
 }
+
+export default Navbar;
