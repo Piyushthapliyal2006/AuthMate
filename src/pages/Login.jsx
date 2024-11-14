@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login } from '../store/authSlice';
+import PasswordInputField from '../components/PasswordInputField'; // Import the new PasswordInputField
 
 const InputField = ({ label, type, name, value, onChange, required, autoComplete }) => (
     <div>
@@ -50,9 +51,6 @@ export default function Login() {
             // Send API request to authenticate the user
             const response = await axios.post('http://127.0.0.1:8000/auth/jwt/create/', { email, password });
 
-            // Log the API response for debugging
-            console.log(response.data); // Check if access and refresh tokens are here
-
             const { access, refresh } = response.data;
 
             if (!access || !refresh) {
@@ -65,7 +63,6 @@ export default function Login() {
             setAuthState({ message: 'Login successful!', error: '', loading: false });
             navigate('/dashboard');
         } catch (err) {
-            console.error('Login error:', err);
             const errorMsg = err?.response?.data?.non_field_errors?.[0] || 'An error occurred. Please try again.';
             setAuthState({ message: '', error: errorMsg, loading: false });
         }
@@ -97,9 +94,9 @@ export default function Login() {
                             autoComplete="email"
                         />
 
-                        <InputField
+                        {/* Replaced Password Input with the new PasswordInputField */}
+                        <PasswordInputField
                             label="Password"
-                            type="password"
                             name="password"
                             value={formData.password}
                             onChange={handleChange}
@@ -120,6 +117,16 @@ export default function Login() {
                             </button>
                         </div>
                     </form>
+
+                    {/* Additional links */}
+                    <div className="mt-6 text-center">
+                        <Link
+                            to="/users/reset_password/"
+                            className="font-semibold text-indigo-600 hover:text-indigo-500"
+                        >
+                            Forgot your password?
+                        </Link>
+                    </div>
 
                     <p className="mt-10 text-center text-sm text-gray-500">
                         Don't have an account?{' '}

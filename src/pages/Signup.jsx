@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import PasswordInputField from '../components/PasswordInputField'; // Import PasswordInputField component
 
 const InputField = ({ label, type, name, value, onChange, required, autoComplete }) => (
     <div>
@@ -102,18 +103,17 @@ export default function Signup() {
                             required
                             autoComplete="name"
                         />
-                        <InputField
+                        {/* Replace password and confirm password inputs with PasswordInputField */}
+                        <PasswordInputField
                             label="Password"
-                            type="password"
                             name="password"
                             value={formData.password}
                             onChange={handleChange}
                             required
                             autoComplete="new-password"
                         />
-                        <InputField
+                        <PasswordInputField
                             label="Confirm Password"
-                            type="password"
                             name="rePassword"
                             value={formData.rePassword}
                             onChange={handleChange}

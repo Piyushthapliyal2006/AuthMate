@@ -2,20 +2,22 @@ import { CloudArrowUpIcon, LockClosedIcon, ServerIcon } from '@heroicons/react/2
 
 const features = [
   {
-    name: 'Push to deploy.',
+    name: 'Quick Integration',
     description:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.',
+      'Effortless API integration with full guides to get your authentication system live fast. Perfect for developers looking to save time and focus on core features.',
     icon: CloudArrowUpIcon,
   },
   {
-    name: 'SSL certificates.',
-    description: 'Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo.',
-    icon: LockClosedIcon,
+    name: 'Powerful User Dashboard',
+    description:
+      'Manage and monitor your users easily across all your projects from a single, intuitive dashboard. Stay informed and in control with detailed insights and tools.',
+    icon: ServerIcon,
   },
   {
-    name: 'Database backups.',
-    description: 'Ac tincidunt sapien vehicula erat auctor pellentesque rhoncus. Et magna sit morbi lobortis.',
-    icon: ServerIcon,
+    name: 'Unique Project Credentials',
+    description:
+      'Create unique API keys for each project to enhance security and maintain control. Ideal for developers managing multiple websites or applications.',
+    icon: LockClosedIcon,
   },
 ]
 
@@ -31,8 +33,7 @@ export default function Feature() {
                 A better workflow
               </p>
               <p className="mt-6 text-lg/8 text-gray-600">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque,
-                iste dolor cupiditate blanditiis ratione.
+                AuthMate helps you seamlessly integrate authentication, manage users, and keep your platforms secure without the hassle.
               </p>
               <dl className="mt-10 max-w-xl space-y-8 text-base/7 text-gray-600 lg:max-w-none">
                 {features.map((feature) => (
@@ -48,8 +49,8 @@ export default function Feature() {
             </div>
           </div>
           <img
-            alt="Product screenshot"
-            src="https://tailwindui.com/plus/img/component-images/dark-project-app-screenshot.png"
+            alt="AuthMate dashboard"
+            src="https://tailwindui.com/plus/img/component-images/dark-project-app-screenshot.png" // Replace with actual AuthMate dashboard or relevant image
             width={2432}
             height={1442}
             className="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
