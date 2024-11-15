@@ -10,6 +10,7 @@ import Landing from './pages/Landing';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import Projects from './pages/Projects';
+import ProjectDetails from './pages/ProjectDetails';
 import Login from './pages/Login';
 import ResetPassword from './pages/ResetPassword';
 import PasswordResetConfirm from './pages/PasswordResetConfirm';
@@ -93,6 +94,7 @@ function App() {
               <Route element={isAuthenticated ? <Layout /> : <Navigate to="/login" />}>
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/projects" element={<Projects />} />
+                <Route path="/project/:id" element={<ProjectDetails />} />
                 <Route path="/about" element={<h1>About Page lorem900</h1>} />
                 <Route path="/services" element={<h1>Services Page</h1>} />
                 <Route path="/contact" element={<h1>Contact Page</h1>} />

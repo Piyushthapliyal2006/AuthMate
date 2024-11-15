@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';  // Import Link from react-router-dom
 
 export default function Projects() {
     const [projects, setProjects] = useState([]);
@@ -111,7 +112,9 @@ export default function Projects() {
                     filteredProjects.map((project) => (
                         <div key={project.id} className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                             <div className="p-6">
-                                <h3 className="text-lg font-semibold text-gray-900">{project.project_name}</h3>
+                                <Link to={`/project/${project.id}`} className="text-lg font-semibold text-gray-900 hover:text-indigo-600">
+                                    {project.project_name}
+                                </Link>
                                 <p className="mt-2 text-sm text-gray-500">
                                     Created at: {new Date(project.created_at).toLocaleString()}
                                 </p>
