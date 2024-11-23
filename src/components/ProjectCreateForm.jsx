@@ -12,14 +12,7 @@ export default function ProjectCreateForm({ onClose }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const token = getToken(); // Fetch the token from localStorage
-        // const apiUrl = process.env.REACT_APP_API_URL; // Ensure you have the API URL in your .env file
-
-        // if (!apiUrl) {
-        //     setMessage('API URL is not defined in environment variables.');
-        //     setMessageType('error');
-        //     return;
-        // }
+        const token = getToken();
 
         if (!token) {
             setMessage('You need to be logged in to create a project.');
@@ -57,7 +50,7 @@ export default function ProjectCreateForm({ onClose }) {
         setProjectName(''); // Clear project name
         setMessage(''); // Clear any message
         setMessageType(''); // Reset message type
-        onClose(); // Close the form if onClose callback is provided
+        onClose(); // Close the form
     };
 
     // Clear message after 5 seconds

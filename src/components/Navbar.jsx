@@ -1,12 +1,20 @@
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/react';
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { Link, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';  // Import useDispatch inside the component
-import { logout } from '../store/authSlice'; // Importing the logout action
+import React from 'react';
+import { MagnifyingGlassIcon, SunIcon, MoonIcon } from '@heroicons/react/24/outline';
+import { FiMenu, FiChevronDown } from 'react-icons/fi';
+import { useDispatch } from 'react-redux'; // Import useDispatch to dispatch the logout action
+import { logout } from '../store/authSlice'; // Import logout action
+import { Link } from 'react-router-dom';
 
-
-function Navbar() {
-  const dispatch = useDispatch(); // Correctly use useDispatch here inside the component
+const Navbar = ({
+  darkMode,
+  toggleSidebar,
+  searchQuery,
+  setSearchQuery,
+  toggleTheme,
+  showProfileDropdown,
+  setShowProfileDropdown
+}) => {
+  const dispatch = useDispatch(); // Get the dispatch function
 
   // Handle the logout action
   const handleLogout = () => {
@@ -14,123 +22,87 @@ function Navbar() {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
 
-    // Dispatch the logout action to clear auth state in Redux
+    // Dispatch the logout action to clear the auth state in Redux
     dispatch(logout());
+
+    // Optionally, you can redirect the user to the login page
+    window.location.href = '/login'; // This will reload the page and redirect to login
   };
 
-  const navigation = [
-    { name: 'Dashboard', href: '/dashboard' },
-    { name: 'Team', href: '/team' },
-    { name: 'Projects', href: '/projects' },
-    { name: 'Calendar', href: '/calendar' },
-  ];
-
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(' ');
-  }
-
-  const location = useLocation(); // Get the current location for active link highlighting
-
   return (
-    <Disclosure as="nav" className="bg-gray-800">
-      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <div className="relative flex h-16 items-center justify-between">
-          <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-            {/* Mobile menu button */}
-            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-              <span className="sr-only">Open main menu</span>
-              <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-              <XMarkIcon className="hidden h-6 w-6" aria-hidden="true" />
-            </DisclosureButton>
-          </div>
-          <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-            <div className="flex flex-shrink-0 items-center">
-              <img
-                alt="Your Company"
-                src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
-                className="h-8 w-auto"
-              />
-            </div>
-            <div className="hidden sm:ml-6 sm:block">
-              <div className="flex space-x-4">
-                {navigation.map((item) => (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    aria-current={location.pathname === item.href ? 'page' : undefined}
-                    className={classNames(
-                      location.pathname === item.href ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                      'rounded-md px-3 py-2 text-sm font-medium'
-                    )}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+    <nav className={`fixed top-0 right-0 left-0 z-50 ${darkMode ? "bg-gray-800" : "bg-white"} shadow-lg transition-colors duration-200`}>
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex items-center">
             <button
-              type="button"
-              className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+              onClick={toggleSidebar}
+              className={`p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 ${darkMode ? "text-white" : "text-gray-600"}`}
+              aria-label="Toggle Sidebar"
             >
-              <span className="sr-only">View notifications</span>
-              <BellIcon className="h-6 w-6" aria-hidden="true" />
+              <FiMenu className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Search Bar */}
+          <div className="flex-1 max-w-lg mx-4">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className={`w-full pl-10 pr-4 py-2 rounded-lg ${darkMode ? "bg-gray-700 text-white" : "bg-gray-100"} focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              />
+              <MagnifyingGlassIcon className="absolute left-3 top-2.5 w-5 h-5 text-gray-400" />
+            </div>
+          </div>
+
+          {/* Right Nav Items */}
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700"
+              aria-label="Toggle Theme"
+            >
+              {darkMode ? (
+                <SunIcon className="w-6 h-6 text-yellow-400" />
+              ) : (
+                <MoonIcon className="w-6 h-6 text-gray-600" />
+              )}
             </button>
 
-            {/* Profile dropdown */}
-            <Menu as="div" className="relative ml-3">
-              <div>
-                <MenuButton className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                  <span className="sr-only">Open user menu</span>
-                  <img
-                    alt="Profile"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    className="h-8 w-8 rounded-full"
-                  />
-                </MenuButton>
-              </div>
-              <MenuItems
-                transition
-                className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none"
+            {/* Profile Dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setShowProfileDropdown(!showProfileDropdown)}
+                className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700"
               >
-                <MenuItem>
-                  <Link to="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Your Profile</Link>
-                </MenuItem>
-                <MenuItem>
-                  <Link to="/settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</Link>
-                </MenuItem>
-                <MenuItem>
-                  <Link onClick={handleLogout} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ">
+                <img
+                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  alt="Profile"
+                  className="w-8 h-8 rounded-full"
+                />
+                <FiChevronDown className={`w-4 h-4 ${darkMode ? "text-white" : "text-gray-600"}`} />
+              </button>
+
+              {showProfileDropdown && (
+                <div className={`absolute right-0 mt-2 w-48 rounded-lg shadow-lg py-1 ${darkMode ? "bg-gray-800" : "bg-white"}`}>
+                  <Link to="/profile" className={`block px-4 py-2 text-sm ${darkMode ? "text-white hover:bg-gray-700" : "text-gray-700 hover:bg-gray-100"}`}>Your Profile</Link>
+                  <Link to="/settings" className={`block px-4 py-2 text-sm ${darkMode ? "text-white hover:bg-gray-700" : "text-gray-700 hover:bg-gray-100"}`}>Settings</Link>
+                  <Link
+                    onClick={handleLogout} // Attach the logout handler to the logout button
+                    className={`block px-4 py-2 text-sm ${darkMode ? "text-white hover:bg-gray-700" : "text-gray-700 hover:bg-gray-100"}`}
+                  >
                     Logout
                   </Link>
-                </MenuItem>
-              </MenuItems>
-            </Menu>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
-
-      <DisclosurePanel className="sm:hidden">
-        <div className="space-y-1 px-2 pb-3 pt-2">
-          {navigation.map((item) => (
-            <DisclosureButton
-              key={item.name}
-              as={Link}
-              to={item.href}
-              aria-current={location.pathname === item.href ? 'page' : undefined}
-              className={classNames(
-                location.pathname === item.href ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                'block rounded-md px-3 py-2 text-base font-medium'
-              )}
-            >
-              {item.name}
-            </DisclosureButton>
-          ))}
-        </div>
-      </DisclosurePanel>
-    </Disclosure>
+    </nav>
   );
-}
+};
 
 export default Navbar;

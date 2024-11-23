@@ -14,6 +14,7 @@ import ProjectDetails from './pages/ProjectDetails';
 import Login from './pages/Login';
 import ResetPassword from './pages/ResetPassword';
 import PasswordResetConfirm from './pages/PasswordResetConfirm';
+import NotFound from './pages/NotFound';
 
 function App() {
   // Access the authentication state from Redux
@@ -99,6 +100,8 @@ function App() {
                 <Route path="/services" element={<h1>Services Page</h1>} />
                 <Route path="/contact" element={<h1>Contact Page</h1>} />
               </Route>
+               {/* 404 Route (Catch-All for undefined routes) */}
+               <Route path="*" element={<NotFound />} />  {/* 404 page */}
             </Routes>
           </main>
         </div>
