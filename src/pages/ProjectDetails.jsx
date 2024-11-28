@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';  // Import useParams from react-router-dom
 import axios from 'axios';
+import PasswordInputField from '../components/PasswordInputField';  // Import the PasswordInputField component
+import CopyContent from '../components/CopyContent';  // Import the CopyContent component
 
 function ProjectDetails() {
     const { id } = useParams();  // Get the project ID from the URL
@@ -28,10 +30,10 @@ function ProjectDetails() {
         fetchProjectDetails();
     }, [id]);  // Refetch the project when the ID changes
 
-    if (!project) return <div>Loading...</div>;
+    if (!project) return <div className="max-w-7xl mx-auto py-20 px-4 sm:px-6 lg:px-8 w-60">Loading...</div>;
 
     return (
-        <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto py-20 px-4 sm:px-6 lg:px-8 bg-white">
             <h1 className="text-3xl font-semibold text-gray-900">{project.project_name}</h1>
             <p className="mt-4 text-lg text-gray-600">
                 <strong>Description:</strong> {project.description || 'No description available.'}
@@ -39,9 +41,29 @@ function ProjectDetails() {
             <p className="mt-4 text-sm text-gray-500">
                 Created at: {new Date(project.created_at).toLocaleString()}
             </p>
-            <p className="mt-4 text-sm text-gray-500">
-                Last updated: {new Date(project.updated_at).toLocaleString()}
-            </p>
+
+            {/* Add the CopyContent for API Key */}
+            <div className="mt-4">
+                <PasswordInputField
+                    label="API Key"
+                    name="api_key"
+                    value="h*&TGUYr67R%^RF&R^%ff86"
+                    // value={project.api_key}
+                    onChange={() => {}}
+                    required={false}
+                    autoComplete="off"
+                    readOnly={true}  // Make it read-only for the project details page
+                />
+                
+                {/* Use the CopyContent component */}
+                <CopyContent
+                    content="h*&TGUYr67R%^RF&R^%ff86"
+                    // content={project.api_key}
+                    buttonText="Copy API Key"
+                    successText="API Key Copied!"
+                    className="mt-2"  // Optional: Add margin for better spacing
+                />
+            </div>
 
             {/* Add more project details as needed */}
         </div>

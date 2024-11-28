@@ -7,14 +7,16 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import './App.css';
 import Layout from './layout/Layout';
 import Landing from './pages/Landing';
-import Signup from './pages/Signup';
-import Dashboard from './pages/Dashboard';
-import Projects from './pages/Projects';
-import ProjectDetails from './pages/ProjectDetails';
 import Login from './pages/Login';
+import Signup from './pages/Signup';
 import ResetPassword from './pages/ResetPassword';
 import PasswordResetConfirm from './pages/PasswordResetConfirm';
 import NotFound from './pages/NotFound';
+import BetaAnnouncementPage from './pages/beta/Beta';
+import Dashboard from './pages/Dashboard';
+import Projects from './pages/Projects';
+import ProjectDetails from './pages/ProjectDetails';
+import DocsLayout from './pages/docs/Docs';
 
 function App() {
   // Access the authentication state from Redux
@@ -23,7 +25,6 @@ function App() {
 
   // Check for the token in localStorage on app load (when page is refreshed)
   useEffect(() => {
-    // If we are not authenticated, we don't need to do anything
     if (!accessToken) {
       const token = localStorage.getItem('accessToken');
       if (token) {
@@ -50,7 +51,6 @@ function App() {
               />
               <meta charSet="UTF-8" />
               <meta name="viewport" content="width=device-width, initial-scale=1" />
-
               <meta property="og:title" content="AuthMate" />
               <meta
                 property="og:description"
@@ -60,19 +60,16 @@ function App() {
               <meta property="og:url" content="https://authmate.xyz" />
               <meta property="og:type" content="website" />
               <meta property="og:site_name" content="AuthMate" />
-
               <meta name="twitter:card" content="summary_large_image" />
               <meta name="twitter:title" content="AuthMate" />
               <meta
                 name="twitter:description"
                 content="Authmate provides the secured authentication with 0 backend code."
               />
-              <meta name="twitter:image" content="https://www.devdisplay.org/twitter-image.jpg" />
+              <meta name="twitter:image" content="https://authmate.xyz/twitter-image.jpg" />
               <meta name="twitter:site" content="@devdisplay_" />
-
               <meta name="robots" content="index, follow" />
-
-              <link rel="canonical" href="https://www.devdisplay.org" />
+              <link rel="canonical" href="https://authmate.xyz" />
               <link rel="icon" href="/DevDisplay ICON.png" />
               <link rel="apple-touch-icon" sizes="180x180" href="/DevDisplay ICON.png" />
               <meta name="theme-color" content="#317EFB" />
@@ -80,19 +77,24 @@ function App() {
               <meta property="og:locale" content="en_US" />
             </Helmet>
 
+            {/* Add a button to test API request manually */}
+            {/* <button onClick={handleApiRequest}>Test API Request</button> */}
+
             <Routes>
               {/* Public Routes */}
               <Route path="/" element={<Landing />} />
-              <Route path="/signup" element={<Signup />} />
+              <Route path="/beta" element={<BetaAnnouncementPage />} />
+              <Route path="/docs" element={<DocsLayout />} />
+              <Route path="/auth/signup" element={<Signup />} />
               <Route
-                path="/login"
+                path="/auth/login"
                 element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />}
               />
               <Route path="/users/reset_password/" element={<ResetPassword />} />
               <Route path="/password/reset/confirm/:uid/:token" element={<PasswordResetConfirm />} />
 
               {/* Protected Routes (with Layout) */}
-              <Route element={isAuthenticated ? <Layout /> : <Navigate to="/login" />}>
+              <Route element={isAuthenticated ? <Layout /> : <Navigate to="/auth/login" />}>
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/projects" element={<Projects />} />
                 <Route path="/project/:id" element={<ProjectDetails />} />
@@ -100,8 +102,8 @@ function App() {
                 <Route path="/services" element={<h1>Services Page</h1>} />
                 <Route path="/contact" element={<h1>Contact Page</h1>} />
               </Route>
-               {/* 404 Route (Catch-All for undefined routes) */}
-               <Route path="*" element={<NotFound />} />  {/* 404 page */}
+              {/* 404 Route (Catch-All for undefined routes) */}
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
         </div>

@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Hook for navigation
+import { ArrowLeftIcon } from '@heroicons/react/24/outline'; // Heroicons for the back button
 
 function ResetPassword() {
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate(); // For navigation to login page
 
     // Function to handle form submission
     const handleSubmit = async (e) => {
@@ -26,6 +29,15 @@ function ResetPassword() {
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="w-full max-w-md p-8 space-y-4 bg-white rounded-lg shadow-md">
+                {/* Back Button */}
+                <button
+                    onClick={() => navigate('/auth/login')}
+                    className="flex items-center text-indigo-600 hover:text-indigo-800 mb-4"
+                >
+                    <ArrowLeftIcon className="h-5 w-5 mr-2" />
+                    Back to Login
+                </button>
+
                 <h2 className="text-2xl font-bold text-center text-gray-800">Reset Password</h2>
 
                 <form onSubmit={handleSubmit} className="space-y-6">

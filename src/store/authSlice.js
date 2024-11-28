@@ -1,18 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// Get initial authentication state from localStorage if available
-const initialState = {
-  isAuthenticated: false,
-  accessToken: null,
-  refreshToken: null,
-};
-
-// Initialize state based on localStorage
+// Initial state setup based on localStorage
 const loadTokensFromLocalStorage = () => {
   const accessToken = localStorage.getItem('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');
   return {
-    isAuthenticated: accessToken ? true : false,
+    isAuthenticated: !!accessToken,  // Checks if the access token exists
     accessToken,
     refreshToken,
   };
@@ -20,28 +13,30 @@ const loadTokensFromLocalStorage = () => {
 
 const authSlice = createSlice({
   name: 'auth',
-  initialState: loadTokensFromLocalStorage(), // Load from localStorage on app initialization
+  initialState: loadTokensFromLocalStorage(), // Initialize with localStorage
   reducers: {
     login: (state, action) => {
       const { access, refresh } = action.payload;
-
-      // Save tokens to Redux state and localStorage
       state.isAuthenticated = true;
       state.accessToken = access;
       state.refreshToken = refresh;
-      localStorage.setItem('accessToken', access); // Save access token
-      localStorage.setItem('refreshToken', refresh); // Save refresh token
+      localStorage.setItem('accessToken', access);
+      localStorage.setItem('refreshToken', refresh);
     },
     logout: (state) => {
       state.isAuthenticated = false;
       state.accessToken = null;
       state.refreshToken = null;
-      localStorage.removeItem('accessToken'); // Remove access token
-      localStorage.removeItem('refreshToken'); // Remove refresh token
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+    },
+    updateAccessToken: (state, action) => {
+      const { access } = action.payload;
+      state.accessToken = access;
+      localStorage.setItem('accessToken', access); // Update localStorage
     },
   },
 });
 
-export const { login, logout } = authSlice.actions;
-
+export const { login, logout, updateAccessToken } = authSlice.actions;
 export default authSlice.reducer;

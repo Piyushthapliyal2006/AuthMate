@@ -6,9 +6,31 @@ export default function ProjectCreateForm({ onClose }) {
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState(''); // 'success' or 'error'
     const [loading, setLoading] = useState(false); // Loading state to disable the submit button
+    const [retrying, setRetrying] = useState(false); // Flag to prevent multiple retries
 
-    // Helper function to get token
+    // Helper function to get token from localStorage
     const getToken = () => localStorage.getItem('accessToken');
+
+    // Helper function to refresh the access token if expired
+    const refreshAccessToken = async () => {
+        const refreshToken = localStorage.getItem('refreshToken');
+        if (refreshToken) {
+            try {
+                const response = await axios.post('http://127.0.0.1:8000/auth/refresh/', {
+                    refresh: refreshToken,
+                });
+                const newAccessToken = response.data.access;
+                localStorage.setItem('accessToken', newAccessToken);
+                return newAccessToken;
+            } catch (error) {
+                console.error('Token refresh failed:', error);
+                setMessage('Session expired. Please log in again.');
+                setMessageType('error');
+                return null;
+            }
+        }
+        return null;
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,10 +42,16 @@ export default function ProjectCreateForm({ onClose }) {
             return;
         }
 
+        if (!projectName.trim()) {
+            setMessage('Project name is required.');
+            setMessageType('error');
+            return;
+        }
+
         setLoading(true); // Set loading state to true while request is in progress
         try {
             const response = await axios.post(
-                `http://127.0.0.1:8000/projects/`, 
+                'http://127.0.0.1:8000/projects/',
                 { project_name: projectName },
                 {
                     headers: {
@@ -39,8 +67,19 @@ export default function ProjectCreateForm({ onClose }) {
             setProjectName(''); // Clear the project name input after success
         } catch (error) {
             console.error(error);
-            setMessage(error?.response?.data?.detail || 'Failed to create project. Please try again.');
-            setMessageType('error');
+            if (error.response && error.response.status === 401 && !retrying) {
+                // Token expired, try to refresh the token
+                setRetrying(true); // Prevent further retries while waiting for the token refresh
+                const newAccessToken = await refreshAccessToken();
+                if (newAccessToken) {
+                    // Retry the API request with the new token
+                    handleSubmit(e); // We call the submit function again after refreshing token
+                }
+                setRetrying(false); // Reset retrying flag after the refresh attempt
+            } else {
+                setMessage(error?.response?.data?.detail || 'Failed to create project. Please try again.');
+                setMessageType('error');
+            }
         } finally {
             setLoading(false); // Reset loading state after request is done
         }

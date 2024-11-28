@@ -24,7 +24,7 @@ function NotFound() {
           <p className="text-sm">You can also check out some of these links:</p>
           <div className="mt-4 flex justify-center gap-6">
             <Link to="/dashboard" className="hover:text-indigo-600">Dashboard</Link>
-            <Link to="/about" className="hover:text-indigo-600">About Us</Link>
+            <Link to="/docs" className="hover:text-indigo-600">Docs</Link>
             <Link to="/contact" className="hover:text-indigo-600">Contact</Link>
           </div>
         </div>

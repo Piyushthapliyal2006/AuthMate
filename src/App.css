@@ -2,7 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
+* {
     margin: 0;
     padding: 0;
+}
+
+/* Example CSS for the Dashboard */
+.dashboard-container {
+    transition: margin-left 0.3s ease-in-out;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+    .dashboard-container {
+        margin-left: 0 !important;
+        /* Sidebar is hidden on mobile */
+    }
 }

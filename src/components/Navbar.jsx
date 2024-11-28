@@ -26,7 +26,7 @@ const Navbar = ({
     dispatch(logout());
 
     // Optionally, you can redirect the user to the login page
-    window.location.href = '/login'; // This will reload the page and redirect to login
+    window.location.href = '/auth/login'; // This will reload the page and redirect to login
   };
 
   return (
@@ -34,6 +34,11 @@ const Navbar = ({
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
+            <div className="logo">
+              <Link to={"/dashboard"}>
+                <span className='text-3xl font-bold tracking-tight text-gray-900'>AuthMate</span>
+              </Link>
+            </div>
             <button
               onClick={toggleSidebar}
               className={`p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 ${darkMode ? "text-white" : "text-gray-600"}`}

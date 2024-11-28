@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login } from '../store/authSlice';
-import PasswordInputField from '../components/PasswordInputField'; // Import the new PasswordInputField
+import { ArrowLeftIcon } from '@heroicons/react/24/outline'; 
+import PasswordInputField from '../components/PasswordInputField';
 
 const InputField = ({ label, type, name, value, onChange, required, autoComplete }) => (
     <div>
@@ -28,6 +29,7 @@ const InputField = ({ label, type, name, value, onChange, required, autoComplete
 export default function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation(); // Used for checking current location
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [authState, setAuthState] = useState({ message: '', error: '', loading: false });
 
@@ -35,7 +37,6 @@ export default function Login() {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
 
-        // Clear any previous error messages when user starts typing
         if (authState.error) {
             setAuthState((prev) => ({ ...prev, error: '' }));
         }
@@ -48,22 +49,19 @@ export default function Login() {
         try {
             const { email, password } = formData;
 
-            // Send API request to authenticate the user
             const response = await axios.post('http://127.0.0.1:8000/auth/jwt/create/', { email, password });
-
             const { access, refresh } = response.data;
 
             if (!access || !refresh) {
-                throw new Error('Access or Refresh token is missing in the response');
+                throw new Error('Access or Refresh token is missing');
             }
 
-            // Dispatch login action with both tokens
             dispatch(login({ access, refresh }));
 
             setAuthState({ message: 'Login successful!', error: '', loading: false });
             navigate('/dashboard');
         } catch (err) {
-            const errorMsg = err?.response?.data?.non_field_errors?.[0] || 'An error occurred. Please try again.';
+            const errorMsg = err?.response?.data?.non_field_errors?.[0] || err?.message || 'An error occurred. Please try again.';
             setAuthState({ message: '', error: errorMsg, loading: false });
         }
     };
@@ -71,6 +69,16 @@ export default function Login() {
     return (
         <div className="h-full bg-white">
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+                {location.pathname == '/auth/login' && (
+                    <button
+                        onClick={() => navigate('/')}
+                        className="flex items-center text-indigo-600 hover:text-indigo-800 mb-4"
+                    >
+                        <ArrowLeftIcon className="h-5 w-5 mr-2" />
+                        Back
+                    </button>
+                )}
+
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <img
                         alt="Your Company"
@@ -93,8 +101,6 @@ export default function Login() {
                             required
                             autoComplete="email"
                         />
-
-                        {/* Replaced Password Input with the new PasswordInputField */}
                         <PasswordInputField
                             label="Password"
                             name="password"
@@ -113,12 +119,15 @@ export default function Login() {
                                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 disabled={authState.loading}
                             >
-                                {authState.loading ? 'Logging In...' : 'Log In'}
+                                {authState.loading ? (
+                                    <span className="animate-spin">⏳</span>
+                                ) : (
+                                    'Log In'
+                                )}
                             </button>
                         </div>
                     </form>
 
-                    {/* Additional links */}
                     <div className="mt-6 text-center">
                         <Link
                             to="/users/reset_password/"
@@ -130,7 +139,7 @@ export default function Login() {
 
                     <p className="mt-10 text-center text-sm text-gray-500">
                         Don't have an account?{' '}
-                        <Link to="/signup" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                        <Link to="/auth/signup" className="font-semibold text-indigo-600 hover:text-indigo-500">
                             Sign Up
                         </Link>
                     </p>

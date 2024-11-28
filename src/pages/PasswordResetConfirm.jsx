@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import PasswordInputField from '../components/PasswordInputField';  // Import PasswordInputField
 
 function PasswordResetConfirm() {
   const [newPassword, setNewPassword] = useState('');
@@ -9,8 +10,8 @@ function PasswordResetConfirm() {
 
   // Extract uid and token from URL path
   const pathParts = window.location.pathname.split('/');
-  const uid = pathParts[4];    // Assuming 'MQ' is in this position
-  const token = pathParts[5];  // Assuming the token is in this position
+  const uid = pathParts[4]; // Assuming 'MQ' is in this position
+  const token = pathParts[5]; // Assuming the token is in this position
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,7 +20,7 @@ function PasswordResetConfirm() {
       return;
     }
 
-    setLoading(true);
+    setLoading(true); // Set loading to true while submitting request
 
     const data = JSON.stringify({
       uid: uid,
@@ -30,7 +31,7 @@ function PasswordResetConfirm() {
 
     const config = {
       method: 'post',
-      url: 'http://127.0.0.1:8000/auth/users/reset_password_confirm/',
+      url: 'http://127.0.0.1:8000/auth/users/reset_password_confirm/', // Endpoint for password reset
       headers: { 'Content-Type': 'application/json' },
       data: data
     };
@@ -52,35 +53,25 @@ function PasswordResetConfirm() {
         <h2 className="text-2xl font-bold text-center text-gray-800">Set New Password</h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700">New Password</label>
-            <input
-              type="password"
-              id="newPassword"
-              name="newPassword"
-              className="w-full px-4 py-2 mt-2 text-gray-700 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-500"
-              placeholder="Enter new password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              required
-              autoComplete="new-password"
-            />
-          </div>
+          {/* Reusing PasswordInputField for New Password */}
+          <PasswordInputField
+            label="New Password"
+            name="newPassword"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            required
+            autoComplete="new-password"
+          />
 
-          <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">Confirm New Password</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              className="w-full px-4 py-2 mt-2 text-gray-700 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-500"
-              placeholder="Confirm new password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-              autoComplete="new-password"
-            />
-          </div>
+          {/* Reusing PasswordInputField for Confirm Password */}
+          <PasswordInputField
+            label="Confirm New Password"
+            name="confirmPassword"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+            autoComplete="new-password"
+          />
 
           <button
             type="submit"

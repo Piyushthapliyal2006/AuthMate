@@ -6,10 +6,10 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom' // Importing Link from react-router-dom
 
 const navigation = [
+    { name: 'Docs', href: '/docs' },
     { name: 'Product', href: '/product' },
-    { name: 'Features', href: '/features' },
-    { name: 'Marketplace', href: '/marketplace' },
-    { name: 'Company', href: '/company' },
+    { name: 'Pricing', href: '/pricing' },  // Updated href to use the fragment identifier for scroll
+    { name: 'Blogs', href: '/blogs' },
 ]
 
 export default function Hero() {
@@ -47,7 +47,7 @@ export default function Hero() {
                         ))}
                     </div>
                     <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                        <Link to="/login" className="text-sm/6 font-semibold text-gray-900">
+                        <Link to="/auth/login" className="text-sm/6 font-semibold text-gray-900">
                             Log in <span aria-hidden="true">&rarr;</span>
                         </Link>
                     </div>
@@ -88,7 +88,7 @@ export default function Hero() {
                                 </div>
                                 <div className="py-6">
                                     <Link
-                                        to="/login"
+                                        to="/auth/login"
                                         className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
                                     >
                                         Log in
@@ -116,8 +116,8 @@ export default function Hero() {
                 <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
                     <div className="hidden sm:mb-8 sm:flex sm:justify-center">
                         <div className="relative rounded-full px-3 py-1 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-                            Announcing our next round of funding.{' '}
-                            <Link to="/funding" className="font-semibold text-indigo-600">
+                            This site is currently in Beta Mode.{' '}
+                            <Link to="/beta" className="font-semibold text-indigo-600">
                                 <span aria-hidden="true" className="absolute inset-0" />
                                 Read more <span aria-hidden="true">&rarr;</span>
                             </Link>
@@ -132,13 +132,13 @@ export default function Hero() {
                         </p>
                         <div className="mt-10 flex items-center justify-center gap-x-6">
                             <Link
-                                to="/get-started"
+                                to="/auth/login"
                                 className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             >
                                 Get Started Free
                             </Link>
-                            <Link to="/learn-more" className="text-sm/6 font-semibold text-gray-900">
-                                Learn More <span aria-hidden="true">→</span>
+                            <Link to="/demo" className="text-sm/6 font-semibold text-gray-900">
+                                Watch Demo <span aria-hidden="true">→</span>
                             </Link>
                         </div>
                     </div>

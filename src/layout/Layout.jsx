@@ -37,7 +37,7 @@ const Layout = () => {
       title: "Projects",
       icon: <FiFolder className="w-5 h-5" />,
       submenu: [
-        { id: 31, title: "Active Projects", link: "/projects/active" },
+        { id: 31, title: "Active Projects", link: "/projects/" },
         { id: 32, title: "Archived Projects", link: "/projects/archived" },
       ],
     },
@@ -123,7 +123,7 @@ const Layout = () => {
         activeDropdowns={activeDropdowns}
         isMobile={isMobile}
       />
-      <div className="flex-1 p-6">
+      <div className={`flex-1 p-6 transition-all duration-300 ${isOpen ? 'ml-64' : 'ml-20'}`}>
         <Outlet />  {/* This is where the nested routes will render */}
       </div>
     </>

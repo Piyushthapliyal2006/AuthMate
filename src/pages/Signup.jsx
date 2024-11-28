@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
 import PasswordInputField from '../components/PasswordInputField'; // Import PasswordInputField component
+import { ArrowLeftIcon } from '@heroicons/react/24/outline'; // Import the back arrow icon
 
 const InputField = ({ label, type, name, value, onChange, required, autoComplete }) => (
     <div>
@@ -33,6 +34,8 @@ export default function Signup() {
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+
+    const navigate = useNavigate(); // Initialize navigate
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -72,6 +75,15 @@ export default function Signup() {
     return (
         <div className="h-full bg-white">
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+                {/* Back Button */}
+                <button
+                    onClick={() => navigate('/')} // Navigate back to the login page
+                    className="flex items-center text-indigo-600 hover:text-indigo-800 mb-4"
+                >
+                    <ArrowLeftIcon className="h-5 w-5 mr-2" />
+                    Back
+                </button>
+
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <img
                         alt="Your Company"
@@ -137,7 +149,7 @@ export default function Signup() {
 
                     <p className="mt-10 text-center text-sm text-gray-500">
                         Already Registered?{' '}
-                        <Link to="/login" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                        <Link to="/auth/login" className="font-semibold text-indigo-600 hover:text-indigo-500">
                             Log In
                         </Link>
                     </p>
