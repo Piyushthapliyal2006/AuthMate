@@ -1,75 +1,120 @@
-import { FaLinkedinIn, FaInstagram } from 'react-icons/fa';
+"use client"
+
+import { motion } from 'framer-motion'
+import { LinkedinIcon, InstagramIcon } from 'lucide-react'
 
 const people = [
   {
     name: 'Anmol',
     role: 'Founder / CEO',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+    imageUrl: 'https://res.cloudinary.com/dkepj7fr9/image/upload/v1735464312/dev2_f8n5lb.jpg?height=256&width=256',
     linkedin: 'https://www.linkedin.com/in/anmol-776877294/',
     instagram: 'https://www.instagram.com/i_am.anmol/',
   },
   {
     name: 'Ayush Thakur',
     role: 'Co-Founder',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+    imageUrl: '/placeholder.svg?height=256&width=256',
     linkedin: 'https://www.linkedin.com/in/ayush-profile',
     instagram: 'https://www.instagram.com/realayushhoon/',
   },
   {
     name: 'Abhinav Tyagi',
     role: 'Co-Founder',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+    imageUrl: '/placeholder.svg?height=256&width=256',
     linkedin: 'https://www.linkedin.com/in/abhinav-profile',
     instagram: 'https://www.instagram.com/_abhinavtyagi__/',
   },
   {
     name: 'Rahul Singh Bhist',
     role: 'Co-Founder',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+    imageUrl: '/placeholder.svg?height=256&width=256',
     linkedin: 'https://www.linkedin.com/in/rahul-profile',
     instagram: 'https://www.instagram.com/singh_rahul.99/',
   },
-  // More people...
-];
+]
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2
+    }
+  }
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 }
+}
 
 export default function Team() {
   return (
-    <div className="bg-white py-24 sm:py-32">
-      <div className="mx-auto grid max-w-7xl gap-20 px-6 lg:px-8 xl:grid-cols-3">
-        <div className="max-w-xl">
-          <h2 className="text-pretty text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
+    <div className="py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          className="mx-auto max-w-2xl lg:mx-0"
+        >
+          <motion.h2 variants={itemVariants} className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
             Meet our leadership
-          </h2>
-          <p className="mt-6 text-lg/8 text-gray-600">
-            We’re a dynamic group of individuals who are passionate about what we do and dedicated to delivering the best results for our clients.
-          </p>
-        </div>
-        <ul role="list" className="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2">
+          </motion.h2>
+          <motion.p variants={itemVariants} className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
+            We're a dynamic group of individuals who are passionate about what we do and dedicated to delivering the best results for our clients.
+          </motion.p>
+        </motion.div>
+
+        <motion.ul
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          className="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-4"
+        >
           {people.map((person) => (
-            <li key={person.name}>
-              <div className="flex items-center gap-x-6">
-                <img alt={person.name} src={person.imageUrl} className="h-16 w-16 rounded-full" />
-                <div>
-                  <h3 className="text-base/7 font-semibold tracking-tight text-gray-900">{person.name}</h3>
-                  <p className="text-sm/6 font-semibold text-indigo-600">{person.role}</p>
-                  <div className="mt-4 flex space-x-4">
-                    <a href={person.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-indigo-600">
-                      <FaLinkedinIn className="h-5 w-5" />
-                    </a>
-                    <a href={person.instagram} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-indigo-600">
-                      <FaInstagram className="h-5 w-5" />
-                    </a>
-                  </div>
-                </div>
+            <motion.li
+              key={person.name}
+              variants={itemVariants}
+              whileHover={{ y: -8 }}
+              className="backdrop-blur-lg bg-white/30 dark:bg-gray-900/30 rounded-2xl p-8 border border-gray-200 dark:border-gray-800"
+            >
+              <motion.img
+                whileHover={{ scale: 1.05 }}
+                className="aspect-square w-full rounded-2xl object-cover"
+                src={person.imageUrl}
+                alt={person.name}
+              />
+              <h3 className="mt-6 text-lg font-semibold leading-8 text-gray-900 dark:text-white">{person.name}</h3>
+              <p className="text-base leading-7 text-primary">{person.role}</p>
+              <div className="mt-6 flex gap-6">
+                <motion.a
+                  whileHover={{ scale: 1.2 }}
+                  href={person.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-primary"
+                >
+                  <LinkedinIcon className="h-6 w-6" />
+                </motion.a>
+                <motion.a
+                  whileHover={{ scale: 1.2 }}
+                  href={person.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-primary"
+                >
+                  <InstagramIcon className="h-6 w-6" />
+                </motion.a>
               </div>
-            </li>
+            </motion.li>
           ))}
-        </ul>
+        </motion.ul>
       </div>
     </div>
-  );
+  )
 }
+

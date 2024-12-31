@@ -1,204 +1,179 @@
-'use client';
+"use client"
 
-import { useState } from 'react';
-import {
-  Dialog,
-  DialogPanel,
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-  Popover,
-  PopoverButton,
-  PopoverGroup,
-  PopoverPanel,
-} from '@headlessui/react';
-import {
-  ArrowPathIcon,
-  Bars3Icon,
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  SquaresPlusIcon,
-  XMarkIcon,
-} from '@heroicons/react/24/outline';
-import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid';
-import { Link } from 'react-router-dom';
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Sun, Moon, Menu, X } from 'lucide-react'
+import { Button, SecondaryButton} from "@/components/index";
+import { useTheme } from '@/components/contexts/theme-context'
+import { Link } from 'react-router-dom'
 
-const products = [
-  { name: 'Analytics', description: 'Get a better understanding of your traffic', to: '/analytics', icon: ChartPieIcon },
-  { name: 'Engagement', description: 'Speak directly to your customers', to: '/engagement', icon: CursorArrowRaysIcon },
-  { name: 'Security', description: 'Your customers’ data will be safe and secure', to: '/security', icon: FingerPrintIcon },
-  { name: 'Integrations', description: 'Connect with third-party tools', to: '/integrations', icon: SquaresPlusIcon },
-  { name: 'Automations', description: 'Build strategic funnels that will convert', to: '/automations', icon: ArrowPathIcon },
-];
+const navigation = [
+  { name: 'Docs', href: '/docs' },
+  { name: 'Product', href: '/product' },
+  { name: 'Pricing', href: '/pricing' },
+  { name: 'Blogs', href: '/blogs' },
+  { name: 'Beta', href: '/beta' },
+]
 
-const callsToAction = [
-  { name: 'Watch demo', to: '/demo', icon: PlayCircleIcon },
-  { name: 'Contact sales', to: '/contact', icon: PhoneIcon },
-];
-
-export default function Headers() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+export default function Header() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { theme, toggleTheme } = useTheme()
 
   return (
-    <header className="bg-white">
-      <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
-        <div className="flex lg:flex-1">
-          <Link to="/" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
-            <img
-              alt=""
-              src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
+    <motion.header 
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      className="fixed w-full top-0 z-50 bg-white dark:bg-gray-900 h-16"
+    >
+      <nav className="mx-auto flex items-center justify-between p-6 lg:px-8 backdrop-blur-lg bg-white/70 dark:bg-gray-900/70 border-b border-gray-200 dark:border-gray-800">
+        <motion.div 
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="flex lg:flex-1"
+        >
+          <Link to="/" className="flex items-center gap-2">
+            <span className="sr-only">AuthMate</span>
+            <motion.img
+              whileHover={{ scale: 1.1, rotate: 360 }}
+              transition={{ type: "spring", stiffness: 300, damping: 10 }}
+              src="/placeholder.svg"
+              alt="Logo"
               className="h-8 w-auto"
             />
           </Link>
-        </div>
+        </motion.div>
+
         <div className="flex lg:hidden">
-          <button
-            type="button"
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            className="text-gray-700 dark:text-gray-200"
             onClick={() => setMobileMenuOpen(true)}
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+            aria-label="Open mobile menu"
           >
-            <span className="sr-only">Open main menu</span>
-            <Bars3Icon aria-hidden="true" className="h-6 w-6" />
-          </button>
+            <Menu className="h-6 w-6" />
+          </motion.button>
         </div>
-        <PopoverGroup className="hidden lg:flex lg:gap-x-12">
-          <Popover className="relative">
-            <PopoverButton className="flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900">
-              Product
-              <ChevronDownIcon aria-hidden="true" className="h-5 w-5 flex-none text-gray-400" />
-            </PopoverButton>
 
-            <PopoverPanel
-              transition
-              className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5 transition data-[closed]:translate-y-1 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="hidden lg:flex lg:gap-x-12"
+        >
+          {navigation.map((item) => (
+            <motion.div
+              key={item.name}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <div className="p-4">
-                {products.map((item) => (
-                  <div
-                    key={item.name}
-                    className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50"
-                  >
-                    <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                      <item.icon aria-hidden="true" className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" />
-                    </div>
-                    <div className="flex-auto">
-                      <Link to={item.to} className="block font-semibold text-gray-900">
-                        {item.name}
-                        <span className="absolute inset-0" />
-                      </Link>
-                      <p className="mt-1 text-gray-600">{item.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
-                {callsToAction.map((item) => (
-                  <Link
-                    key={item.name}
-                    to={item.to}
-                    className="flex items-center justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-100"
-                  >
-                    <item.icon aria-hidden="true" className="h-5 w-5 flex-none text-gray-400" />
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            </PopoverPanel>
-          </Popover>
+              <Link
+                to={item.href}
+                className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100 hover:text-primary"
+              >
+                {item.name}
+              </Link>
+            </motion.div>
+          ))}
+        </motion.div>
 
-          <Link to="/features" className="text-sm/6 font-semibold text-gray-900">
-            Features
-          </Link>
-          <Link to="/marketplace" className="text-sm/6 font-semibold text-gray-900">
-            Marketplace
-          </Link>
-          <Link to="/company" className="text-sm/6 font-semibold text-gray-900">
-            Company
-          </Link>
-        </PopoverGroup>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <Link to="/login" className="text-sm/6 font-semibold text-gray-900">
-            Log in <span aria-hidden="true">&rarr;</span>
-          </Link>
-        </div>
+        <motion.div 
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-4"
+        >
+          <motion.button
+            whileHover={{ scale: 1.1, rotate: 180 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={toggleTheme}
+            className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+            aria-label="Toggle theme"
+          >
+            {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+          </motion.button>
+          <SecondaryButton to="/auth/login">Log in</SecondaryButton>
+          <Button to="/auth/signup">Sign up</Button>
+        </motion.div>
       </nav>
-      <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
-        <div className="fixed inset-0 z-10" />
-        <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-          <div className="flex items-center justify-between">
-            <Link to="/" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
-              <img
-                alt=""
-                src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
-                className="h-8 w-auto"
-              />
-            </Link>
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen(false)}
-              className="-m-2.5 rounded-md p-2.5 text-gray-700"
-            >
-              <span className="sr-only">Close menu</span>
-              <XMarkIcon aria-hidden="true" className="h-6 w-6" />
-            </button>
-          </div>
-          <div className="mt-6 flow-root">
-            <div className="-my-6 divide-y divide-gray-500/10">
-              <div className="space-y-2 py-6">
-                <Disclosure as="div" className="-mx-3">
-                  <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">
-                    Product
-                    <ChevronDownIcon aria-hidden="true" className="h-5 w-5 flex-none group-data-[open]:rotate-180" />
-                  </DisclosureButton>
-                  <DisclosurePanel className="mt-2 space-y-2">
-                    {[...products, ...callsToAction].map((item) => (
-                      <DisclosureButton
-                        key={item.name}
-                        as={Link}
-                        to={item.to}
-                        className="block rounded-lg py-2 pl-6 pr-3 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50"
+
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 bg-gray-500 bg-opacity-75 z-[99]"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-label="Close mobile menu"
+          />
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, x: '100%' }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: '100%' }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            className="fixed inset-y-0 right-0 z-[101] w-full overflow-y-auto bg-white dark:bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
+          >
+            <div className="flex flex-col h-full">
+              <div className="flex items-center justify-between mb-8">
+                <Link to="/" className="-m-1.5 p-1.5">
+                  <span className="sr-only">AuthMate</span>
+                  <img
+                    className="h-8 w-auto"
+                    src="/placeholder.svg"
+                    alt="Logo"
+                  />
+                </Link>
+                <motion.button
+                  whileTap={{ scale: 0.9 }}
+                  className="text-gray-700 dark:text-gray-200"
+                  onClick={() => setMobileMenuOpen(false)}
+                  aria-label="Close mobile menu"
+                >
+                  <X className="h-6 w-6" />
+                </motion.button>
+              </div>
+              <nav className="flex-grow">
+                <ul className="space-y-4">
+                  {navigation.map((item) => (
+                    <motion.li
+                      key={item.name}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Link
+                        to={item.href}
+                        className="block py-2 text-base font-semibold leading-7 text-gray-900 dark:text-gray-100 hover:text-primary"
+                        onClick={() => setMobileMenuOpen(false)}
                       >
                         {item.name}
-                      </DisclosureButton>
-                    ))}
-                  </DisclosurePanel>
-                </Disclosure>
-                <Link
-                  to="/features"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                      </Link>
+                    </motion.li>
+                  ))}
+                </ul>
+              </nav>
+              <div className="mt-auto pt-6 border-t border-gray-200 dark:border-gray-700">
+                <motion.button
+                  whileHover={{ scale: 1.1, rotate: 180 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={toggleTheme}
+                  className="mb-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+                  aria-label="Toggle theme"
                 >
-                  Features
-                </Link>
-                <Link
-                  to="/marketplace"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Marketplace
-                </Link>
-                <Link
-                  to="/company"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Company
-                </Link>
-              </div>
-              <div className="py-6">
-                <Link
-                  to="/login"
-                  onClick={() => console.log(`Navigating to ${item.to}`)}
-
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Log in
-                </Link>
+                  {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                </motion.button>
+                <div className="space-y-3">
+                  <SecondaryButton to="/auth/login" className="w-full justify-center">Log in</SecondaryButton>
+                  <Button to="/auth/signup" className="w-full justify-center">Sign up</Button>
+                </div>
               </div>
             </div>
-          </div>
-        </DialogPanel>
-      </Dialog>
-    </header>
-  );
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.header>
+  )
 }

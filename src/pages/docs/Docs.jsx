@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FiSun, FiMoon, FiSearch, FiChevronDown, FiChevronRight } from "react-icons/fi";
 import { FaReact, FaPython, FaNodeJs } from "react-icons/fa";
+import Navbar from "../../components/Navbar";
 
 const DocsLayout = () => {
   const [darkMode, setDarkMode] = useState(() => {
@@ -222,7 +223,8 @@ const DocsLayout = () => {
   return (
     <div className={`min-h-screen ${darkMode ? "dark" : ""}`}>
       <div className="bg-white dark:bg-gray-900 min-h-screen transition-colors duration-300">
-        <DocsHeader />
+        {/* <DocsHeader /> */}
+        <Navbar />
         <DocsSidebar />
         <DocsContent />
       </div>

@@ -15,10 +15,19 @@ import NotFound from './pages/NotFound';
 import BetaAnnouncementPage from './pages/beta/Beta';
 import Dashboard from './pages/Dashboard';
 import Projects from './pages/Projects';
+import Profile from './pages/Profile';
 import ProjectDetails from './pages/ProjectDetails';
 import DocsLayout from './pages/docs/Docs';
+import PricingPage from './pages/payment/Pricing';
+import BlogPage from './pages/blogs/BlogPage';
+import BlogPostPage from './pages/blogs/[slug]/BlogPostPage';
+import { ThemeProvider } from './components/contexts/theme-context';
+
+import { conf } from "@/conf/conf.js";
 
 function App() {
+  console.log(conf.devBaseUrl)
+
   // Access the authentication state from Redux
   const { isAuthenticated, accessToken } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -35,80 +44,87 @@ function App() {
   }, [dispatch, accessToken]);
 
   return (
-    <HelmetProvider> {/* Wrap your app in HelmetProvider */}
-      <Router>
-        <div>
-          <main className="bg-gray-100">
-            <Helmet>
-              <title>AuthMate</title>
-              <meta
-                name="description"
-                content="Authmate provides the secured authentication with 0 backend code."
-              />
-              <meta
-                name="keywords"
-                content="Authmate, secured, authentication, 0 backend code, Auth Mate, authmate, Auth mate, auth mate"
-              />
-              <meta charSet="UTF-8" />
-              <meta name="viewport" content="width=device-width, initial-scale=1" />
-              <meta property="og:title" content="AuthMate" />
-              <meta
-                property="og:description"
-                content="Authmate provides the secured authentication with 0 backend code."
-              />
-              <meta property="og:image" content="https://authmate.xyz/og-image.jpg" />
-              <meta property="og:url" content="https://authmate.xyz" />
-              <meta property="og:type" content="website" />
-              <meta property="og:site_name" content="AuthMate" />
-              <meta name="twitter:card" content="summary_large_image" />
-              <meta name="twitter:title" content="AuthMate" />
-              <meta
-                name="twitter:description"
-                content="Authmate provides the secured authentication with 0 backend code."
-              />
-              <meta name="twitter:image" content="https://authmate.xyz/twitter-image.jpg" />
-              <meta name="twitter:site" content="@devdisplay_" />
-              <meta name="robots" content="index, follow" />
-              <link rel="canonical" href="https://authmate.xyz" />
-              <link rel="icon" href="/DevDisplay ICON.png" />
-              <link rel="apple-touch-icon" sizes="180x180" href="/DevDisplay ICON.png" />
-              <meta name="theme-color" content="#317EFB" />
-              <meta name="author" content="Anmol" />
-              <meta property="og:locale" content="en_US" />
-            </Helmet>
 
-            {/* Add a button to test API request manually */}
-            {/* <button onClick={handleApiRequest}>Test API Request</button> */}
+    <ThemeProvider>
+      <HelmetProvider> {/* Wrap your app in HelmetProvider */}
+        <Router>
+          <div>
+            <main className="bg-gray-100">
+              <Helmet>
+                <title>AuthMate</title>
+                <meta
+                  name="description"
+                  content="Authmate provides the secured authentication with 0 backend code."
+                />
+                <meta
+                  name="keywords"
+                  content="Authmate, secured, authentication, 0 backend code, Auth Mate, authmate, Auth mate, auth mate"
+                />
+                <meta charSet="UTF-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <meta property="og:title" content="AuthMate" />
+                <meta
+                  property="og:description"
+                  content="Authmate provides the secured authentication with 0 backend code."
+                />
+                <meta property="og:image" content="https://authmate.xyz/og-image.jpg" />
+                <meta property="og:url" content="https://authmate.xyz" />
+                <meta property="og:type" content="website" />
+                <meta property="og:site_name" content="AuthMate" />
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content="AuthMate" />
+                <meta
+                  name="twitter:description"
+                  content="Authmate provides the secured authentication with 0 backend code."
+                />
+                <meta name="twitter:image" content="https://authmate.xyz/twitter-image.jpg" />
+                <meta name="twitter:site" content="@devdisplay_" />
+                <meta name="robots" content="index, follow" />
+                <link rel="canonical" href="https://authmate.xyz" />
+                <link rel="icon" href="/DevDisplay ICON.png" />
+                <link rel="apple-touch-icon" sizes="180x180" href="/DevDisplay ICON.png" />
+                <meta name="theme-color" content="#317EFB" />
+                <meta name="author" content="Anmol" />
+                <meta property="og:locale" content="en_US" />
+              </Helmet>
 
-            <Routes>
-              {/* Public Routes */}
-              <Route path="/" element={<Landing />} />
-              <Route path="/beta" element={<BetaAnnouncementPage />} />
-              <Route path="/docs" element={<DocsLayout />} />
-              <Route path="/auth/signup" element={<Signup />} />
-              <Route
-                path="/auth/login"
-                element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />}
-              />
-              <Route path="/users/reset_password/" element={<ResetPassword />} />
-              <Route path="/password/reset/confirm/:uid/:token" element={<PasswordResetConfirm />} />
+              {/* Add a button to test API request manually */}
+              {/* <button onClick={handleApiRequest}>Test API Request</button> */}
 
-              {/* Protected Routes (with Layout) */}
-              <Route element={isAuthenticated ? <Layout /> : <Navigate to="/auth/login" />}>
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/projects" element={<Projects />} />
-                <Route path="/project/:id" element={<ProjectDetails />} />
-                <Route path="/about" element={<h1>About Page lorem900</h1>} />
-                <Route path="/services" element={<h1>Services Page</h1>} />
-                <Route path="/contact" element={<h1>Contact Page</h1>} />
-              </Route>
-              {/* 404 Route (Catch-All for undefined routes) */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </main>
-        </div>
-      </Router>
-    </HelmetProvider>
+              <Routes>
+                {/* Public Routes */}
+                <Route path="/" element={<Landing />} />
+                <Route path="/beta" element={<BetaAnnouncementPage />} />
+                <Route path="/blogs" element={<BlogPage />} />
+                <Route path="/blogs/:slug" element={<BlogPostPage />} />
+                <Route path="/docs" element={<DocsLayout />} />
+                <Route path="/pricing" element={<PricingPage />} />
+                <Route path="/auth/signup" element={<Signup />} />
+                <Route
+                  path="/auth/login"
+                  element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />}
+                />
+                <Route path="/users/reset_password/" element={<ResetPassword />} />
+                <Route path="/password/reset/confirm/:uid/:token" element={<PasswordResetConfirm />} />
+
+                {/* Protected Routes (with Layout) */}
+                <Route element={isAuthenticated ? <Layout /> : <Navigate to="/auth/login" />}>
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/projects" element={<Projects />} />
+                  <Route path="/project/:id" element={<ProjectDetails />} />
+                  <Route path="/profile" element={<Profile />} />
+                  <Route path="/about" element={<h1>About Page lorem900</h1>} />
+                  <Route path="/services" element={<h1>Services Page</h1>} />
+                  <Route path="/contact" element={<h1>Contact Page</h1>} />
+                </Route>
+                {/* 404 Route (Catch-All for undefined routes) */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </main>
+          </div>
+        </Router>
+      </HelmetProvider>
+    </ThemeProvider>
   );
 }
 

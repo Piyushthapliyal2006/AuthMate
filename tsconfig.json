@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",  // Ensure the base directory is the root of your project
+    "paths": {
+      "@/*": ["src/*"],  // Alias for your 'src' directory
+      "@shadcn/*": ["node_modules/shadcn/*"]  // Alias for the 'shadcn' package
+    }
+  }
+}
