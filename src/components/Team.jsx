@@ -7,7 +7,7 @@ const people = [
   {
     name: 'Anmol',
     role: 'Founder / CEO',
-    imageUrl: 'https://res.cloudinary.com/dkepj7fr9/image/upload/v1735464312/dev2_f8n5lb.jpg?height=256&width=256',
+    imageUrl: 'https://res.cloudinary.com/dkepj7fr9/image/upload/ar_1.0,c_fill,g_north,h_256,w_256/v1736087693/dev2_f8n5lb_1_11zon_qw2y70.webp',
     linkedin: 'https://www.linkedin.com/in/anmol-776877294/',
     instagram: 'https://www.instagram.com/i_am.anmol/',
   },

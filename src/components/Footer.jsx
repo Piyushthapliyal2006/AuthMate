@@ -1,5 +1,3 @@
-"use client"
-
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import Button from "@/components/ui/Button"
@@ -24,7 +22,7 @@ const navigation = {
     { name: 'Terms of Service', href: '#' },
   ],
   social: [
-    { name: 'GitHub', icon: GithubIcon, href: '#' },
+    { name: 'GitHub', icon: GithubIcon, href: 'https://github.com/AuthMate-Dev' },
     { name: 'Instagram', icon: InstagramIcon, href: 'https://instagram.com/authmate_dev' },
     { name: 'Facebook', icon: FacebookIcon, href: '#' },
     { name: 'Twitter', icon: TwitterIcon, href: '#' },
@@ -50,16 +48,16 @@ const itemVariants = {
 
 export default function Footer() {
   return (
-    <footer className="relative mt-32">
+    <footer className="relative mt-32 bg-white dark:bg-gray-900">
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute bottom-0 left-0 right-0 h-[500px] bg-gradient-to-t from-background to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 h-[500px] bg-gradient-to-t from-background to-transparent dark:from-gray-800 dark:to-transparent" />
           <motion.div
-            animate={{ 
+            animate={{
               rotate: 360,
               scale: [1, 1.2, 1],
             }}
-            transition={{ 
+            transition={{
               duration: 20,
               repeat: Infinity,
               ease: "linear"
@@ -181,4 +179,3 @@ export default function Footer() {
     </footer>
   )
 }
-

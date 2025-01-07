@@ -51,14 +51,14 @@ function App() {
           <div>
             <main className="bg-gray-100">
               <Helmet>
-                <title>AuthMate</title>
+                <title>AuthMate - Welcome to AuthMate</title>
                 <meta
                   name="description"
                   content="Authmate provides the secured authentication with 0 backend code."
                 />
                 <meta
                   name="keywords"
-                  content="Authmate, secured, authentication, 0 backend code, Auth Mate, authmate, Auth mate, auth mate"
+                  content="Authmate, secured, authentication, 0 backend code, Auth Mate, authmate, Auth mate, auth mate, authmate.xyz, authmatedev, authmate dev, authmate development"
                 />
                 <meta charSet="UTF-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
