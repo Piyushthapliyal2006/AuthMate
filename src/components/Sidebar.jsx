@@ -1,54 +1,105 @@
-import React from "react";
-import { FiChevronDown, FiChevronRight } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { FiChevronLeft, FiChevronDown, FiHome, FiUsers, FiFolder, FiSettings, FiHelpCircle } from 'react-icons/fi';
+import { Link } from 'react-router-dom'
 
-const Sidebar = ({ darkMode, menuItems, isOpen, toggleDropdown, activeDropdowns, isMobile }) => {
+const MenuItem = ({ icon: Icon, title, items, isOpen, link }) => {
+  const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
+
   return (
-    <nav
-      className={`fixed top-16 left-0 h-[calc(100vh-4rem)] ${darkMode ? "bg-gray-800" : "bg-white"} shadow-xl transition-all duration-300 ease-in-out z-40 ${isOpen ? "w-64" : "w-0 md:w-16"} ${isMobile && !isOpen ? "-translate-x-full" : "translate-x-0"}`}
-      aria-label="Sidebar Navigation"
-    >
-      <div className="h-full overflow-y-auto">
-        <ul className="p-2">
-          {menuItems.map((item) => (
-            <li key={item.id} className="mb-1">
-              <div
-                className={`flex items-center justify-between p-2 rounded-lg cursor-pointer ${darkMode ? "hover:bg-gray-700" : "hover:bg-gray-100"} ${activeDropdowns.includes(item.id) ? (darkMode ? "bg-gray-700" : "bg-gray-50") : ""}`}
-                onClick={() => item.submenu.length && toggleDropdown(item.id)}
-                role="button"
-                tabIndex={0}
-                aria-expanded={activeDropdowns.includes(item.id)}
-              >
-                <div className="flex items-center">
-                  <span className={`mr-2 ${darkMode ? "text-white" : ""}`}>{item.icon}</span>
-                  <span className={`transition-opacity duration-200 ${isOpen ? "opacity-100" : "opacity-0 md:hidden"} ${darkMode ? "text-white" : ""}`}>{item.title}</span>
-                </div>
-                {item.submenu.length > 0 && isOpen && (
-                  <FiChevronDown
-                    className={`w-4 h-4 transition-transform duration-200 ${darkMode ? "text-white" : ""} ${activeDropdowns.includes(item.id) ? "rotate-180" : ""}`}
-                  />
-                )}
-              </div>
-              {item.submenu.length > 0 && isOpen && (
-                <ul className={`ml-8 mt-1 transition-all duration-200 ${activeDropdowns.includes(item.id) ? "max-h-48 opacity-100" : "max-h-0 opacity-0 overflow-hidden"}`}>
-                  {item.submenu.map((subitem) => (
-                    <li key={subitem.id}>
-                      <Link
-                        to={subitem.link}
-                        className={`block p-2 text-sm rounded-lg ${darkMode ? "text-gray-300 hover:bg-gray-700" : "text-gray-600 hover:bg-gray-100"}`}
-                      >
-                        {subitem.title}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
-        </ul>
+    <div className="mb-2 transition-all duration-200 ease-in-out">
+      <div
+        className={`flex items-center justify-between p-2 cursor-pointer text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900 rounded-md ${isSubmenuOpen ? 'bg-blue-100 dark:bg-blue-900' : ''
+          }`}
+        onClick={() => items && setIsSubmenuOpen(!isSubmenuOpen)}
+      >
+        <div className="flex items-center">
+          <Icon className="w-5 h-5 mr-2" />
+          {isOpen && <span>{title}</span>}
+        </div>
+        {items && isOpen && (
+          <FiChevronDown
+            className={`w-4 h-4 transition-transform ${isSubmenuOpen ? 'transform rotate-180' : ''
+              }`}
+          />
+        )}
       </div>
-    </nav>
+      {items && isSubmenuOpen && isOpen && (
+        <div className="ml-4 mt-2">
+          {items.map((item, index) => (
+            <Link
+              key={index}
+              to={item.link}
+              className="block py-2 px-4 text-sm text-gray-600 dark:text-gray-400 hover:bg-blue-50 dark:hover:bg-blue-800 rounded-md transition-all duration-200 ease-in-out"
+            >
+              {item.title}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const Sidebar = ({ isOpen, toggleSidebar }) => {
+  const menuItems = [
+    { icon: FiHome, title: 'Dashboard', link: '/dashboard' },
+    {
+      icon: FiUsers,
+      title: 'User Management',
+      link: '/users',
+      items: [
+        { title: 'User List', link: '/users' },
+        { title: 'User Roles', link: '/roles' },
+        { title: 'Permissions', link: '/permissions' },
+      ],
+    },
+    {
+      icon: FiFolder,
+      title: 'Projects',
+      link: '/projects',
+      items: [
+        { title: 'Active Projects', link: '/projects' },
+        { title: 'Archived Projects', link: '/projects/archived' },
+      ],
+    },
+    {
+      icon: FiSettings,
+      title: 'Settings',
+      link: '/settings',
+      items: [
+        { title: 'General', link: '/settings/general' },
+        { title: 'Security', link: '/settings/security' },
+        { title: 'Notifications', link: '/settings/notifications' },
+      ],
+    },
+    { icon: FiHelpCircle, title: 'Help', link: '/help' },
+  ];
+
+  return (
+    <div
+      className={`fixed left-0 top-0 h-full bg-white dark:bg-gray-800 shadow-lg z-20 transition-all duration-300 ease-in-out ${isOpen ? 'w-60' : 'w-16'
+        }`}
+    >
+      <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+        {isOpen && <h1 className="text-xl font-bold text-blue-600 dark:text-blue-400">AuthMate</h1>}
+        <button
+          onClick={toggleSidebar}
+          className="p-2 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900 focus:outline-none transition-all duration-200 ease-in-out"
+        >
+          <FiChevronLeft
+            className={`w-5 h-5 text-blue-600 dark:text-blue-400 transition-transform ${isOpen ? '' : 'transform rotate-180'
+              }`}
+          />
+        </button>
+      </div>
+      <nav className="mt-4 px-2">
+        {menuItems.map((item, index) => (
+          <MenuItem key={index} {...item} isOpen={isOpen} />
+        ))}
+      </nav>
+    </div>
   );
 };
 
 export default Sidebar;
+

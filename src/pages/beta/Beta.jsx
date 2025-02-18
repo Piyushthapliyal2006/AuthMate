@@ -41,7 +41,7 @@ export default function BetaPage() {
     <>
       <Header />
       <main className="min-h-screen mt-8 pt-20 bg-gradient-to-br from-purple-100 to-blue-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center px-4 content-container">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-4xl mx-auto text-center mb-8">
           <motion.h1
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -50,7 +50,7 @@ export default function BetaPage() {
           >
             Welcome to AuthMate Beta!
           </motion.h1>
-          
+
           <motion.p
             variants={fadeInUp}
             initial="initial"
@@ -73,7 +73,7 @@ export default function BetaPage() {
               Our team is working hard to bring you even more features and improvements.
               The full version of AuthMate will be released on March 15, 2025.
             </p>
-            
+
             <motion.div
               animate={pulseAnimation}
               className="grid grid-cols-4 gap-4 text-center"

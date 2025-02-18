@@ -4,7 +4,7 @@ import Headers from '@/components/Headers';
 import Hero from '@/components/Hero';
 import Feature from '@/components/Feature';
 import Cta from '@/components/Cta';
-import Team from '@/components/Team';
+// import Team from '@/components/Team';
 import BlogSection from '@/components/BlogSection';
 import Footer from '@/components/Footer';
 
@@ -18,7 +18,7 @@ function Landing() {
         <Hero />
         <Feature />
         <Cta />
-        <Team />
+        {/* <Team /> */}
         <BlogSection />
       </main>
       <Footer />

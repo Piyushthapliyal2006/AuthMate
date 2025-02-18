@@ -1,74 +1,19 @@
-import React, { useState, useEffect } from 'react'; // Import useState, useEffect from React
+import React, { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom'; // For nested routing
-import { FiHome, FiUsers, FiFolder, FiSettings } from 'react-icons/fi'; // Import required icons from react-icons/fi
-import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline'; // Import QuestionMarkCircleIcon from heroicons
 import Navbar from "../components/Navbar"; // Assuming your Navbar is in the components folder
 import Sidebar from "../components/Sidebar"; // Assuming your Sidebar is in the components folder
 
 const Layout = () => {
-  const [isOpen, setIsOpen] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
-  const [showScrollTop, setShowScrollTop] = useState(false);
-  const [activeDropdowns, setActiveDropdowns] = useState([]);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
-  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const menuItems = [
-    {
-      id: 1,
-      title: "Dashboard",
-      icon: <FiHome className="w-5 h-5" />,
-      submenu: [],
-      link: "/dashboard"
-    },
-    {
-      id: 2,
-      title: "User Management",
-      icon: <FiUsers className="w-5 h-5" />,
-      submenu: [
-        { id: 21, title: "User List", link: "/users" },
-        { id: 22, title: "User Roles", link: "/roles" },
-        { id: 23, title: "Permissions", link: "/permissions" },
-      ],
-    },
-    {
-      id: 3,
-      title: "Projects",
-      icon: <FiFolder className="w-5 h-5" />,
-      submenu: [
-        { id: 31, title: "Active Projects", link: "/projects/" },
-        { id: 32, title: "Archived Projects", link: "/projects/archived" },
-      ],
-    },
-    {
-      id: 4,
-      title: "Settings",
-      icon: <FiSettings className="w-5 h-5" />,
-      submenu: [
-        { id: 41, title: "General", link: "/settings/general" },
-        { id: 42, title: "Security", link: "/settings/security" },
-        { id: 43, title: "Notifications", link: "/settings/notifications" },
-      ],
-    },
-    {
-      id: 5,
-      title: "Help",
-      icon: <QuestionMarkCircleIcon className="w-5 h-5" />,
-      submenu: [],
-      link: "/help"
-    },
-  ];
 
   // Toggle Sidebar on Mobile
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
-        setIsMobile(true);
-        setIsOpen(false);
+        setIsSidebarOpen(false);
       } else {
-        setIsMobile(false);
-        setIsOpen(true);
+        setIsSidebarOpen(true);
       }
     };
 
@@ -78,55 +23,54 @@ const Layout = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Toggle Dark Mode
-  const toggleTheme = () => setDarkMode(!darkMode);
+  // Initialize dark mode from localStorage or system preference
+  useEffect(() => {
+    const isDark =
+      localStorage.getItem("darkMode") === "true" ||
+      (!localStorage.getItem("darkMode") && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    setDarkMode(isDark);
+  }, []);
 
-  // Handle Sidebar Dropdown Toggle
-  const toggleDropdown = (id) => {
-    setActiveDropdowns((prev) =>
-      prev.includes(id)
-        ? prev.filter((dropdownId) => dropdownId !== id)
-        : [...prev, id]
-    );
-  };
+  // Toggle dark mode
+  const toggleTheme = () => {
+    const newDarkMode = !darkMode;
+    setDarkMode(newDarkMode);
+    localStorage.setItem("darkMode", newDarkMode.toString());
 
-  // Scroll to Top Logic
-  const handleScroll = () => {
-    if (window.scrollY > 100) {
-      setShowScrollTop(true);
+    // Apply dark mode class to the document root
+    if (newDarkMode) {
+      document.documentElement.classList.add("dark");
     } else {
-      setShowScrollTop(false);
+      document.documentElement.classList.remove("dark");
     }
   };
 
+  // Set initial dark mode class on component mount
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [darkMode]);
 
   return (
-    <>
+    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
+      <Sidebar isOpen={isSidebarOpen} toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
       <Navbar
         darkMode={darkMode}
-        toggleSidebar={() => setIsOpen(!isOpen)}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
         toggleTheme={toggleTheme}
-        showProfileDropdown={showProfileDropdown}
-        setShowProfileDropdown={setShowProfileDropdown}
       />
-      <Sidebar
-        darkMode={darkMode}
-        menuItems={menuItems}
-        isOpen={isOpen}
-        toggleDropdown={toggleDropdown}
-        activeDropdowns={activeDropdowns}
-        isMobile={isMobile}
-      />
-      <div className={`flex-1 p-6 transition-all duration-300 ${isOpen ? 'ml-64' : 'ml-20'}`}>
-        <Outlet />  {/* This is where the nested routes will render */}
-      </div>
-    </>
+
+      <main
+        className="p-4 transition-all duration-300 ease-in-out"
+        style={{ marginLeft: isSidebarOpen ? "240px" : "60px" }}
+      >
+        <div className="mt-16 container mx-auto">
+          <Outlet /> {/* This is where the nested routes will render */}
+        </div>
+      </main>
+    </div>
   );
 };
 

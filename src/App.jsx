@@ -16,6 +16,7 @@ import BetaAnnouncementPage from './pages/beta/Beta';
 import Dashboard from './pages/Dashboard';
 import Projects from './pages/Projects';
 import Profile from './pages/Profile';
+import Contact from './pages/Contact';
 import ProjectDetails from './pages/ProjectDetails';
 import DocsLayout from './pages/docs/Docs';
 import PricingPage from './pages/payment/Pricing';
@@ -78,7 +79,7 @@ function App() {
                   content="Authmate provides the secured authentication with 0 backend code."
                 />
                 <meta name="twitter:image" content="https://authmate.xyz/twitter-image.jpg" />
-                <meta name="twitter:site" content="@devdisplay_" />
+                <meta name="twitter:site" content="@Authmate_dev" />
                 <meta name="robots" content="index, follow" />
                 <link rel="canonical" href="https://authmate.xyz" />
                 <link rel="icon" href="/DevDisplay ICON.png" />
@@ -100,6 +101,10 @@ function App() {
                 <Route path="/docs" element={<DocsLayout />} />
                 <Route path="/pricing" element={<PricingPage />} />
                 <Route path="/auth/signup" element={<Signup />} />
+
+                <Route path="/about" element={<h1>About Page lorem900</h1>} />
+                <Route path="/services" element={<h1>Services Page</h1>} />
+                <Route path="/contact" element={<Contact />} />
                 <Route
                   path="/auth/login"
                   element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />}
@@ -113,9 +118,6 @@ function App() {
                   <Route path="/projects" element={<Projects />} />
                   <Route path="/project/:id" element={<ProjectDetails />} />
                   <Route path="/profile" element={<Profile />} />
-                  <Route path="/about" element={<h1>About Page lorem900</h1>} />
-                  <Route path="/services" element={<h1>Services Page</h1>} />
-                  <Route path="/contact" element={<h1>Contact Page</h1>} />
                 </Route>
                 {/* 404 Route (Catch-All for undefined routes) */}
                 <Route path="*" element={<NotFound />} />

@@ -8,14 +8,12 @@ const navigation = {
   main: [
     { name: 'Dashboard', href: '/dashboard' },
     { name: 'Pricing', href: '/pricing' },
-    { name: 'Services', href: '#' },
-    { name: 'Contact', href: '#' },
+    { name: 'Contact', href: '/contact' },
   ],
   resources: [
     { name: 'Blog', href: '/blogs' },
-    { name: 'Documentation', href: '/docs' },
+    { name: 'Documentation', href: 'https://docs.authmate.xyz' },
     { name: 'API Reference', href: '#' },
-    { name: 'FAQ', href: '#' },
   ],
   legal: [
     { name: 'Privacy Policy', href: '#' },
@@ -24,10 +22,10 @@ const navigation = {
   social: [
     { name: 'GitHub', icon: GithubIcon, href: 'https://github.com/AuthMate-Dev' },
     { name: 'Instagram', icon: InstagramIcon, href: 'https://instagram.com/authmate_dev' },
-    { name: 'Facebook', icon: FacebookIcon, href: '#' },
-    { name: 'Twitter', icon: TwitterIcon, href: '#' },
-    { name: 'YouTube', icon: YoutubeIcon, href: '#' },
-    { name: 'LinkedIn', icon: LinkedinIcon, href: '#' },
+    // { name: 'Facebook', icon: FacebookIcon, href: '#' },
+    { name: 'Twitter', icon: TwitterIcon, href: 'https://x.com/Authmate_dev' },
+    { name: 'YouTube', icon: YoutubeIcon, href: 'https://www.youtube.com/@AuthMate' },
+    { name: 'LinkedIn', icon: LinkedinIcon, href: 'https://www.linkedin.com/company/authmate/' },
   ],
 }
 
@@ -48,7 +46,7 @@ const itemVariants = {
 
 export default function Footer() {
   return (
-    <footer className="relative mt-32 bg-white dark:bg-gray-900">
+    <footer className="relative bg-white dark:bg-gray-900">
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute bottom-0 left-0 right-0 h-[500px] bg-gradient-to-t from-background to-transparent dark:from-gray-800 dark:to-transparent" />

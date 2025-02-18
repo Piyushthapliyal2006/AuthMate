@@ -8,8 +8,7 @@ import { useTheme } from '@/components/contexts/theme-context'
 import { Link } from 'react-router-dom'
 
 const navigation = [
-  { name: 'Docs', href: '/docs' },
-  { name: 'Product', href: '/product' },
+  { name: 'Docs', href: 'https://docs.authmate.xyz' },
   { name: 'Pricing', href: '/pricing' },
   { name: 'Blogs', href: '/blogs' },
   { name: 'Beta', href: '/beta' },
