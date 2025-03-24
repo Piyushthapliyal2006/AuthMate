@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';  // Import useParams from react-ro
 import axios from 'axios';
 import PasswordInputField from '../components/PasswordInputField';  // Import the PasswordInputField component
 import CopyContent from '../components/CopyContent';  // Import the CopyContent component
+import { conf } from "@/conf/conf.js";
 
 function ProjectDetails() {
     const { id } = useParams();  // Get the project ID from the URL
@@ -11,9 +12,10 @@ function ProjectDetails() {
     useEffect(() => {
         const fetchProjectDetails = async () => {
             const token = localStorage.getItem('accessToken');
+            const url = `${conf.prodBaseUrl}/projects/${id}`;
             const config = {
                 method: 'get',
-                url: `http://127.0.0.1:8000/projects/${id}`,
+                url: url,
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 },

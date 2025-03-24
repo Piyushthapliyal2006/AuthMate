@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Hook for navigation
 import { ArrowLeftIcon } from '@heroicons/react/24/outline'; // Heroicons for the back button
+import { conf } from "@/conf/conf.js";
 
 function ResetPassword() {
     const [email, setEmail] = useState('');
@@ -15,7 +16,8 @@ function ResetPassword() {
         setLoading(true); // Start loading
 
         try {
-            await axios.post('http://127.0.0.1:8000/auth/users/reset_password/', { email }, {
+            const url = `${conf.prodKidUrl}/users/reset_password/`;
+            await axios.post(url, { email }, {
                 headers: { 'Content-Type': 'application/json' }
             });
             setMessage('Password reset link sent! Please check your email.');

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import axios from 'axios';
 import { FiCalendar, FiGrid, FiList } from 'react-icons/fi';
 import { Link } from 'react-router-dom';  // Import Link from react-router-dom
+import { conf } from "@/conf/conf.js";
 
 const Projects = () => {
     const [projects, setProjects] = useState([]);
@@ -11,8 +12,9 @@ const Projects = () => {
     // Fetch the projects from the API
     const fetchProjects = async () => {
         const token = localStorage.getItem('accessToken'); // Fetch the token from local storage
+        const url = `${conf.prodBaseUrl}/projects/`;
         try {
-            const response = await axios.get('http://127.0.0.1:8000/projects/', {
+            const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${token}`, // Use the token in the request header
                 },

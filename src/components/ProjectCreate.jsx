@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FiPlus, FiX } from 'react-icons/fi';
 import axios from 'axios';
+import { conf } from "@/conf/conf.js";
 
 const ProjectCreate = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,7 +19,8 @@ const ProjectCreate = () => {
     const refreshToken = localStorage.getItem('refreshToken');
     if (refreshToken) {
       try {
-        const response = await axios.post('http://127.0.0.1:8000/auth/refresh/', {
+        const url = `${conf.prodKidUrl}/refresh/`;
+        const response = await axios.post(url, {
           refresh: refreshToken,
         });
         const newAccessToken = response.data.access;
@@ -52,8 +54,9 @@ const ProjectCreate = () => {
 
     setLoading(true); // Set loading state to true while request is in progress
     try {
+      const url = `${conf.prodBaseUrl}/projects/`;
       const response = await axios.post(
-        'http://127.0.0.1:8000/projects/',
+        url,
         { project_name: projectName },
         {
           headers: {

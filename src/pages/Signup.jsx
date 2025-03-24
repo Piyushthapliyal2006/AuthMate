@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
 import PasswordInputField from '../components/PasswordInputField'; // Import PasswordInputField component
 import { ArrowLeftIcon } from '@heroicons/react/24/outline'; // Import the back arrow icon
+import { conf } from "@/conf/conf.js";
 
 const InputField = ({ label, type, name, value, onChange, required, autoComplete }) => (
     <div>
@@ -51,7 +52,8 @@ export default function Signup() {
         const { email, name, password, rePassword } = formData;
 
         try {
-            await axios.post('http://127.0.0.1:8000/auth/users/', {
+            const url = `${conf.prodKidUrl}/users/`;
+            await axios.post(url, {
                 email,
                 name,
                 password,

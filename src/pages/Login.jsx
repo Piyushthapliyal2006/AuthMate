@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { login } from '../store/authSlice';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline'; 
 import PasswordInputField from '../components/PasswordInputField';
+import { conf } from "@/conf/conf.js";
 
 const InputField = ({ label, type, name, value, onChange, required, autoComplete }) => (
     <div>
@@ -48,8 +49,8 @@ export default function Login() {
 
         try {
             const { email, password } = formData;
-
-            const response = await axios.post('http://127.0.0.1:8000/auth/jwt/create/', { email, password });
+            const url = `${conf.prodKidUrl}/jwt/create/`;
+            const response = await axios.post(url, { email, password });
             const { access, refresh } = response.data;
 
             if (!access || !refresh) {

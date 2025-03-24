@@ -1,8 +1,5 @@
-"use client"
-
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-
 import { CalendarIcon } from 'lucide-react'
 import blogData from '@/pages/blogs/[slug]/blog-posts.json'
 

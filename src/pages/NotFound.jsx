@@ -26,7 +26,7 @@ const glitchAnimation = {
 
 const links = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboardIcon },
-  { href: '/docs', label: 'Documentation', icon: BookOpenIcon },
+  { href: 'https://docs.authmate.xyz', label: 'Documentation', icon: BookOpenIcon },
   { href: '/contact', label: 'Contact', icon: MailIcon },
 ]
 

@@ -25,7 +25,7 @@ export default function BetaPage() {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      const difference = new Date('2025-03-15') - new Date()
+      const difference = new Date('2025-08-14') - new Date()
       setTimeLeft({
         days: Math.floor(difference / (1000 * 60 * 60 * 24)),
         hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
@@ -71,7 +71,7 @@ export default function BetaPage() {
             </h2>
             <p className="text-gray-700 dark:text-gray-300 mb-6">
               Our team is working hard to bring you even more features and improvements.
-              The full version of AuthMate will be released on March 15, 2025.
+              The full version of AuthMate will be released on August 14, 2025.
             </p>
 
             <motion.div

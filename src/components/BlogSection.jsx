@@ -1,8 +1,8 @@
-"use client"
-
-import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
-import { CalendarIcon } from 'lucide-react'
+import React, { useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { CalendarIcon } from 'lucide-react';
+import axios from "axios";
 
 const posts = [
   {
@@ -51,6 +51,44 @@ const posts = [
     },
   },
 ]
+
+
+// const fetchBlogs = async () => {
+//   try {
+//       const response = await axios.get('http://127.0.0.1:8000/api/blog/posts', {
+//           headers: {
+//               Accept: "*/*",
+//           },
+//       });
+//       console.log(response.data); // Store the fetched projects
+//   } catch (error) {
+//       console.error("Error fetching projects:", error);
+//   }
+// };
+
+// // Fetch projects when the component mounts
+
+//   fetchBlogs();
+
+let config = {
+	method: 'get',
+	maxBodyLength: Infinity,
+	url: 'http://127.0.0.1:8000/api/blog/posts',
+	headers: { }
+};
+
+async function makeRequest() {
+	try {
+		const response = await axios.request(config);
+		console.log(JSON.stringify(response.data));
+	}
+	catch (error) {
+		console.log(error);
+	}
+}
+
+makeRequest();
+
 
 const containerVariants = {
   hidden: { opacity: 0 },

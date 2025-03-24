@@ -9,19 +9,19 @@ import SecondaryButton from "@/components/ui/secondary-button"
 const plans = [
   {
     name: 'Basic',
-    price: 9,
+    price: 427,
     features: ['100 API calls/day', 'Basic support', 'Single project'],
     featured: false,
   },
   {
     name: 'Pro',
-    price: 29,
+    price: 1711,
     features: ['1000 API calls/day', 'Priority support', 'Multiple projects', 'Advanced analytics'],
     featured: true,  // Featured plan
   },
   {
     name: 'Enterprise',
-    price: 99,
+    price: 3423,
     features: ['Unlimited API calls', '24/7 dedicated support', 'Custom integrations', 'SLA guarantees'],
     featured: false,
   },
@@ -73,7 +73,7 @@ export default function PricingSection() {
               )}
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">{plan.name}</h3>
               <div className="mb-6">
-                <span className="text-4xl font-bold text-gray-900 dark:text-white">${billingCycle === 'annual' ? plan.price * 10 : plan.price}</span>
+                <span className="text-4xl font-bold text-gray-900 dark:text-white">₹{billingCycle === 'annual' ? plan.price * 10 : plan.price}</span>
                 <span className="text-gray-600 dark:text-gray-400">/{billingCycle === 'annual' ? 'year' : 'month'}</span>
               </div>
               <ul className="mb-6 space-y-2">
