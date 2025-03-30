@@ -12,7 +12,8 @@ function ProjectDetails() {
     useEffect(() => {
         const fetchProjectDetails = async () => {
             const token = localStorage.getItem('accessToken');
-            const url = `${conf.prodBaseUrl}/projects/${id}`;
+            // const url = `${conf.prodBaseUrl}/projects/${id}`;
+            const url = `${conf.devBaseUrl}/projects/${id}`;      // Use the local URL for development 
             const config = {
                 method: 'get',
                 url: url,
@@ -40,6 +41,14 @@ function ProjectDetails() {
             <p className="mt-4 text-lg text-gray-600">
                 <strong>Description:</strong> {project.description || 'No description available.'}
             </p>
+            <p className="mt-4 text-lg text-gray-600">
+                <strong>Project type:</strong> {project.project_type || 'Project type not set.'}
+            </p>
+            {project.is_active || project.is_archived ? (
+                <p className="mt-4 text-lg text-gray-600">
+                    <strong>Project status:</strong> {project.is_active ? 'Active' : 'Archived'}
+                </p>
+            ) : null}
             <p className="mt-4 text-sm text-gray-500">
                 Created at: {new Date(project.created_at).toLocaleString()}
             </p>
@@ -49,18 +58,16 @@ function ProjectDetails() {
                 <PasswordInputField
                     label="API Key"
                     name="api_key"
-                    value="h*&TGUYr67R%^RF&R^%ff86"
-                    // value={project.api_key}
-                    onChange={() => {}}
+                    value={project.api_key_value}
+                    onChange={() => { }}
                     required={false}
                     autoComplete="off"
                     readOnly={true}  // Make it read-only for the project details page
                 />
-                
+
                 {/* Use the CopyContent component */}
                 <CopyContent
-                    content="h*&TGUYr67R%^RF&R^%ff86"
-                    // content={project.api_key}
+                    content={project.api_key_value}
                     buttonText="Copy API Key"
                     successText="API Key Copied!"
                     className="mt-2"  // Optional: Add margin for better spacing

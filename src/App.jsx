@@ -15,6 +15,7 @@ import NotFound from './pages/NotFound';
 import BetaAnnouncementPage from './pages/beta/Beta';
 import Dashboard from './pages/Dashboard';
 import Projects from './pages/Projects';
+import Archived from './pages/Archived';
 import Profile from './pages/Profile';
 import Contact from './pages/Contact';
 import ProjectDetails from './pages/ProjectDetails';
@@ -116,6 +117,7 @@ function App() {
                 <Route element={isAuthenticated ? <Layout /> : <Navigate to="/auth/login" />}>
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/projects" element={<Projects />} />
+                  <Route path="/projects/archived" element={<Archived />} />
                   <Route path="/project/:id" element={<ProjectDetails />} />
                   <Route path="/profile" element={<Profile />} />
                 </Route>

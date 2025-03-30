@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import { FiCalendar, FiGrid, FiList } from 'react-icons/fi';
 import { Link } from 'react-router-dom';  // Import Link from react-router-dom
 import { conf } from "@/conf/conf.js";
 
-const Projects = () => {
+const Archived = () => {
     const [projects, setProjects] = useState([]);
     const [sortOrder, setSortOrder] = useState('latest'); // 'latest' or 'oldest'
     const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
@@ -33,8 +33,8 @@ const Projects = () => {
     // Sorting the projects based on the selected sort order
     const sortedProjects = useMemo(() => {
         return [...projects].sort((a, b) => {
-            const dateA = new Date(a.createdAt);
-            const dateB = new Date(b.createdAt);
+            const dateA = new Date(a.created_at);
+            const dateB = new Date(b.created_at);
             return sortOrder === 'latest' ? dateB - dateA : dateA - dateB;
         });
     }, [projects, sortOrder]);
@@ -94,36 +94,38 @@ const Projects = () => {
             </div>
             <div className={`grid gap-6 ${viewMode === 'grid' ? 'sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'}`}>
                 {sortedProjects.length > 0 ? (
-                    sortedProjects.map((project) => (
-                        <div
-                            key={project.id}
-                            className={`bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 ease-in-out transform hover:scale-102 ${viewMode === 'list' ? 'flex items-center' : ''
-                                }`}
-                        >
-                            <div className={`p-6 ${viewMode === 'list' ? 'flex-grow' : ''}`}>
-                                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                                    <Link to={`/project/${project.id}`} className="hover:text-indigo-600">
-                                        {project.project_name}
-                                    </Link>
-                                </h3>
-                                <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">{project.description}</p>
-                                <div className={`mt-4 flex items-center ${viewMode === 'list' ? 'justify-between' : ''}`}>
-                                    <span className="text-xs text-gray-500 dark:text-gray-400">{new Date(project.created_at).toLocaleString()}</span>
-                                    <span
-                                        className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium transition-all duration-200 ease-in-out ${project.is_active
-                                            ? 'bg-green-100 text-green-700 dark:bg-green-800 dark:text-green-100'
-                                            : 'bg-yellow-100 text-yellow-700 dark:bg-yellow-800 dark:text-yellow-100'
-                                            }`}
-                                    >
-                                        Active
-                                    </span>
+                    sortedProjects
+                        .filter((project) => project.is_archived) // Only show archived projects
+                        .map((project) => (
+                            <div
+                                key={project.id}
+                                className={`bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 ease-in-out transform hover:scale-102 ${viewMode === 'list' ? 'flex items-center' : ''
+                                    }`}
+                            >
+                                <div className={`p-6 ${viewMode === 'list' ? 'flex-grow' : ''}`}>
+                                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                                        <Link to={`/project/${project.id}`} className="hover:text-indigo-600">
+                                            {project.project_name}
+                                        </Link>
+                                    </h3>
+                                    <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">{project.description}</p>
+                                    <div className={`mt-4 flex items-center ${viewMode === 'list' ? 'justify-between' : ''}`}>
+                                        <span className="text-xs text-gray-500 dark:text-gray-400">{new Date(project.created_at).toLocaleString()}</span>
+                                        <span
+                                            className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium transition-all duration-200 ease-in-out ${project.is_archived
+                                                ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-800 dark:text-yellow-100'
+                                                : 'bg-green-100 text-green-700 dark:bg-green-800 dark:text-green-100'
+                                                }`}
+                                        >
+                                            Archived
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))
+                        ))
                 ) : (
                     <div className="col-span-full text-center text-gray-500 p-6">
-                        <p>No projects found. Try adjusting your search or sorting criteria.</p>
+                        <p>No archived projects found. Try adjusting your search or sorting criteria.</p>
                     </div>
                 )}
             </div>
@@ -131,4 +133,4 @@ const Projects = () => {
     );
 };
 
-export default Projects;
+export default Archived;

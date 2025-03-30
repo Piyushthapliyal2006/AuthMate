@@ -6,6 +6,8 @@ import { conf } from "@/conf/conf.js";
 const ProjectCreate = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [projectName, setProjectName] = useState('');
+  const [projectType, setProjectType] = useState('');
+  const [description, setDescription] = useState('');
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState(''); // 'success' or 'error'
   const [loading, setLoading] = useState(false); // Loading state for the submit button
@@ -57,7 +59,11 @@ const ProjectCreate = () => {
       const url = `${conf.prodBaseUrl}/projects/`;
       const response = await axios.post(
         url,
-        { project_name: projectName },
+        {
+          project_name: projectName,
+          project_type: projectType,
+          description: description,
+        },
         {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -70,6 +76,8 @@ const ProjectCreate = () => {
       setMessage('Project created successfully!');
       setMessageType('success');
       setProjectName(''); // Clear the project name input after success
+      setProjectType(''); // Reset project type dropdown
+      setDescription(''); // Clear description
     } catch (error) {
       console.error(error);
       if (error.response && error.response.status === 401 && !retrying) {
@@ -92,6 +100,8 @@ const ProjectCreate = () => {
 
   const handleCancel = () => {
     setProjectName(''); // Clear project name
+    setProjectType(''); // Reset project type dropdown
+    setDescription(''); // Clear description
     setMessage(''); // Clear any message
     setMessageType(''); // Reset message type
     setIsModalOpen(false); // Close the form
@@ -151,6 +161,37 @@ const ProjectCreate = () => {
                   required
                 />
               </div>
+
+              <div>
+                <label htmlFor="projectType" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Project Type
+                </label>
+                <select
+                  id="projectType"
+                  value={projectType}
+                  onChange={(e) => setProjectType(e.target.value)}
+                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all duration-200 ease-in-out"
+                >
+                  <option value="">Select Type</option>
+                  <option value="web">Web</option>
+                  <option value="mobile">Mobile</option>
+                  <option value="desktop">Desktop</option>
+                </select>
+              </div>
+
+              <div>
+                <label htmlFor="description" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Description
+                </label>
+                <textarea
+                  id="description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all duration-200 ease-in-out"
+                  rows="4"
+                ></textarea>
+              </div>
+
               <div className="flex justify-end space-x-2">
                 <button
                   type="button"
@@ -173,6 +214,6 @@ const ProjectCreate = () => {
       )}
     </>
   );
-};
+};;
 
 export default ProjectCreate;
