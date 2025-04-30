@@ -84,10 +84,17 @@ function App() {
                 <meta name="robots" content="index, follow" />
                 <link rel="canonical" href="https://authmate.xyz" />
                 <link rel="icon" href="/DevDisplay ICON.png" />
-                <link rel="apple-touch-icon" sizes="180x180" href="/DevDisplay ICON.png" />
                 <meta name="theme-color" content="#317EFB" />
                 <meta name="author" content="Anmol" />
                 <meta property="og:locale" content="en_US" />
+
+
+                <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+                <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+                <link rel="shortcut icon" href="/favicon.ico" />
+                <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+                <meta name="apple-mobile-web-app-title" content="AuthMate" />
+                <link rel="manifest" href="/site.webmanifest" />
               </Helmet>
 
               {/* Add a button to test API request manually */}

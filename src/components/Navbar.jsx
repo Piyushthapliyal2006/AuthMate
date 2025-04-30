@@ -44,7 +44,7 @@ const Navbar = ({
             {/* Only show logo in mobile view when sidebar is collapsed */}
             <div className="lg:hidden">
               <Link to="/dashboard" className="flex items-center">
-                <img src="/logo.png" alt="AuthMate Logo" className="h-8 w-auto mr-2" />
+                <img src="/favicon.svg" alt="AuthMate Logo" className="h-16 w-auto mr-2" />
                 <span className="text-xl font-bold text-blue-600 dark:text-blue-400 transition-colors duration-200">
                   AuthMate
                 </span>

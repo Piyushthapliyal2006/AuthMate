@@ -12,6 +12,7 @@ const publicDir = path.resolve(rootDir, 'public');
 const pages = [
   { url: '/', changefreq: 'daily', priority: 1.0 },
   { url: '/docs', changefreq: 'weekly', priority: 0.8 },
+  { url: '/pricing', changefreq: 'weekly', priority: 0.8 },
 ];
 
 async function generateSitemap() {

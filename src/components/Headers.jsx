@@ -36,9 +36,9 @@ export default function Header() {
             <motion.img
               whileHover={{ scale: 1.1, rotate: 360 }}
               transition={{ type: "spring", stiffness: 300, damping: 10 }}
-              src="/placeholder.svg"
+              src="/favicon.svg"
               alt="Logo"
-              className="h-8 w-auto"
+              className="h-16 w-auto"
             />
           </Link>
         </motion.div>
