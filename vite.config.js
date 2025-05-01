@@ -6,10 +6,16 @@ import path from 'path'
 // https://vite.dev/config/
 export default defineConfig({
   server: {
-    port: 3000,  // Port for the development server
-    open: true,  // Automatically open the browser when the server starts
+    // port: 3000,  // Port for the development server
+    // open: true,  // Automatically open the browser when the server starts
     proxy: {
-      '/api': {
+      '/projects': {
+        target: 'https://backend.authmate.xyz',  // Replace with your backend server URL
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')  // Remove /api prefix when forwarding to the backend
+      },
+
+      '/profiles': {
         target: 'https://backend.authmate.xyz',  // Replace with your backend server URL
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')  // Remove /api prefix when forwarding to the backend
@@ -20,18 +26,6 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/auth/, '')  // Remove /auth prefix when forwarding to the backend
       }
     }
-    // proxy: {
-    //   '/': {
-    //     target: "https://backend.authmate.xyz",  // Replace with your backend server URL
-    //     changeOrigin: false,
-    //     // rewrite: (path) => path.replace(/^\/api/, '')  // Remove /api prefix when forwarding to the backend
-    //   },
-    //   // '/auth': {
-    //   //   target: "https://backend.authmate.xyz",  // Replace with your backend server URL
-    //   //   // changeOrigin: true,
-    //   //   // rewrite: (path) => path.replace(/^\/kid/, '')  // Remove /kid prefix when forwarding to the backend
-    //   // }
-    // }
   },
   plugins: [react()],
   resolve: {
