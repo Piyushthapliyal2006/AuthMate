@@ -13,7 +13,7 @@ function ProjectDetails() {
         const fetchProjectDetails = async () => {
             const token = localStorage.getItem('accessToken');
             // const url = `${conf.prodBaseUrl}/projects/${id}`;
-            const url = `${conf.devBaseUrl}/projects/${id}`;      // Use the local URL for development 
+            const url = `/projects/${id}`;      // Use the local URL for development 
             const config = {
                 method: 'get',
                 url: url,

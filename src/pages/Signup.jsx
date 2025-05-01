@@ -52,7 +52,7 @@ export default function Signup() {
         const { email, name, password, rePassword } = formData;
 
         try {
-            const url = `${conf.prodKidUrl}/users/`;
+            const url = `auth/users/`;
             await axios.post(url, {
                 email,
                 name,

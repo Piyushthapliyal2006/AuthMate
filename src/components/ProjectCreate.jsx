@@ -21,7 +21,7 @@ const ProjectCreate = () => {
     const refreshToken = localStorage.getItem('refreshToken');
     if (refreshToken) {
       try {
-        const url = `${conf.prodKidUrl}/refresh/`;
+        const url = `/refresh/`;
         const response = await axios.post(url, {
           refresh: refreshToken,
         });
@@ -56,7 +56,7 @@ const ProjectCreate = () => {
 
     setLoading(true); // Set loading state to true while request is in progress
     try {
-      const url = `${conf.prodBaseUrl}/projects/`;
+      const url = `/projects/`;
       const response = await axios.post(
         url,
         {

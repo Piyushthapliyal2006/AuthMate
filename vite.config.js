@@ -5,20 +5,34 @@ import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
-  // server: {
-  //   proxy: {
-  //     '/': {
-  //       target: "https://backend.authmate.xyz",  // Replace with your backend server URL
-  //       changeOrigin: true,
-  //       rewrite: (path) => path.replace(/^\/api/, '')  // Remove /api prefix when forwarding to the backend
-  //     },
-  //     '/auth': {
-  //       target: "https://backend.authmate.xyz",  // Replace with your backend server URL
-  //       changeOrigin: true,
-  //       rewrite: (path) => path.replace(/^\/kid/, '')  // Remove /kid prefix when forwarding to the backend
-  //     }
-  //   }
-  // },
+  server: {
+    port: 3000,  // Port for the development server
+    open: true,  // Automatically open the browser when the server starts
+    proxy: {
+      '/api': {
+        target: 'https://backend.authmate.xyz',  // Replace with your backend server URL
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')  // Remove /api prefix when forwarding to the backend
+      },
+      '/auth': {
+        target: 'https://backend.authmate.xyz',  // Replace with your backend server URL
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/auth/, '')  // Remove /auth prefix when forwarding to the backend
+      }
+    }
+    // proxy: {
+    //   '/': {
+    //     target: "https://backend.authmate.xyz",  // Replace with your backend server URL
+    //     changeOrigin: false,
+    //     // rewrite: (path) => path.replace(/^\/api/, '')  // Remove /api prefix when forwarding to the backend
+    //   },
+    //   // '/auth': {
+    //   //   target: "https://backend.authmate.xyz",  // Replace with your backend server URL
+    //   //   // changeOrigin: true,
+    //   //   // rewrite: (path) => path.replace(/^\/kid/, '')  // Remove /kid prefix when forwarding to the backend
+    //   // }
+    // }
+  },
   plugins: [react()],
   resolve: {
     alias: {

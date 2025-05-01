@@ -30,7 +30,7 @@ function PasswordResetConfirm() {
       re_new_password: confirmPassword
     });
 
-    const url = `${conf.prodKidUrl}/users/reset_password_confirm/`;
+    const url = `auth/users/reset_password_confirm/`;
     const config = {
       method: 'post',
       url: url, // Endpoint for password reset

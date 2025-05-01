@@ -17,7 +17,7 @@ function Profile() {
           return;
         }
 
-        const url = `${conf.prodBaseUrl}/profiles/`;
+        const url = `/profiles/`;
         // const url = `${conf.devBaseUrl}/profiles/`;
         // Make the API request with the token from localStorage
         const response = await axios.get(url, {
