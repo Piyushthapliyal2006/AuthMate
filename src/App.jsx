@@ -83,8 +83,7 @@ function App() {
                 <meta name="twitter:site" content="@Authmate_dev" />
                 <meta name="robots" content="index, follow" />
                 <link rel="canonical" href="https://authmate.xyz" />
-                <link rel="icon" href="/DevDisplay ICON.png" />
-                <meta name="theme-color" content="#317EFB" />
+                <link rel="icon" href="/favicom.ico" />
                 <meta name="author" content="Anmol" />
                 <meta property="og:locale" content="en_US" />
 

@@ -49,7 +49,7 @@ export default function Login() {
 
         try {
             const { email, password } = formData;
-            const url = `auth/jwt/create/`;
+            const url = `/auth/jwt/create/`;
             const response = await axios.post(url, { email, password });
             const { access, refresh } = response.data;
 

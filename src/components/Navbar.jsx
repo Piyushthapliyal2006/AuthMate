@@ -79,12 +79,28 @@ const Navbar = ({
               )}
             </button>
 
-            <button
-              onClick={handleLogout}
-              className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 ease-in-out"
-            >
-              <FiUser className="w-6 h-6" />
+            <button className='relative group'>
+              <div
+                className="inline-flex space-x-1 text-center p-2 transition rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 duration-200 ease-in-out"
+              >
+                <FiUser className="w-6 h-6" />
+                <svg class="w-4 h-4 text-gray-500 group-hover:bg-gray-200 dark:group-hover:bg-gray-700 transition"
+                  fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.08 1.04l-4.25 4.25a.75.75 0 01-1.08 0L5.25 8.27a.75.75 0 01-.02-1.06z" />
+                </svg>
+
+                {/* <!-- Dropdown Content --> */}
+                <div class="absolute left-0 mt-10 w-48 bg-white text-left border border-gray-200 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transform scale-95 group-hover:scale-100 
+                transition-all duration-200 ease-out z-50">
+                  <Link to="/profile"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition">Profile</Link>
+                  <button
+                    onClick={handleLogout} class="block px-4 py-2 text-left text-sm w-full text-red-700 hover:bg-red-100 transition">Log Out</button>
+                </div>
+              </div>
             </button>
+
           </div>
         </div>
       </div>

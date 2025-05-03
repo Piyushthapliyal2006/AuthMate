@@ -16,7 +16,7 @@ const refreshAccessToken = async () => {
 
   const config = {
     method: 'post',
-    url: 'http://127.0.0.1:8000/auth/jwt/refresh/',  // Your API endpoint
+    url: '/auth/jwt/refresh/',  // Your API endpoint
     headers: {
       'Content-Type': 'application/json',
     },
