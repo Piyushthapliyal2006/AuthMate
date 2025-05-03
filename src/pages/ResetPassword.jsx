@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Hook for navigation
 import { ArrowLeftIcon } from '@heroicons/react/24/outline'; // Heroicons for the back button
-import { conf } from "@/conf/conf.js";
+
 
 function ResetPassword() {
     const [email, setEmail] = useState('');
@@ -16,7 +16,7 @@ function ResetPassword() {
         setLoading(true); // Start loading
 
         try {
-            const url = `auth/users/reset_password/`;
+            const url = `/api/auth/users/reset_password/`;
             await axios.post(url, { email }, {
                 headers: { 'Content-Type': 'application/json' }
             });
@@ -67,7 +67,11 @@ function ResetPassword() {
                     </button>
                 </form>
 
-                {message && <p className="mt-4 text-center text-sm text-green-600">{message}</p>}
+                {message && (message === "Failed to send reset link. Please try again." ? (
+                    <p className="mt-4 text-center text-sm text-red-600">{message}</p>
+                ) : (
+                    <p className="mt-4 text-center text-sm text-green-600">{message}</p>
+                ))}
             </div>
         </div>
     );

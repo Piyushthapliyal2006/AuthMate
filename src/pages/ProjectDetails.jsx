@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';  // Import useParams from react-router-dom
+import { Link, useParams } from 'react-router-dom';  // Import useParams from react-router-dom
 import axios from 'axios';
 import PasswordInputField from '../components/PasswordInputField';  // Import the PasswordInputField component
 import CopyContent from '../components/CopyContent';  // Import the CopyContent component
-import { conf } from "@/conf/conf.js";
+import { ArrowLeftIcon } from '@heroicons/react/24/outline'; // Heroicons for the back button
 
 function ProjectDetails() {
     const { id } = useParams();  // Get the project ID from the URL
@@ -13,7 +13,7 @@ function ProjectDetails() {
         const fetchProjectDetails = async () => {
             const token = localStorage.getItem('accessToken');
             // const url = `${conf.prodBaseUrl}/projects/${id}`;
-            const url = `/projects/${id}`;      // Use the local URL for development 
+            const url = `/api/projects/${id}`;      // Use the local URL for development 
             const config = {
                 method: 'get',
                 url: url,
@@ -36,20 +36,27 @@ function ProjectDetails() {
     if (!project) return <div className="max-w-7xl mx-auto py-20 px-4 sm:px-6 lg:px-8 w-60">Loading...</div>;
 
     return (
-        <div className="max-w-7xl mx-auto py-20 px-4 sm:px-6 lg:px-8 bg-white">
-            <h1 className="text-3xl font-semibold text-gray-900">{project.project_name}</h1>
-            <p className="mt-4 text-lg text-gray-600">
+
+        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            {/* Back Button */}
+            <Link to="/projects" className="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 hover:dark:text-indigo-600 mb-4">
+                <ArrowLeftIcon className="h-5 w-5 mr-2" />
+                Back to Projects
+            </Link>
+
+            <h1 className="text-3xl font-semibold text-gray-900 dark:text-white">{project.project_name}</h1>
+            <p className="mt-4 text-lg text-gray-600 dark:text-white">
                 <strong>Description:</strong> {project.description || 'No description available.'}
             </p>
-            <p className="mt-4 text-lg text-gray-600">
+            <p className="mt-4 text-lg text-gray-600 dark:text-white">
                 <strong>Project type:</strong> {project.project_type || 'Project type not set.'}
             </p>
             {project.is_active || project.is_archived ? (
-                <p className="mt-4 text-lg text-gray-600">
+                <p className="mt-4 text-lg text-gray-600 dark:text-white">
                     <strong>Project status:</strong> {project.is_active ? 'Active' : 'Archived'}
                 </p>
             ) : null}
-            <p className="mt-4 text-sm text-gray-500">
+            <p className="mt-4 text-sm text-gray-500 dark:text-white">
                 Created at: {new Date(project.created_at).toLocaleString()}
             </p>
 

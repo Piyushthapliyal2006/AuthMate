@@ -12,7 +12,7 @@ const Archived = () => {
     // Fetch the projects from the API
     const fetchProjects = async () => {
         const token = localStorage.getItem('accessToken'); // Fetch the token from local storage
-        const url = `/projects/`;
+        const url = `/api/projects/`;
         try {
             const response = await axios.get(url, {
                 headers: {

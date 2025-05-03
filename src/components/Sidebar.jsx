@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FiChevronLeft, FiChevronDown, FiHome, FiUsers, FiFolder, FiSettings, FiHelpCircle } from 'react-icons/fi';
+import { FiChevronLeft, FiChevronDown, FiHome, FiUsers, FiFolder, FiSettings, FiBook } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 const MenuItem = ({ icon: Icon, title, items, isOpen, link }) => {
@@ -14,31 +14,34 @@ const MenuItem = ({ icon: Icon, title, items, isOpen, link }) => {
   return (
     <div className="mb-2 transition-all duration-200 ease-in-out">
       {/* Parent Menu Item */}
+      {isOpen && (
+          <Link
+            to={link}
+            className="hover:text-blue-600 dark:hover:text-blue-400"
+            onClick={(e) => {
+              if (items) e.preventDefault(); // Prevent navigation if submenu exists
+            }}
+          >
       <div
         className={`flex items-center justify-between p-2 cursor-pointer text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900 rounded-md ${isSubmenuOpen ? 'bg-blue-100 dark:bg-blue-900' : ''
           }`}
         onClick={handleClick}
       >
-        <div className="flex items-center">
-          <Icon className="w-5 h-5 mr-2" />
-          {isOpen && (
-            <Link
-              to={link}
-              className="hover:text-blue-600 dark:hover:text-blue-400"
-              onClick={(e) => {
-                if (items) e.preventDefault(); // Prevent navigation if submenu exists
-              }}
-            >
+       
+            <div className="flex items-center">
+              <Icon className="w-5 h-5 mr-2" />
               {title}
-            </Link>
-          )}
-        </div>
+            </div>
+         
+       
         {items && isOpen && (
           <FiChevronDown
             className={`w-4 h-4 transition-transform ${isSubmenuOpen ? 'transform rotate-180' : ''}`}
           />
         )}
       </div>
+      </Link>
+      )}
 
       {/* Submenu Items */}
       {items && isSubmenuOpen && isOpen && (
@@ -90,7 +93,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         { title: 'Notifications', link: '/settings/notifications' },
       ],
     },
-    { icon: FiHelpCircle, title: 'Help', link: '/help' },
+    { icon: FiBook, title: 'Docs', link: 'https://docs.authmate.xyz' },
   ];
 
   return (
