@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { FiPlus, FiX } from 'react-icons/fi';
 import axios from 'axios';
+import PasswordInputField from '../components/PasswordInputField';  // Import the PasswordInputField component
+import CopyContent from '../components/CopyContent';
 import { conf } from "@/conf/conf.js";
 
-const ProjectCreate = () => {
+export const ProjectCreate = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [projectName, setProjectName] = useState('');
   const [projectType, setProjectType] = useState('');
@@ -12,6 +14,9 @@ const ProjectCreate = () => {
   const [messageType, setMessageType] = useState(''); // 'success' or 'error'
   const [loading, setLoading] = useState(false); // Loading state for the submit button
   const [retrying, setRetrying] = useState(false); // Flag to prevent multiple retries
+  const [data, setData] = useState({}); // State to hold the project data
+  const [projectCreated, setProjectCreated] = useState(false);
+
 
   // Helper function to get token from localStorage
   const getToken = () => localStorage.getItem('accessToken');
@@ -73,6 +78,10 @@ const ProjectCreate = () => {
       );
 
       console.log(response.data);
+      setData(response.data);// Assuming the response contains the project data
+
+      setProjectCreated(true); // ✅ Set this flag
+
       setMessage('Project created successfully!');
       setMessageType('success');
       setProjectName(''); // Clear the project name input after success
@@ -118,6 +127,8 @@ const ProjectCreate = () => {
     }
   }, [message]);
 
+  console.log('ProjectCreate component rendered');
+
   return (
     <>
       <button
@@ -132,88 +143,140 @@ const ProjectCreate = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4 transition-opacity duration-300 ease-in-out">
           <div className="bg-white dark:bg-gray-800 rounded-lg p-8 max-w-md w-full transform transition-all duration-300 ease-in-out scale-95 hover:scale-100">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Create New Project</h2>
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                {projectCreated ? 'Project Created' : 'Create New Project'}
+              </h2>
               <button
-                onClick={handleCancel}
+                onClick={() => {
+                  handleCancel();
+                  setProjectCreated(false); // reset for next time
+                }}
                 className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
               >
                 <FiX className="w-6 h-6" />
               </button>
             </div>
 
-            {message && (
-              <div className={`p-4 rounded-md ${messageType === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-                {message}
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label htmlFor="projectName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Project Name
-                </label>
-                <input
-                  type="text"
-                  id="projectName"
-                  value={projectName}
-                  onChange={(e) => setProjectName(e.target.value)}
-                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all duration-200 ease-in-out"
-                  required
+            {projectCreated ? (
+              <div className="mt-4">
+                <PasswordInputField
+                  label="API Key"
+                  name="api_key"
+                  value={data.api_key_value}
+                  onChange={() => { }}
+                  required={false}
+                  autoComplete="off"
+                  readOnly={true}
                 />
+                <CopyContent
+                  content={data.api_key_value}
+                  buttonText="Copy API Key"
+                  successText="API Key Copied!"
+                  className="mt-2"
+                />
+                <div className="flex justify-end mt-6">
+                  <button
+                    onClick={() => {
+                      setIsModalOpen(false);
+                      setProjectCreated(false);
+                    }}
+                    className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-blue-700 dark:hover:bg-blue-600 transition-all duration-200 ease-in-out"
+                  >
+                    Close
+                  </button>
+                </div>
               </div>
+            ) : (
+              <>
+                {message && (
+                  <div className={`p-4 rounded-md ${messageType === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                    {message}
+                  </div>
+                )}
 
-              <div>
-                <label htmlFor="projectType" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Project Type
-                </label>
-                <select
-                  id="projectType"
-                  value={projectType}
-                  onChange={(e) => setProjectType(e.target.value)}
-                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all duration-200 ease-in-out"
-                >
-                  <option value="">Select Type</option>
-                  <option value="web">Web</option>
-                  <option value="mobile">Mobile</option>
-                  <option value="desktop">Desktop</option>
-                </select>
-              </div>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <label htmlFor="projectName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Project Name
+                    </label>
+                    <input
+                      type="text"
+                      id="projectName"
+                      value={projectName}
+                      onChange={(e) => setProjectName(e.target.value)}
+                      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all duration-200 ease-in-out"
+                      required
+                    />
+                  </div>
 
-              <div>
-                <label htmlFor="description" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Description
-                </label>
-                <textarea
-                  id="description"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all duration-200 ease-in-out"
-                  rows="4"
-                ></textarea>
-              </div>
+                  <div>
+                    <label htmlFor="projectType" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Project Type
+                    </label>
+                    <select
+                      id="projectType"
+                      value={projectType}
+                      onChange={(e) => setProjectType(e.target.value)}
+                      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all duration-200 ease-in-out"
+                    >
+                      <option value="">Select Type</option>
+                      <option value="web">Web</option>
+                      <option value="mobile">Mobile</option>
+                      <option value="desktop">Desktop</option>
+                    </select>
+                  </div>
 
-              <div className="flex justify-end space-x-2">
-                <button
-                  type="button"
-                  onClick={handleCancel}
-                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-all duration-200 ease-in-out"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={loading} // Disable button when loading
-                  className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-blue-700 dark:hover:bg-blue-600 transition-all duration-200 ease-in-out"
-                >
-                  {loading ? 'Creating...' : 'Create'}
-                </button>
-              </div>
-            </form>
+                  <div>
+                    <label htmlFor="description" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Description
+                    </label>
+                    <textarea
+                      id="description"
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all duration-200 ease-in-out"
+                      rows="4"
+                    ></textarea>
+                  </div>
+
+                  <div className="flex justify-end space-x-2">
+                    <button
+                      type="button"
+                      onClick={handleCancel}
+                      className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-all duration-200 ease-in-out"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setProjectName('');
+                        setProjectType('');
+                        setDescription('');
+                        setMessage('');
+                        setMessageType('');
+                      }}
+                      className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-all duration-200 ease-in-out"
+                    >
+                      Reset
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-blue-700 dark:hover:bg-blue-600 transition-all duration-200 ease-in-out"
+                    >
+                      {loading ? 'Creating...' : 'Create'}
+                    </button>
+                  </div>
+                </form>
+              </>
+            )}
           </div>
         </div>
       )}
+
+      <div className="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300 ease-in-out" style={{ display: isModalOpen ? 'block' : 'none' }}></div>
     </>
   );
 };;
 
-export default ProjectCreate;

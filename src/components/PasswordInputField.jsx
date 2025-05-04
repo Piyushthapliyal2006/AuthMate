@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 
-const PasswordInputField = ({ label, name, value, onChange, required, autoComplete }) => {
+const PasswordInputField = ({ label, name, value, onChange, required, autoComplete, readOnly = false }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const togglePasswordVisibility = () => {
-        setShowPassword(prevState => !prevState);
+        setShowPassword(prev => !prev);
     };
 
     return (
         <div>
-            <label htmlFor={name} className="block text-sm font-medium text-gray-900">
+            <label htmlFor={name} className="block text-sm font-medium text-gray-800 dark:text-gray-200">
                 {label}
             </label>
             <div className="mt-2 relative">
@@ -21,12 +21,18 @@ const PasswordInputField = ({ label, name, value, onChange, required, autoComple
                     value={value}
                     onChange={onChange}
                     autoComplete={autoComplete}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
+                    readOnly={readOnly}
+                    className={`block w-full rounded-md py-1.5 pr-10 pl-3 sm:text-sm
+                        bg-white dark:bg-gray-800 
+                        text-gray-900 dark:text-gray-100 
+                        border border-gray-300 dark:border-gray-600 
+                        placeholder:text-gray-400 dark:placeholder:text-gray-500
+                        focus:outline-none focus:ring-2 focus:ring-indigo-500`}
                 />
                 <button
                     type="button"
                     onClick={togglePasswordVisibility}
-                    className="absolute inset-y-0 right-0 flex items-center pr-3 text-sm text-gray-500"
+                    className="absolute inset-y-0 right-2 flex items-center text-sm text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-100"
                 >
                     {showPassword ? 'Hide' : 'Show'}
                 </button>

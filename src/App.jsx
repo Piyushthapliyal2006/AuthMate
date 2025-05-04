@@ -44,6 +44,8 @@ function App() {
       }
     }
   }, [dispatch, accessToken]);
+  
+  console.log("Rendering App"); 
 
   return (
 
