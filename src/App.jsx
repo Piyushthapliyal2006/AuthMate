@@ -11,6 +11,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import ResetPassword from './pages/ResetPassword';
 import PasswordResetConfirm from './pages/PasswordResetConfirm';
+import ActivateAccount from './pages/ActivateAccount';
 import NotFound from './pages/NotFound';
 import BetaAnnouncementPage from './pages/beta/Beta';
 import Dashboard from './pages/Dashboard';
@@ -19,6 +20,8 @@ import Archived from './pages/Archived';
 import Profile from './pages/Profile';
 import Contact from './pages/Contact';
 import ProjectDetails from './pages/ProjectDetails';
+import OrganizationSettings from './pages/settings/OrganizationSettings';
+import AcceptInvite from './pages/settings/AcceptInvite';
 import DocsLayout from './pages/docs/Docs';
 import PricingPage from './pages/payment/Pricing';
 import BlogPage from './pages/blogs/BlogPage';
@@ -120,6 +123,7 @@ function App() {
                 />
                 <Route path="/users/reset_password/" element={<ResetPassword />} />
                 <Route path="/password/reset/confirm/:uid/:token" element={<PasswordResetConfirm />} />
+                <Route path="/activate/:userId/:token" element={<ActivateAccount />} />
 
                 {/* Protected Routes (with Layout) */}
                 <Route element={isAuthenticated ? <Layout /> : <Navigate to="/auth/login" />}>
@@ -128,6 +132,8 @@ function App() {
                   <Route path="/projects/archived" element={<Archived />} />
                   <Route path="/project/:id" element={<ProjectDetails />} />
                   <Route path="/profile" element={<Profile />} />
+                  <Route path="/settings/organization" element={<OrganizationSettings />} />
+                  <Route path="/settings/organization/accept-invite" element={<AcceptInvite />} />
                 </Route>
                 {/* 404 Route (Catch-All for undefined routes) */}
                 <Route path="*" element={<NotFound />} />

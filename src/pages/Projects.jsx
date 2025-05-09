@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import { FiCalendar, FiGrid, FiList } from 'react-icons/fi';
-import { Link } from 'react-router-dom';  // Import Link from react-router-dom
+import { Link } from 'react-router-dom';
 
 const Projects = () => {
     const [projects, setProjects] = useState([]);
@@ -11,12 +11,12 @@ const Projects = () => {
 
     // Fetch the projects from the API
     const fetchProjects = async () => {
-        const token = localStorage.getItem('accessToken'); // Fetch the token from local storage
+        const token = localStorage.getItem('accessToken');
         const url = `/api/projects/`;
         try {
             const response = await axios.get(url, {
                 headers: {
-                    Authorization: `Bearer ${token}`, // Use the token in the request header
+                    Authorization: `Bearer ${token}`,
                 },
             });
             setProjects(response.data); // Store the fetched projects
@@ -35,8 +35,10 @@ const Projects = () => {
     // Sorting the projects based on the selected sort order
     const sortedProjects = useMemo(() => {
         return [...projects].sort((a, b) => {
-            const dateA = new Date(a.createdAt);
-            const dateB = new Date(b.createdAt);
+            const dateA = new Date(a.created_at); // Use created_at instead of createdAt
+            const dateB = new Date(b.created_at); // Use created_at instead of createdAt
+
+            // Ensure we compare dates correctly based on the sort order
             return sortOrder === 'latest' ? dateB - dateA : dateA - dateB;
         });
     }, [projects, sortOrder]);
@@ -96,7 +98,7 @@ const Projects = () => {
     );
 
     return (
-        <div className='space-y-6'>
+        <div className="space-y-6">
             {loading ? (
                 <Skeleton />
             ) : (
