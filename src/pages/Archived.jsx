@@ -109,6 +109,7 @@ const Archived = () => {
                                         </Link>
                                     </h3>
                                     <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">{project.description}</p>
+                                    <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">Owned by : {project.owner_email}</p>
                                     <div className={`mt-4 flex items-center ${viewMode === 'list' ? 'justify-between' : ''}`}>
                                         <span className="text-xs text-gray-500 dark:text-gray-400">{new Date(project.created_at).toLocaleString()}</span>
                                         <span

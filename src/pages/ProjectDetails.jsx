@@ -278,6 +278,10 @@ function ProjectDetails() {
                     </div>
 
                     <div className="text-lg text-gray-700 dark:text-gray-300">
+                        <p><span className="text-gray-900 dark:text-gray-100">Owned By :</span> {project.owner_email || 'Not specified'}</p>
+                    </div>
+
+                    <div className="text-lg text-gray-700 dark:text-gray-300">
                         <p>
                             <span
                                 className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium transition-all duration-200 ease-in-out ${project.is_active
