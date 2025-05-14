@@ -7,7 +7,7 @@ import path from 'path'
 export default defineConfig({
   server: {
     proxy: {
-      '/api': "https://backend.authmate.xyz",  // Replace with your backend server URL
+      '/api': "	http://backend.authmate.xyz/",  // Replace with your backend server URL
     }
   },
   plugins: [react()],
