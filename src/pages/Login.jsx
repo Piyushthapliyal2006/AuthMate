@@ -49,7 +49,8 @@ export default function Login() {
 
         try {
             const { email, password } = formData;
-            const url = `/api/auth/jwt/create/`;
+            const url = `${conf.prodBaseUrl}/api/auth/jwt/create/`; // Use conf.apiUrl if available, otherwise default to '/api'
+            // const url = `/api/auth/jwt/create/`;
             const response = await axios.post(url, { email, password });
             const { access, refresh } = response.data;
 

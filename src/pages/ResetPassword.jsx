@@ -16,7 +16,7 @@ function ResetPassword() {
         setLoading(true); // Start loading
 
         try {
-            const url = `/api/auth/users/reset_password/`;
+            const url = `${VITE_PROD_BASE_URL}/api/auth/users/reset_password/`;
             await axios.post(url, { email }, {
                 headers: { 'Content-Type': 'application/json' }
             });

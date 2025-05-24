@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { conf } from "@/conf/conf.js"; // Adjust the import path as necessary
 
 function Profile() {
   const [profile, setProfile] = useState(null);
@@ -16,8 +17,8 @@ function Profile() {
           return;
         }
 
-        const url = `/api/profiles/`;
-        // const url = `${conf.devBaseUrl}/profiles/`;
+        // const url = `/api/profiles/`;
+        const url = `${conf.prodBaseUrl}/profiles/`;
         // Make the API request with the token from localStorage
         const response = await axios.get(url, {
           headers: {

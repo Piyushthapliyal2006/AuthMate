@@ -4,6 +4,7 @@ import axios from 'axios';
 import PasswordInputField from '../components/PasswordInputField';
 import CopyContent from '../components/CopyContent';
 import { ArrowLeftIcon, PencilIcon } from '@heroicons/react/24/outline';
+import { conf } from "@/conf/conf.js";
 
 function ProjectDetails() {
     const { id } = useParams();
@@ -28,7 +29,7 @@ function ProjectDetails() {
         const fetchProjectDetails = async () => {
             const token = localStorage.getItem('accessToken');
             try {
-                const response = await axios.get(`/api/projects/${id}`, {
+                const response = await axios.get(`${conf.prodBaseUrl}/api/projects/${id}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 setProject(response.data);
@@ -55,7 +56,7 @@ function ProjectDetails() {
         setIsSavingEdit(true);
         setEditError(null);
         try {
-            const response = await axios.put(`/api/projects/${id}/`, editData, {
+            const response = await axios.put(`${conf.prodBaseUrl}/api/projects/${id}/`, editData, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setProject(response.data);
@@ -78,7 +79,7 @@ function ProjectDetails() {
         const token = localStorage.getItem('accessToken');
         setIsDeleting(true);
         try {
-            await axios.delete(`/api/projects/${id}`, {
+            await axios.delete(`${conf.prodBaseUrl}/api/projects/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             navigate('/projects');
@@ -94,7 +95,7 @@ function ProjectDetails() {
         const token = localStorage.getItem('accessToken');
         setIsRegenerating(true);
         try {
-            const response = await axios.post(`/api/projects/${id}/regenerate-api-key/`, {}, {
+            const response = await axios.post(`${conf.prodBaseUrl}/api/projects/${id}/regenerate-api-key/`, {}, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setApiKey(response.data.api_key_value);

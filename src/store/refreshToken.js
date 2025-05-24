@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { updateAccessToken } from './authSlice';  // Redux action
 import { store } from './store';  // Redux store
+import { conf } from '../conf/conf.js';  // Configuration file
 
 // Function to refresh the access token
 const refreshAccessToken = async () => {
@@ -16,7 +17,7 @@ const refreshAccessToken = async () => {
 
   const config = {
     method: 'post',
-    url: '/api/auth/jwt/refresh/',  // Your API endpoint
+    url: `${conf.prodBaseUrl}/api/auth/jwt/refresh/`,  // Your API endpoint
     headers: {
       'Content-Type': 'application/json',
     },

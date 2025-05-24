@@ -26,7 +26,7 @@ export const ProjectCreate = () => {
     const refreshToken = localStorage.getItem('refreshToken');
     if (refreshToken) {
       try {
-        const url = `/api/refresh/`;
+        const url = `${VITE_PROD_BASE_URL}/api/refresh/`;
         const response = await axios.post(url, {
           refresh: refreshToken,
         });
@@ -61,7 +61,7 @@ export const ProjectCreate = () => {
 
     setLoading(true); // Set loading state to true while request is in progress
     try {
-      const url = `/api/projects/`;
+      const url = `${conf.prodBaseUrl}/api/projects/`;
       const response = await axios.post(
         url,
         {

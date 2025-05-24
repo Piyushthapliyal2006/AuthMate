@@ -5,15 +5,15 @@ import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
-  server: {
-    // proxy: {
-    //   '/api': "http://127.0.0.1:8000",  // Replace with your backend server URL
-    // }
-    proxy: {
-      '/api': "https://backend.authmate.xyz",  // Replace with your backend server URL
-    }
+  // server: {
+  //   // proxy: {
+  //   //   '/api': "http://127.0.0.1:8000",  // Replace with your backend server URL
+  //   // }
+  //   proxy: {
+  //     '/api': "https://backend.authmate.xyz",  // Replace with your backend server URL
+  //   }
 
-  },
+  // },
   plugins: [react()],
   resolve: {
     alias: {

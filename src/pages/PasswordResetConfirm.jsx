@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import PasswordInputField from '../components/PasswordInputField';  // Import PasswordInputField
+import { conf } from "@/conf/conf.js"; // Import configuration
 
 
 function PasswordResetConfirm() {
@@ -30,7 +31,7 @@ function PasswordResetConfirm() {
       re_new_password: confirmPassword
     });
 
-    const url = `/api/auth/users/reset_password_confirm/`;
+    const url = `${conf.prodBaseUrl}/api/auth/users/reset_password_confirm/`;
     const config = {
       method: 'post',
       url: url, // Endpoint for password reset

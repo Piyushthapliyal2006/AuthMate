@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import { FiCalendar, FiGrid, FiList } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
+import { conf } from "@/conf/conf.js"; // Import the configuration
 
 const Projects = () => {
     const [projects, setProjects] = useState([]);
@@ -12,7 +13,7 @@ const Projects = () => {
     // Fetch the projects from the API
     const fetchProjects = async () => {
         const token = localStorage.getItem('accessToken');
-        const url = `/api/projects/`;
+        const url = `${conf.prodBaseUrl}/api/projects/`;
         try {
             const response = await axios.get(url, {
                 headers: {
