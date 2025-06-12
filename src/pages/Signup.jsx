@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
-import PasswordInputField from '../components/PasswordInputField'; // Import PasswordInputField component
-import { ArrowLeftIcon } from '@heroicons/react/24/outline'; // Import the back arrow icon
+import { Link, useNavigate } from 'react-router-dom';
+import PasswordInputField from '../components/PasswordInputField';
+import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { conf } from "@/conf/conf.js";
 
 const InputField = ({ label, type, name, value, onChange, required, autoComplete }) => (
     <div>
-        <label htmlFor={name} className="block text-sm font-medium text-gray-900">
+        <label htmlFor={name} className="block text-sm font-medium text-gray-900 dark:text-gray-100">
             {label}
         </label>
         <div className="mt-2">
@@ -19,7 +19,7 @@ const InputField = ({ label, type, name, value, onChange, required, autoComplete
                 value={value}
                 onChange={onChange}
                 autoComplete={autoComplete}
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-white dark:bg-gray-800 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
             />
         </div>
     </div>
@@ -36,7 +36,7 @@ export default function Signup() {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const navigate = useNavigate(); // Initialize navigate
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -75,12 +75,11 @@ export default function Signup() {
     };
 
     return (
-        <div className="h-full bg-white">
+        <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-                {/* Back Button */}
                 <button
-                    onClick={() => navigate('/')} // Navigate back to the login page
-                    className="flex items-center text-indigo-600 hover:text-indigo-800 mb-4"
+                    onClick={() => navigate('/')}
+                    className="flex items-center text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 mb-4"
                 >
                     <ArrowLeftIcon className="h-5 w-5 mr-2" />
                     Back
@@ -88,11 +87,11 @@ export default function Signup() {
 
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <img
-                        alt="Your Company"
-                        src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
-                        className="mx-auto h-10 w-auto"
+                        alt="AuthMate Logo"
+                        src="/favicon.svg"
+                        className="mx-auto h-16 w-auto"
                     />
-                    <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">
+                    <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                         Sign Up for an account
                     </h2>
                 </div>
@@ -117,7 +116,6 @@ export default function Signup() {
                             required
                             autoComplete="name"
                         />
-                        {/* Replace password and confirm password inputs with PasswordInputField */}
                         <PasswordInputField
                             label="Password"
                             name="password"
@@ -125,6 +123,7 @@ export default function Signup() {
                             onChange={handleChange}
                             required
                             autoComplete="new-password"
+                            classNameInput="dark:bg-gray-800 dark:text-white dark:ring-gray-700"
                         />
                         <PasswordInputField
                             label="Confirm Password"
@@ -133,15 +132,16 @@ export default function Signup() {
                             onChange={handleChange}
                             required
                             autoComplete="new-password"
+                            classNameInput="dark:bg-gray-800 dark:text-white dark:ring-gray-700"
                         />
 
-                        {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
-                        {message && <p className="mt-2 text-sm text-green-600">{message}</p>}
+                        {error && <p className="mt-2 text-sm text-red-600 dark:text-red-400">{error}</p>}
+                        {message && <p className="mt-2 text-sm text-green-600 dark:text-green-400">{message}</p>}
 
                         <div>
                             <button
                                 type="submit"
-                                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                className="flex w-full justify-center rounded-md bg-indigo-600 hover:bg-indigo-500 px-3 py-1.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50"
                                 disabled={loading}
                             >
                                 {loading ? 'Signing Up...' : 'Sign Up'}
@@ -149,9 +149,9 @@ export default function Signup() {
                         </div>
                     </form>
 
-                    <p className="mt-10 text-center text-sm text-gray-500">
+                    <p className="mt-10 text-center text-sm text-gray-500 dark:text-gray-400">
                         Already Registered?{' '}
-                        <Link to="/auth/login" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                        <Link to="/auth/login" className="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">
                             Log In
                         </Link>
                     </p>

@@ -7,6 +7,17 @@ module.exports = {
   ],
   theme: {
   	extend: {
+
+		keyframes: {
+        shimmer: {
+          '0%': { backgroundPosition: '-700px 0' },
+          '100%': { backgroundPosition: '700px 0' },
+        },
+      },
+      animation: {
+        shimmer: 'shimmer 4.5s infinite linear',
+      },
+
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',

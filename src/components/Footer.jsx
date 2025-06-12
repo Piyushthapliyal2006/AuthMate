@@ -16,8 +16,9 @@ const navigation = {
     { name: 'API Reference', href: '#' },
   ],
   legal: [
-    { name: 'Privacy Policy', href: '#' },
-    { name: 'Terms of Service', href: '#' },
+    { name: 'Terms of Service', href: '/terms' },
+    { name: 'Privacy Policy', href: '/privacy' },
+    { name: 'Cancellation & Refunds', href: '/privacy' },
   ],
   social: [
     { name: 'GitHub', icon: GithubIcon, href: 'https://github.com/AuthMate-Dev' },

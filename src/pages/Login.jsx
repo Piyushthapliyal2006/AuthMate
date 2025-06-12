@@ -3,13 +3,13 @@ import axios from 'axios';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login } from '../store/authSlice';
-import { ArrowLeftIcon } from '@heroicons/react/24/outline'; 
+import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import PasswordInputField from '../components/PasswordInputField';
 import { conf } from "@/conf/conf.js";
 
 const InputField = ({ label, type, name, value, onChange, required, autoComplete }) => (
     <div>
-        <label htmlFor={name} className="block text-sm font-medium text-gray-900">
+        <label htmlFor={name} className="block text-sm font-medium text-gray-900 dark:text-gray-100">
             {label}
         </label>
         <div className="mt-2">
@@ -21,7 +21,7 @@ const InputField = ({ label, type, name, value, onChange, required, autoComplete
                 value={value}
                 onChange={onChange}
                 autoComplete={autoComplete}
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-white dark:bg-gray-800 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
             />
         </div>
     </div>
@@ -30,7 +30,7 @@ const InputField = ({ label, type, name, value, onChange, required, autoComplete
 export default function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const location = useLocation(); // Used for checking current location
+    const location = useLocation();
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [authState, setAuthState] = useState({ message: '', error: '', loading: false });
 
@@ -49,8 +49,7 @@ export default function Login() {
 
         try {
             const { email, password } = formData;
-            const url = `${conf.prodBaseUrl}/api/auth/jwt/create/`; // Use conf.apiUrl if available, otherwise default to '/api'
-            // const url = `/api/auth/jwt/create/`;
+            const url = `${conf.prodBaseUrl}/api/auth/jwt/create/`;
             const response = await axios.post(url, { email, password });
             const { access, refresh } = response.data;
 
@@ -59,7 +58,6 @@ export default function Login() {
             }
 
             dispatch(login({ access, refresh }));
-
             setAuthState({ message: 'Login successful!', error: '', loading: false });
             navigate('/dashboard');
         } catch (err) {
@@ -69,12 +67,12 @@ export default function Login() {
     };
 
     return (
-        <div className="h-full bg-white">
+        <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-                {location.pathname == '/auth/login' && (
+                {location.pathname === '/auth/login' && (
                     <button
                         onClick={() => navigate('/')}
-                        className="flex items-center text-indigo-600 hover:text-indigo-800 mb-4"
+                        className="flex items-center text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 mb-4"
                     >
                         <ArrowLeftIcon className="h-5 w-5 mr-2" />
                         Back
@@ -83,11 +81,11 @@ export default function Login() {
 
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <img
-                        alt="Your Company"
+                        alt="AuthMate Logo"
                         src="/favicon.svg"
                         className="mx-auto h-16 w-auto"
                     />
-                    <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">
+                    <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                         Log In to Your Account
                     </h2>
                 </div>
@@ -110,15 +108,24 @@ export default function Login() {
                             onChange={handleChange}
                             required
                             autoComplete="current-password"
+                            classNameInput="dark:bg-gray-800 dark:text-white dark:ring-gray-700"
                         />
 
-                        {authState.error && <p className="mt-2 text-sm text-red-600">{authState.error}</p>}
-                        {authState.message && <p className="mt-2 text-sm text-green-600">{authState.message}</p>}
+                        {authState.error && (
+                            <p className="mt-2 text-sm text-red-600 dark:text-red-400">
+                                {authState.error}
+                            </p>
+                        )}
+                        {authState.message && (
+                            <p className="mt-2 text-sm text-green-600 dark:text-green-400">
+                                {authState.message}
+                            </p>
+                        )}
 
                         <div>
                             <button
                                 type="submit"
-                                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                className="flex w-full justify-center rounded-md bg-indigo-600 hover:bg-indigo-500 px-3 py-1.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50"
                                 disabled={authState.loading}
                             >
                                 {authState.loading ? (
@@ -133,15 +140,15 @@ export default function Login() {
                     <div className="mt-6 text-center">
                         <Link
                             to="/users/reset_password/"
-                            className="font-semibold text-indigo-600 hover:text-indigo-500"
+                            className="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
                         >
                             Forgot your password?
                         </Link>
                     </div>
 
-                    <p className="mt-10 text-center text-sm text-gray-500">
+                    <p className="mt-10 text-center text-sm text-gray-500 dark:text-gray-400">
                         Don't have an account?{' '}
-                        <Link to="/auth/signup" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                        <Link to="/auth/signup" className="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">
                             Sign Up
                         </Link>
                     </p>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom'; // For nested routing
-import Navbar from "../components/Navbar"; // Assuming your Navbar is in the components folder
-import Sidebar from "../components/Sidebar"; // Assuming your Sidebar is in the components folder
+import Navbar from "@/components/Navbar"; // Assuming your Navbar is in the components folder
+import Sidebar from "@/components/Sidebar"; // Assuming your Sidebar is in the components folder
 
 const Layout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);

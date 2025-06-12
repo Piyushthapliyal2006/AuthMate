@@ -1,34 +1,43 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from './store/authSlice';  // Assuming you're using Redux Toolkit
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-
 import './App.css';
-import Layout from './layout/Layout';
-import Landing from './pages/Landing';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import ResetPassword from './pages/ResetPassword';
-import PasswordResetConfirm from './pages/PasswordResetConfirm';
-import ActivateAccount from './pages/ActivateAccount';
-import NotFound from './pages/NotFound';
-import BetaAnnouncementPage from './pages/beta/Beta';
-import Dashboard from './pages/Dashboard';
-import Projects from './pages/Projects';
-import Archived from './pages/Archived';
-import Profile from './pages/Profile';
-import Contact from './pages/Contact';
-import ProjectDetails from './pages/ProjectDetails';
-import OrganizationSettings from './pages/settings/OrganizationSettings';
-import AcceptInvite from './pages/settings/AcceptInvite';
-import DocsLayout from './pages/docs/Docs';
-import PricingPage from './pages/payment/Pricing';
-import BlogPage from './pages/blogs/BlogPage';
-import BlogPostPage from './pages/blogs/[slug]/BlogPostPage';
+
 import { ThemeProvider } from './components/contexts/theme-context';
+import Layout from './layout/Layout';
+
 
 import { conf } from "@/conf/conf.js";
+
+// Lazy Load Pages
+const Landing = React.lazy(() => import('./pages/Landing'));
+const Login = React.lazy(() => import('./pages/Login'));
+const Signup = React.lazy(() => import('./pages/Signup'));
+const ResetPassword = React.lazy(() => import('./pages/ResetPassword'));
+const PasswordResetConfirm = React.lazy(() => import('./pages/PasswordResetConfirm'));
+const ActivateAccount = React.lazy(() => import('./pages/ActivateAccount'));
+const NotFound = React.lazy(() => import('./pages/NotFound'));
+const BetaAnnouncementPage = React.lazy(() => import('./pages/beta/Beta'));
+const Dashboard = React.lazy(() => import('./pages/Dashboard'));
+const Projects = React.lazy(() => import('./pages/Projects'));
+const Archived = React.lazy(() => import('./pages/Archived'));
+const Profile = React.lazy(() => import('./pages/Profile'));
+const Contact = React.lazy(() => import('./pages/Contact'));
+const ProjectDetails = React.lazy(() => import('./pages/ProjectDetails'));
+const OrganizationSettings = React.lazy(() => import('./pages/settings/OrganizationSettings'));
+const AcceptInvite = React.lazy(() => import('./pages/settings/AcceptInvite'));
+const DocsLayout = React.lazy(() => import('./pages/docs/Docs'));
+const PricingPage = React.lazy(() => import('./pages/payment/Pricing'));
+const Billing = React.lazy(() => import('./pages/payment/Billing'));
+const BlogPage = React.lazy(() => import('./pages/blogs/BlogPage'));
+const BlogPostPage = React.lazy(() => import('./pages/blogs/[slug]/BlogPostPage'));
+const SubscriptionList = React.lazy(() => import('./components/billing/SubscriptionList'));
+const InvoiceList = React.lazy(() => import('./components/billing/InvoiceList'));
+const Notifications = React.lazy(() => import('./pages/settings/notifications/Notifications'));
+const PrivacyPolicy = React.lazy(() => import('./pages/legal/PrivacyPolicy'));
+const TermsnConditions = React.lazy(() => import('./pages/legal/TermsnConditions'));
 
 function App() {
   console.log(conf.devBaseUrl)
@@ -47,8 +56,8 @@ function App() {
       }
     }
   }, [dispatch, accessToken]);
-  
-  console.log("Rendering App"); 
+
+  console.log("Rendering App");
 
   return (
 
@@ -104,6 +113,22 @@ function App() {
               {/* Add a button to test API request manually */}
               {/* <button onClick={handleApiRequest}>Test API Request</button> */}
 
+              <Suspense
+                fallback={
+                  <div className="flex justify-center items-center min-h-screen bg-gray-100 text-gray-700 dark:bg-gray-900 dark:text-gray-200">
+                    <div className="relative">
+                      <img
+                        alt="AuthMate Logo"
+                        src="/favicon.svg"
+                        className="mx-auto h-28 w-auto opacity-80"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-20 animate-shimmer" />
+                    </div>
+                  </div>
+                }
+              >
+
+
               <Routes>
                 {/* Public Routes */}
                 <Route path="/" element={<Landing />} />
@@ -117,6 +142,11 @@ function App() {
                 <Route path="/about" element={<h1>About Page lorem900</h1>} />
                 <Route path="/services" element={<h1>Services Page</h1>} />
                 <Route path="/contact" element={<Contact />} />
+
+                <Route path="/privacy" element={<PrivacyPolicy />} />
+                <Route path="/terms" element={<TermsnConditions />} />
+
+
                 <Route
                   path="/auth/login"
                   element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />}
@@ -132,17 +162,24 @@ function App() {
                   <Route path="/projects/archived" element={<Archived />} />
                   <Route path="/project/:id" element={<ProjectDetails />} />
                   <Route path="/profile" element={<Profile />} />
+                  <Route path="/settings/security" element={<ResetPassword />} />
+                  <Route path="/settings/notifications" element={<Notifications />} />
                   <Route path="/settings/organization" element={<OrganizationSettings />} />
                   <Route path="/settings/organization/accept-invite" element={<AcceptInvite />} />
+                  <Route path="/settings/billing" element={<Billing />} />
+                  <Route path="/settings/billing/invoice" element={<InvoiceList />} />
+                  <Route path="/settings/billing/subscription" element={<SubscriptionList />} />
+
                 </Route>
                 {/* 404 Route (Catch-All for undefined routes) */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
-            </main>
-          </div>
-        </Router>
-      </HelmetProvider>
-    </ThemeProvider>
+            </Suspense>
+          </main>
+        </div>
+      </Router>
+    </HelmetProvider>
+    </ThemeProvider >
   );
 }
 

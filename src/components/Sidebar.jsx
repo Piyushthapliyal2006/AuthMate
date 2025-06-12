@@ -92,6 +92,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         { title: 'Security', link: '/settings/security' },
         { title: 'Notifications', link: '/settings/notifications' },
         { title: 'Organization', link: '/settings/organization' },
+        { title: 'Billing', link: '/settings/billing' },
       ],
     },
     { icon: FiBook, title: 'Docs', link: 'https://docs.authmate.xyz' },
