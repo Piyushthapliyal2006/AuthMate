@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { conf } from "@/conf/conf.js";
-import SkeletonProfile from '@/SkeletonComponent/profile/SkeletonProfile'; // Adjust path if needed
+import SkeletonProfile from '@/skeletonComponent/profile/SkeletonProfile'; // Adjust path if needed
 
 function Profile() {
   const [profile, setProfile] = useState(null);
