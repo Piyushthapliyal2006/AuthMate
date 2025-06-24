@@ -71,20 +71,20 @@ const posts = [
 //   fetchBlogs();
 
 let config = {
-	method: 'get',
-	maxBodyLength: Infinity,
-	url: 'http://127.0.0.1:8000/api/blog/posts',
-	headers: { }
+  method: 'get',
+  maxBodyLength: Infinity,
+  url: 'http://127.0.0.1:8000/api/blog/posts',
+  headers: {}
 };
 
 async function makeRequest() {
-	try {
-		const response = await axios.request(config);
-		console.log(JSON.stringify(response.data));
-	}
-	catch (error) {
-		console.log(error);
-	}
+  try {
+    const response = await axios.request(config);
+    console.log(JSON.stringify(response.data));
+  }
+  catch (error) {
+    console.log(error);
+  }
 }
 
 makeRequest();

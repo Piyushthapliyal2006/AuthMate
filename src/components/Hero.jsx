@@ -27,6 +27,8 @@ export default function Hero() {
             }}
             className="absolute -top-40 left-0 right-0 h-[500px] rounded-full bg-gradient-to-r from-purple-500 to-pink-500 opacity-20 blur-3xl"
           />
+          <img src="/hero.png" alt="Hero BG Image" className="relative z-0 w-full h-full object-cover" />
+
           <motion.div
             animate={{
               rotate: -360,
@@ -63,9 +65,9 @@ export default function Hero() {
               <motion.div
                 variants={fadeInUp}
                 className="rounded-full px-4 py-1.5 text-sm font-medium 
-                  backdrop-blur-lg border border-gray-200 dark:border-gray-800 
-                  bg-white/30 dark:bg-gray-900/30 
-                  text-gray-900 dark:text-gray-100"
+                  backdrop-blur-lg border border-gray-800 
+                  bg-gray-900/30 
+                  text-gray-100"
               >
                 This site is currently in Beta Mode
                 <Link to="/beta" className="font-semibold text-primary ml-2">
@@ -76,7 +78,7 @@ export default function Hero() {
 
             <motion.h1
               variants={fadeInUp}
-              className="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-6xl"
+              className="text-4xl font-bold tracking-tight text-gray-100 sm:text-6xl"
             >
               Fast, Secure Authentication
               <br />
@@ -85,7 +87,7 @@ export default function Hero() {
 
             <motion.p
               variants={fadeInUp}
-              className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-400"
+              className="mt-6 text-lg leading-8 text-gray-400"
             >
               AuthMate simplifies user authentication with easy APIs, secure keys, and a powerful dashboard—so you can focus on your product.
             </motion.p>

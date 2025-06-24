@@ -39,11 +39,10 @@ export default function SubscriptionList() {
                 <tr key={i} className="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                   <td className="px-6 py-4 text-sm text-gray-800 dark:text-gray-100">{s.plan.name}</td>
                   <td className="px-6 py-4 text-sm">
-                    <span className={`capitalize inline-flex px-3 py-1 rounded-full text-xs font-medium ${
-                      s.status === 'active'
-                        ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                        : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
-                    }`}>
+                    <span className={`capitalize inline-flex px-3 py-1 rounded-full text-xs font-medium ${s.status === 'active'
+                      ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                      : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
+                      }`}>
                       {s.status}
                     </span>
                   </td>

@@ -2,7 +2,6 @@ import { motion } from 'framer-motion'
 import Button from "@/components/ui/Button"
 import SecondaryButton from "@/components/ui/secondary-button"
 
-
 export default function Cta() {
   return (
     <div className="relative isolate overflow-hidden">
@@ -10,18 +9,21 @@ export default function Cta() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
           className="relative isolate overflow-hidden rounded-3xl"
         >
-          <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:flex lg:items-center lg:gap-x-10 lg:px-8 lg:py-40">
-            <div className="absolute inset-0 -z-10">
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-blue-500 opacity-20 dark:opacity-40" />
-              <div className="absolute inset-0 backdrop-blur-3xl" />
-            </div>
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-blue-500 opacity-20 dark:opacity-40" />
+            <div className="absolute inset-0 backdrop-blur-3xl" />
+          </div>
 
+          <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:flex lg:items-center lg:gap-x-10 lg:px-8 lg:py-40">
+            {/* Text Column */}
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
               viewport={{ once: true }}
               className="mx-auto max-w-2xl lg:mx-0 lg:flex-auto"
             >
@@ -37,9 +39,11 @@ export default function Cta() {
               </div>
             </motion.div>
 
+            {/* Image Column */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
               viewport={{ once: true }}
               className="mt-16 sm:mt-24 lg:mt-0 lg:flex-shrink-0 lg:flex-grow"
             >
@@ -61,4 +65,3 @@ export default function Cta() {
     </div>
   )
 }
-

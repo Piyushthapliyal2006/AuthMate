@@ -73,11 +73,10 @@ function ResetPassword() {
 
         {message && (
           <p
-            className={`mt-4 text-center text-sm ${
-              message.toLowerCase().includes('failed')
+            className={`mt-4 text-center text-sm ${message.toLowerCase().includes('failed')
                 ? 'text-red-600 dark:text-red-400'
                 : 'text-green-600 dark:text-green-400'
-            }`}
+              }`}
           >
             {message}
           </p>

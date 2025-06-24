@@ -10,6 +10,7 @@ import Layout from './layout/Layout';
 
 
 import { conf } from "@/conf/conf.js";
+import CancelSubscriptionButton from './components/Billing/CancelSubscriptionButton';
 
 // Lazy Load Pages
 const Landing = React.lazy(() => import('./pages/Landing'));
@@ -33,8 +34,8 @@ const PricingPage = React.lazy(() => import('./pages/payment/Pricing'));
 const Billing = React.lazy(() => import('./pages/payment/Billing'));
 const BlogPage = React.lazy(() => import('./pages/blogs/BlogPage'));
 const BlogPostPage = React.lazy(() => import('./pages/blogs/[slug]/BlogPostPage'));
-const SubscriptionList = React.lazy(() => import('./components/billing/SubscriptionList'));
-const InvoiceList = React.lazy(() => import('./components/billing/InvoiceList'));
+const SubscriptionList = React.lazy(() => import('@/components/billing/SubscriptionList'));
+const InvoiceList = React.lazy(() => import('@/components/billing/InvoiceList'));
 const Notifications = React.lazy(() => import('./pages/settings/notifications/Notifications'));
 const PrivacyPolicy = React.lazy(() => import('./pages/legal/PrivacyPolicy'));
 const TermsnConditions = React.lazy(() => import('./pages/legal/TermsnConditions'));
@@ -169,6 +170,7 @@ function App() {
                   <Route path="/settings/billing" element={<Billing />} />
                   <Route path="/settings/billing/invoice" element={<InvoiceList />} />
                   <Route path="/settings/billing/subscription" element={<SubscriptionList />} />
+                  <Route path="/settings/billing/subscription/cancel" element={<CancelSubscriptionButton />} />
 
                 </Route>
                 {/* 404 Route (Catch-All for undefined routes) */}

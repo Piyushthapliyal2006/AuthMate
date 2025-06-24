@@ -24,19 +24,24 @@ const containerVariants = {
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.2
+      staggerChildren: 0.2,
+      ease: 'easeOut',
+      duration: 0.6
     }
   }
 }
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 }
+  hidden: { opacity: 0, y: 30 },
+  show: { opacity: 1, y: 0, transition: { ease: 'easeOut', duration: 0.5 } }
 }
 
 export default function Features() {
   return (
-    <div className="py-24 sm:py-32 relative">
+    <section className="relative py-24 sm:py-32 bg-white dark:bg-transparent transition-colors duration-300">
+      {/* Subtle overlay with blur (only in dark mode) */}
+      <div className="absolute inset-0 -z-10 hidden dark:block bg-black/30 backdrop-blur-md" />
+
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
           variants={containerVariants}
@@ -45,14 +50,23 @@ export default function Features() {
           viewport={{ once: true }}
           className="mx-auto max-w-2xl text-center"
         >
-          <motion.h2 variants={itemVariants} className="text-base font-semibold leading-7 text-primary">
+          <motion.h2
+            variants={itemVariants}
+            className="text-base font-semibold leading-7 text-gray-700 dark:text-white/80"
+          >
             Deploy faster
           </motion.h2>
-          <motion.p variants={itemVariants} className="mt-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl">
+          <motion.p
+            variants={itemVariants}
+            className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 dark:text-white"
+          >
             Everything you need to deploy your app
           </motion.p>
-          <motion.p variants={itemVariants} className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-400">
-            AuthMate helps you seamlessly integrate authentication, manage users, and keep your platforms secure without the hassle.
+          <motion.p
+            variants={itemVariants}
+            className="mt-6 text-lg leading-8 text-gray-600 dark:text-white/80"
+          >
+            AuthMate helps you seamlessly integrate authentication, manage users, and keep your platforms secure—without the hassle.
           </motion.p>
         </motion.div>
 
@@ -63,28 +77,28 @@ export default function Features() {
           viewport={{ once: true }}
           className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none"
         >
-          <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
+          <dl className="grid grid-cols-1 gap-y-12 gap-x-8 sm:grid-cols-2 lg:grid-cols-3">
             {features.map((feature) => (
-              <motion.div 
+              <motion.div
                 key={feature.name}
                 variants={itemVariants}
-                whileHover={{ scale: 1.05 }}
-                className="backdrop-blur-lg bg-white/30 dark:bg-gray-900/30 rounded-2xl p-8 border border-gray-200 dark:border-gray-800"
+                whileHover={{ scale: 1.03 }}
+                className="group relative flex flex-col rounded-2xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/10 p-8 backdrop-blur-lg shadow-md transition-all hover:shadow-xl"
               >
-                <dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900 dark:text-gray-100">
-                  <feature.icon className="h-5 w-5 flex-none text-primary" aria-hidden="true" />
+                <dt className="flex items-center gap-x-4 text-lg font-semibold text-gray-900 dark:text-white">
+                  <span className="inline-flex items-center justify-center rounded-full bg-gray-200 dark:bg-white/10 p-2">
+                    <feature.icon className="h-6 w-6 text-gray-900 dark:text-white" aria-hidden="true" />
+                  </span>
                   {feature.name}
                 </dt>
-                <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600 dark:text-gray-400">
-                  <p className="flex-auto">{feature.description}</p>
+                <dd className="mt-4 text-base text-gray-600 dark:text-white/80 leading-relaxed">
+                  {feature.description}
                 </dd>
               </motion.div>
             ))}
           </dl>
         </motion.div>
       </div>
-    </div>
+    </section>
   )
 }
-
-
