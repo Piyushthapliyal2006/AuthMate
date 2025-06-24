@@ -1,6 +1,6 @@
 import Header from '@/components/Headers'
 import Footer from '@/components/Footer'
-import PricingSection from '@/components/billing/PricingSection'
+import PricingSection from '@/components/Billing/PricingSection'
 import { motion } from 'framer-motion'
 
 export default function PricingPage() {
