@@ -135,7 +135,7 @@ function App() {
                 <Route path="/" element={<Landing />} />
                 <Route path="/beta" element={<BetaAnnouncementPage />} />
                 <Route path="/blogs" element={<BlogPage />} />
-                <Route path="/blogs/:slug" element={<BlogPostPage />} />
+                <Route path="/blog/:slug" element={<BlogPostPage />} />
                 <Route path="/docs" element={<DocsLayout />} />
                 <Route path="/pricing" element={<PricingPage />} />
                 <Route path="/auth/signup" element={<Signup />} />

@@ -1,22 +1,41 @@
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import axios from 'axios'
 import Header from '@/components/Headers'
 import Footer from '@/components/Footer'
 import BlogPost from '@/components/blog/BlogPost'
-import blogData from './blog-posts.json'
 
+export default function BlogPostPage() {
+  const { slug } = useParams()
+  const [post, setPost] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
+  useEffect(() => {
+    async function fetchBySlug() {
+      try {
+        setLoading(true)
+        const res = await axios.get(`http://127.0.0.1:8000/api/blog/posts/${slug}/`)
+        setPost(res.data)
+      } catch (err) {
+        console.error(err)
+        if (err.response?.status === 404) {
+          setError('Post not found.')
+        } else {
+          setError('Failed to load post.')
+        }
+      } finally {
+        setLoading(false)
+      }
+    }
 
-export async function generateStaticParams() {
-  return blogData.posts.map((post) => ({
-    slug: post.slug,
-  }))
-}
+    if (slug) fetchBySlug()
+  }, [slug])
 
-export default function BlogPostPage({ params }) {
-  const post = blogData.posts.find((post) => post.slug === params.slug)
-
-  if (!post) {
-    return null
-  }
+  if (loading)
+    return <div className="py-20 text-center">Loading post...</div>
+  if (error)
+    return <div className="py-20 text-center text-red-500">{error}</div>
 
   return (
     <>
@@ -28,4 +47,3 @@ export default function BlogPostPage({ params }) {
     </>
   )
 }
-
