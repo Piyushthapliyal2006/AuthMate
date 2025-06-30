@@ -26,9 +26,7 @@ export default function Hero() {
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
             className="absolute -top-40 left-0 right-0 h-[500px] rounded-full bg-gradient-to-r from-purple-500 to-pink-500 opacity-20 blur-3xl will-change-transform"
           />
-          {/* Keep the background image */}
           <img src="/hero.png" alt="Hero BG Image" className="relative z-0 w-full h-full object-cover" />
-
           <motion.div
             animate={{ rotate: -360, scale: [1.2, 1, 1.2] }}
             transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
@@ -80,24 +78,32 @@ export default function Hero() {
 
       {/* Demo Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md px-6">
+        <div
+          className="fixed mt-24 inset-0 z-[999] flex items-center justify-center bg-black/80 backdrop-blur-md px-6"
+          role="dialog"
+          aria-modal="true"
+          tabIndex="-1"
+        >
           <div className="bg-gray-900 rounded-lg max-w-5xl w-full max-h-[90vh] relative p-6 flex flex-col">
             <button
               onClick={handleModalClose}
-              className="absolute top-4 right-4 text-white text-4xl font-bold hover:text-red-400"
+              className="absolute top-1 right-1 text-white text-4xl font-bold hover:text-red-400"
               aria-label="Close modal"
             >
               &times;
             </button>
             <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden flex-grow max-h-[80vh]">
-              <iframe
-                className="w-full h-full"
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ" // Replace with your video or demo URL
-                title="Demo Video"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
+              <div className="relative w-full max-h-[80vh] aspect-[2.18] p-10">
+                <iframe
+                  src="https://app.supademo.com/embed/cmcj2z50b787l8qsz5jjdjz44?embed_v=2"
+                  loading="lazy"
+                  title="AuthMate Demo"
+                  allow="clipboard-write"
+                  allowFullScreen
+                  frameBorder="0"
+                  className="absolute top-0 left-0 w-full h-full"
+                />
+              </div>
             </div>
             <div className="mt-4 text-sm text-gray-300 text-center">Demo of AuthMate Platform</div>
           </div>

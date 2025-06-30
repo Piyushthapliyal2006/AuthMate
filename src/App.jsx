@@ -71,7 +71,7 @@ function App() {
                 <title>AuthMate - Welcome to AuthMate</title>
                 <meta
                   name="description"
-                  content="Authmate provides the secured authentication with 0 backend code."
+                  content="Secure authentication with zero backend code. Built for devs."
                 />
                 <meta
                   name="keywords"
@@ -82,9 +82,9 @@ function App() {
                 <meta property="og:title" content="AuthMate" />
                 <meta
                   property="og:description"
-                  content="Authmate provides the secured authentication with 0 backend code."
+                  content="Secure authentication with zero backend code. Built for devs."
                 />
-                <meta property="og:image" content="https://authmate.xyz/og-image.jpg" />
+                <meta property="og:image" content="https://authmate.xyz/og.png" />
                 <meta property="og:url" content="https://authmate.xyz" />
                 <meta property="og:type" content="website" />
                 <meta property="og:site_name" content="AuthMate" />
@@ -92,20 +92,19 @@ function App() {
                 <meta name="twitter:title" content="AuthMate" />
                 <meta
                   name="twitter:description"
-                  content="Authmate provides the secured authentication with 0 backend code."
+                  content="Secure authentication with zero backend code. Built for devs."
                 />
                 <meta name="twitter:image" content="https://authmate.xyz/twitter-image.jpg" />
                 <meta name="twitter:site" content="@Authmate_dev" />
                 <meta name="robots" content="index, follow" />
                 <link rel="canonical" href="https://authmate.xyz" />
-                <link rel="icon" href="/favicom.ico" />
+                <link rel="icon" href="/favicon.ico" />
                 <meta name="author" content="Anmol" />
                 <meta property="og:locale" content="en_US" />
 
 
                 <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
                 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-                <link rel="shortcut icon" href="/favicon.ico" />
                 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
                 <meta name="apple-mobile-web-app-title" content="AuthMate" />
                 <link rel="manifest" href="/site.webmanifest" />

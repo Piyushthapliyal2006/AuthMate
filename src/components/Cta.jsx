@@ -35,7 +35,7 @@ export default function Cta() {
               </p>
               <div className="mt-10 flex items-center gap-x-6">
                 <Button to="/auth/login">Get Started Free</Button>
-                <SecondaryButton to="#learn-more" variant="secondary">Learn More</SecondaryButton>
+                <SecondaryButton to="https://docs.authmate.xyz" variant="secondary">Learn More</SecondaryButton>
               </div>
             </motion.div>
 

@@ -112,7 +112,6 @@ export default function BlogSection() {
                   <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 dark:text-white group-hover:text-blue-500">
                     <Link
                       to={`/blog/${post.slug}`}
-                      className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
                     >
                       <span className="absolute inset-0" aria-hidden="true" />
                       {post.title}

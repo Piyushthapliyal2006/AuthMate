@@ -46,7 +46,7 @@ const itemVariants = {
 
 export default function Footer() {
   return (
-    <footer className="relative bg-white/30 dark:bg-black/30 backdrop-blur-xl border-t border-white/10 dark:border-gray-700/30 shadow-2xl transition-all duration-300 rounded-t-2xl">
+    <footer className="relative bg-white/30 dark:bg-black/90 backdrop-blur-xl border-t border-white/10 dark:border-gray-700/30 shadow-2xl transition-all duration-300">
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 overflow-hidden">
           <motion.div
