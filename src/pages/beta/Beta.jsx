@@ -158,7 +158,7 @@ export default function BetaPage() {
             animate="animate"
             className="mt-12"
           >
-            <Button href="/">
+            <Button to="/auth/login">
               Start Exploring AuthMate Beta
             </Button>
           </motion.div>

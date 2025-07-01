@@ -3,11 +3,12 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from './store/authSlice';  // Assuming you're using Redux Toolkit
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
+
 import './App.css';
 
 import { ThemeProvider } from './components/contexts/theme-context';
 import Layout from './layout/Layout';
-
 
 import { conf } from "@/conf/conf.js";
 import CancelSubscriptionButton from './components/Billing/CancelSubscriptionButton';
@@ -41,7 +42,7 @@ const PrivacyPolicy = React.lazy(() => import('./pages/legal/PrivacyPolicy'));
 const TermsnConditions = React.lazy(() => import('./pages/legal/TermsnConditions'));
 
 function App() {
-  console.log(conf.devBaseUrl)
+  console.log(conf.devBaseUrl);
 
   // Access the authentication state from Redux
   const { isAuthenticated, accessToken } = useSelector((state) => state.auth);
@@ -60,13 +61,28 @@ function App() {
 
   console.log("Rendering App");
 
-  return (
+  // Wrapper for dynamic titles and descriptions
+  function PageWrapper({ title, description, children }) {
+    const location = useLocation();
 
+    return (
+      <>
+        <Helmet key={location.pathname}> {/* key forces remount on path change */}
+          <title>{`AuthMate - ${title}`}</title>
+          {description && <meta name="description" content={description} />}
+        </Helmet>
+        {children}
+      </>
+    );
+  }
+
+  return (
     <ThemeProvider>
-      <HelmetProvider> {/* Wrap your app in HelmetProvider */}
+      <HelmetProvider>
         <Router>
           <div>
             <main className="bg-gray-100">
+              {/* Default meta tags - keep for fallback */}
               <Helmet>
                 <title>AuthMate - Welcome to AuthMate</title>
                 <meta
@@ -101,17 +117,12 @@ function App() {
                 <link rel="icon" href="/favicon.ico" />
                 <meta name="author" content="Anmol" />
                 <meta property="og:locale" content="en_US" />
-
-
                 <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
                 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
                 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
                 <meta name="apple-mobile-web-app-title" content="AuthMate" />
                 <link rel="manifest" href="/site.webmanifest" />
               </Helmet>
-
-              {/* Add a button to test API request manually */}
-              {/* <button onClick={handleApiRequest}>Test API Request</button> */}
 
               <Suspense
                 fallback={
@@ -127,58 +138,248 @@ function App() {
                   </div>
                 }
               >
+                <Routes>
+                  {/* Landing page: keep original title */}
+                  <Route path="/" element={<Landing />} />
 
+                  {/* Other public routes with dynamic titles */}
+                  <Route
+                    path="/beta"
+                    element={
+                      <PageWrapper title="Beta Announcement" description="Join our beta program now!">
+                        <BetaAnnouncementPage />
+                      </PageWrapper>
+                    }
+                  />
+                  <Route
+                    path="/blogs"
+                    element={
+                      <PageWrapper title="Blogs" description="Read our latest blog posts">
+                        <BlogPage />
+                      </PageWrapper>
+                    }
+                  />
+                  <Route
+                    path="/blog/:slug"
+                    element={
+                      <PageWrapper title="Blog Post" description="Detailed blog post">
+                        <BlogPostPage />
+                      </PageWrapper>
+                    }
+                  />
+                  <Route
+                    path="/docs"
+                    element={
+                      <PageWrapper title="Documentation" description="AuthMate documentation and guides">
+                        <DocsLayout />
+                      </PageWrapper>
+                    }
+                  />
+                  <Route
+                    path="/pricing"
+                    element={
+                      <PageWrapper title="Pricing" description="AuthMate pricing plans">
+                        <PricingPage />
+                      </PageWrapper>
+                    }
+                  />
+                  <Route
+                    path="/auth/signup"
+                    element={
+                      <PageWrapper title="Sign Up" description="Create your AuthMate account">
+                        <Signup />
+                      </PageWrapper>
+                    }
+                  />
+                  <Route
+                    path="/contact"
+                    element={
+                      <PageWrapper title="Contact Us" description="Get in touch with AuthMate">
+                        <Contact />
+                      </PageWrapper>
+                    }
+                  />
+                  <Route
+                    path="/privacy"
+                    element={
+                      <PageWrapper title="Privacy Policy" description="Our privacy practices">
+                        <PrivacyPolicy />
+                      </PageWrapper>
+                    }
+                  />
+                  <Route
+                    path="/terms"
+                    element={
+                      <PageWrapper title="Terms and Conditions" description="Terms of service and conditions">
+                        <TermsnConditions />
+                      </PageWrapper>
+                    }
+                  />
 
-              <Routes>
-                {/* Public Routes */}
-                <Route path="/" element={<Landing />} />
-                <Route path="/beta" element={<BetaAnnouncementPage />} />
-                <Route path="/blogs" element={<BlogPage />} />
-                <Route path="/blog/:slug" element={<BlogPostPage />} />
-                <Route path="/docs" element={<DocsLayout />} />
-                <Route path="/pricing" element={<PricingPage />} />
-                <Route path="/auth/signup" element={<Signup />} />
+                  {/* Auth/Login routes */}
+                  <Route
+                    path="/auth/login"
+                    element={
+                      isAuthenticated ? (
+                        <Navigate to="/dashboard" />
+                      ) : (
+                        <PageWrapper title="Login" description="Access your AuthMate account">
+                          <Login />
+                        </PageWrapper>
+                      )
+                    }
+                  />
+                  <Route
+                    path="/users/reset_password/"
+                    element={
+                      <PageWrapper title="Reset Password" description="Reset your AuthMate password">
+                        <ResetPassword />
+                      </PageWrapper>
+                    }
+                  />
+                  <Route
+                    path="/password/reset/confirm/:uid/:token"
+                    element={
+                      <PageWrapper title="Confirm Password Reset" description="Confirm your password reset request">
+                        <PasswordResetConfirm />
+                      </PageWrapper>
+                    }
+                  />
+                  <Route
+                    path="/activate/:userId/:token"
+                    element={
+                      <PageWrapper title="Activate Account" description="Activate your AuthMate account">
+                        <ActivateAccount />
+                      </PageWrapper>
+                    }
+                  />
 
-                <Route path="/contact" element={<Contact />} />
+                  {/* Protected Routes with Layout */}
+                  <Route
+                    element={isAuthenticated ? <Layout /> : <Navigate to="/auth/login" />}
+                  >
+                    <Route
+                      path="/dashboard"
+                      element={
+                        <PageWrapper title="Dashboard" description="Your AuthMate dashboard">
+                          <Dashboard />
+                        </PageWrapper>
+                      }
+                    />
+                    <Route
+                      path="/projects"
+                      element={
+                        <PageWrapper title="Projects" description="Manage your projects">
+                          <Projects />
+                        </PageWrapper>
+                      }
+                    />
+                    <Route
+                      path="/projects/archived"
+                      element={
+                        <PageWrapper title="Archived Projects" description="View archived projects">
+                          <Archived />
+                        </PageWrapper>
+                      }
+                    />
+                    <Route
+                      path="/project/:id"
+                      element={
+                        <PageWrapper title="Project Details" description="Detailed project info">
+                          <ProjectDetails />
+                        </PageWrapper>
+                      }
+                    />
+                    <Route
+                      path="/profile"
+                      element={
+                        <PageWrapper title="Profile" description="Manage your user profile">
+                          <Profile />
+                        </PageWrapper>
+                      }
+                    />
+                    <Route
+                      path="/settings/security"
+                      element={
+                        <PageWrapper title="Security Settings" description="Update your security settings">
+                          <ResetPassword />
+                        </PageWrapper>
+                      }
+                    />
+                    <Route
+                      path="/settings/notifications"
+                      element={
+                        <PageWrapper title="Notifications Settings" description="Manage notification preferences">
+                          <Notifications />
+                        </PageWrapper>
+                      }
+                    />
+                    <Route
+                      path="/settings/organization"
+                      element={
+                        <PageWrapper title="Organization Settings" description="Manage your organization">
+                          <OrganizationSettings />
+                        </PageWrapper>
+                      }
+                    />
+                    <Route
+                      path="/settings/organization/accept-invite"
+                      element={
+                        <PageWrapper title="Accept Invite" description="Accept organization invite">
+                          <AcceptInvite />
+                        </PageWrapper>
+                      }
+                    />
+                    <Route
+                      path="/settings/billing"
+                      element={
+                        <PageWrapper title="Billing" description="Manage billing and payments">
+                          <Billing />
+                        </PageWrapper>
+                      }
+                    />
+                    <Route
+                      path="/settings/billing/invoice"
+                      element={
+                        <PageWrapper title="Invoices" description="View your invoices">
+                          <InvoiceList />
+                        </PageWrapper>
+                      }
+                    />
+                    <Route
+                      path="/settings/billing/subscription"
+                      element={
+                        <PageWrapper title="Subscriptions" description="Manage your subscriptions">
+                          <SubscriptionList />
+                        </PageWrapper>
+                      }
+                    />
+                    <Route
+                      path="/settings/billing/subscription/cancel"
+                      element={
+                        <PageWrapper title="Cancel Subscription" description="Cancel your subscription">
+                          <CancelSubscriptionButton />
+                        </PageWrapper>
+                      }
+                    />
+                  </Route>
 
-                <Route path="/privacy" element={<PrivacyPolicy />} />
-                <Route path="/terms" element={<TermsnConditions />} />
-
-
-                <Route
-                  path="/auth/login"
-                  element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />}
-                />
-                <Route path="/users/reset_password/" element={<ResetPassword />} />
-                <Route path="/password/reset/confirm/:uid/:token" element={<PasswordResetConfirm />} />
-                <Route path="/activate/:userId/:token" element={<ActivateAccount />} />
-
-                {/* Protected Routes (with Layout) */}
-                <Route element={isAuthenticated ? <Layout /> : <Navigate to="/auth/login" />}>
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/projects" element={<Projects />} />
-                  <Route path="/projects/archived" element={<Archived />} />
-                  <Route path="/project/:id" element={<ProjectDetails />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route path="/settings/security" element={<ResetPassword />} />
-                  <Route path="/settings/notifications" element={<Notifications />} />
-                  <Route path="/settings/organization" element={<OrganizationSettings />} />
-                  <Route path="/settings/organization/accept-invite" element={<AcceptInvite />} />
-                  <Route path="/settings/billing" element={<Billing />} />
-                  <Route path="/settings/billing/invoice" element={<InvoiceList />} />
-                  <Route path="/settings/billing/subscription" element={<SubscriptionList />} />
-                  <Route path="/settings/billing/subscription/cancel" element={<CancelSubscriptionButton />} />
-
-                </Route>
-                {/* 404 Route (Catch-All for undefined routes) */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Suspense>
-          </main>
-        </div>
-      </Router>
-    </HelmetProvider>
-    </ThemeProvider >
+                  {/* 404 catch-all */}
+                  <Route
+                    path="*"
+                    element={
+                      <PageWrapper title="Page Not Found" description="The requested page was not found">
+                        <NotFound />
+                      </PageWrapper>
+                    }
+                  />
+                </Routes>
+              </Suspense>
+            </main>
+          </div>
+        </Router>
+      </HelmetProvider>
+    </ThemeProvider>
   );
 }
 
