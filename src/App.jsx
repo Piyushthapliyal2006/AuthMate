@@ -139,8 +139,6 @@ function App() {
                 <Route path="/pricing" element={<PricingPage />} />
                 <Route path="/auth/signup" element={<Signup />} />
 
-                <Route path="/about" element={<h1>About Page lorem900</h1>} />
-                <Route path="/services" element={<h1>Services Page</h1>} />
                 <Route path="/contact" element={<Contact />} />
 
                 <Route path="/privacy" element={<PrivacyPolicy />} />

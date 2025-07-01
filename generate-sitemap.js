@@ -12,8 +12,7 @@ const pages = [
   { url: '/blogs', changefreq: 'weekly', priority: 0.8 },
   { url: '/pricing', changefreq: 'monthly', priority: 0.7 },
   { url: '/auth/signup', changefreq: 'monthly', priority: 0.5 },
-  { url: '/about', changefreq: 'monthly', priority: 0.5 },
-  { url: '/services', changefreq: 'monthly', priority: 0.5 },
+  { url: '/auth/login', changefreq: 'monthly', priority: 0.5 },
   { url: '/contact', changefreq: 'monthly', priority: 0.5 },
   { url: '/privacy', changefreq: 'yearly', priority: 0.3 },
   { url: '/terms', changefreq: 'yearly', priority: 0.3 },
@@ -28,17 +27,16 @@ async function generateSitemap() {
   }
 
   const writeStream = createWriteStream(path.resolve(publicDir, 'sitemap.xml'));
-  const sitemap = new SitemapStream({ hostname: 'https://authmate.xyz' });
+  const sitemap = new SitemapStream({ hostname: 'https://www.authmate.xyz' }); // ✅ Fixed
 
   sitemap.pipe(writeStream).on('finish', () => {
-    console.log('Sitemap generated successfully');
+    console.log('✅ Sitemap generated successfully');
   });
 
   pages.forEach((page) => sitemap.write(page));
-
   sitemap.end();
 }
 
 generateSitemap().catch((error) => {
-  console.error('Error generating sitemap:', error);
+  console.error('❌ Error generating sitemap:', error);
 });
