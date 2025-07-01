@@ -62,7 +62,7 @@ export default function Hero() {
             </motion.h1>
 
             <motion.p variants={fadeInUp} className="mt-6 text-lg leading-8 text-gray-300">
-              AuthMate simplifies user authentication with easy APIs, secure keys, and a powerful dashboard—so you can focus on your product.
+              AuthMate simplifies user authentication with easy APIs, secure keys, and a powerful dashboard so you can focus on your product.
             </motion.p>
 
             <motion.div
@@ -105,7 +105,6 @@ export default function Hero() {
                 />
               </div>
             </div>
-            <div className="mt-4 text-sm text-gray-300 text-center">Demo of AuthMate Platform</div>
           </div>
         </div>
       )}

@@ -3,22 +3,23 @@ import { createWriteStream } from 'fs';
 import path from 'path';
 import fs from 'fs';
 
-// Use process.cwd() to get the current working directory (root of the project)
-const rootDir = process.cwd(); 
-
-// Resolve the correct path for the 'public' directory
+const rootDir = process.cwd();
 const publicDir = path.resolve(rootDir, 'public');
 
 const pages = [
   { url: '/', changefreq: 'daily', priority: 1.0 },
-  { url: '/docs', changefreq: 'weekly', priority: 0.8 },
-  { url: '/pricing', changefreq: 'weekly', priority: 0.8 },
+  { url: '/beta', changefreq: 'weekly', priority: 0.7 },
   { url: '/blogs', changefreq: 'weekly', priority: 0.8 },
-  { url: '/contact', changefreq: 'weekly', priority: 0.8 },
+  { url: '/pricing', changefreq: 'monthly', priority: 0.7 },
+  { url: '/auth/signup', changefreq: 'monthly', priority: 0.5 },
+  { url: '/about', changefreq: 'monthly', priority: 0.5 },
+  { url: '/services', changefreq: 'monthly', priority: 0.5 },
+  { url: '/contact', changefreq: 'monthly', priority: 0.5 },
+  { url: '/privacy', changefreq: 'yearly', priority: 0.3 },
+  { url: '/terms', changefreq: 'yearly', priority: 0.3 },
 ];
 
 async function generateSitemap() {
-  // Check if the 'public' folder exists and create it if not
   try {
     await fs.promises.mkdir(publicDir, { recursive: true });
   } catch (err) {
@@ -27,7 +28,6 @@ async function generateSitemap() {
   }
 
   const writeStream = createWriteStream(path.resolve(publicDir, 'sitemap.xml'));
-
   const sitemap = new SitemapStream({ hostname: 'https://authmate.xyz' });
 
   sitemap.pipe(writeStream).on('finish', () => {
