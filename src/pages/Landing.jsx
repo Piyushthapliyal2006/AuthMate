@@ -7,6 +7,7 @@ import Cta from '@/components/Cta';
 // import Team from '@/components/Team';
 import BlogSection from '@/components/BlogSection';
 import Footer from '@/components/Footer';
+// import WorldMapComp from '@/components/WorldMap';
 
 
 
@@ -18,6 +19,7 @@ function Landing() {
         <Hero />
         <Feature />
         <Cta />
+        {/* <WorldMapComp /> */}
         {/* <Team /> */}
         <BlogSection />
       </main>

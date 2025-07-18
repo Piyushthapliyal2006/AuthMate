@@ -49,7 +49,7 @@ export default function Hero() {
                 className="rounded-full px-4 py-1.5 text-sm font-medium backdrop-blur-lg border border-gray-800 bg-gray-900/30 text-gray-100"
               >
                 This site is currently in Beta Mode
-                <Link to="/beta" className="font-semibold text-primary ml-2">
+                <Link to="/beta" className="font-semibold text-primary ml-2 text-gray-100">
                   Read more <span aria-hidden="true">→</span>
                 </Link>
               </motion.div>
