@@ -35,7 +35,7 @@ export default function Cta() {
               </p>
               <div className="mt-10 flex items-center gap-x-6">
                 <Button to="/auth/login">Get Started Free</Button>
-                <SecondaryButton to="https://docs.authmate.xyz" variant="secondary">Learn More</SecondaryButton>
+                <SecondaryButton to="https://docs.authmate.xyz" variant="secondary">Visit Docs</SecondaryButton>
               </div>
             </motion.div>
 
@@ -53,7 +53,7 @@ export default function Cta() {
                 className="relative mx-auto w-[45rem] max-w-full overflow-hidden rounded-xl shadow-xl ring-1 ring-gray-900/10 dark:ring-white/10"
               >
                 <img
-                  src="/authmate.svg?height=700&width=400"
+                  src="/Dashboard.webp"
                   alt="Dashboard preview"
                   className="w-full"
                 />

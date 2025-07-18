@@ -40,6 +40,7 @@ const InvoiceList = React.lazy(() => import('@/components/Billing/InvoiceList'))
 const Notifications = React.lazy(() => import('./pages/settings/notifications/Notifications'));
 const PrivacyPolicy = React.lazy(() => import('./pages/legal/PrivacyPolicy'));
 const TermsnConditions = React.lazy(() => import('./pages/legal/TermsnConditions'));
+const UserList = React.lazy(() => import('./components/user-management/UserList'));
 
 function App() {
   console.log(conf.devBaseUrl);
@@ -110,7 +111,7 @@ function App() {
                   name="twitter:description"
                   content="Secure authentication with zero backend code. Built for devs."
                 />
-                <meta name="twitter:image" content="https://authmate.xyz/twitter-image.jpg" />
+                <meta name="twitter:image" content="https://authmate.xyz/og.png" />
                 <meta name="twitter:site" content="@Authmate_dev" />
                 <meta name="robots" content="index, follow" />
                 <link rel="canonical" href="https://authmate.xyz" />
@@ -290,6 +291,17 @@ function App() {
                         </PageWrapper>
                       }
                     />
+
+                    <Route
+                      path="/user-management"
+                      element={
+                        <PageWrapper title="User Management" description="Manage users and roles">
+                          <UserList />
+                        </PageWrapper>
+                      }
+                    />
+                    
+
                     <Route
                       path="/profile"
                       element={

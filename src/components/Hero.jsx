@@ -26,7 +26,7 @@ export default function Hero() {
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
             className="absolute -top-40 left-0 right-0 h-[500px] rounded-full bg-gradient-to-r from-purple-500 to-pink-500 opacity-20 blur-3xl will-change-transform"
           />
-          <img src="/hero.png" alt="Hero BG Image" className="relative z-0 w-full h-full object-cover" />
+          <img src="/Hero.webp" alt="Hero BG Image" className="relative z-0 w-full h-full object-cover" />
           <motion.div
             animate={{ rotate: -360, scale: [1.2, 1, 1.2] }}
             transition={{ duration: 25, repeat: Infinity, ease: "linear" }}

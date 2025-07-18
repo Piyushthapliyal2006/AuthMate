@@ -67,7 +67,7 @@ export default function Footer() {
         >
           <motion.div variants={itemVariants} className="space-y-8">
             <Link to="/" className="flex items-center">
-              <img className="h-20 w-auto" src="/favicon.svg" alt="AuthMate" />
+              <img className="h-20 w-auto" src="/Logo.webp" alt="AuthMate Logo" />
               <span className="ml-2 text-xl font-bold">AuthMate</span>
             </Link>
             <p className="text-sm leading-6 text-gray-700 dark:text-gray-300">

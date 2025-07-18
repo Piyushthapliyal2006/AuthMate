@@ -69,7 +69,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       title: 'User Management',
       link: '#',
       items: [
-        { title: 'User List', link: '/users' },
+        { title: 'User List', link: '/user-management' },
         { title: 'User Roles', link: '/roles' },
         { title: 'Permissions', link: '/permissions' },
       ],

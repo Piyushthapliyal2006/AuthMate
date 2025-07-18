@@ -47,7 +47,7 @@ const Navbar = ({
             <div className="lg:hidden">
               <Link to="/dashboard" className="flex items-center">
                 <img
-                  src="/favicon.svg"
+                  src="/Logo.webp"
                   alt="AuthMate Logo"
                   className="h-10 w-auto mr-2"
                 />
