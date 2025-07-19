@@ -5,7 +5,6 @@ import Projects from "./Projects";
 function Dashboard() {
   return (
     <div className="mt-8">
-      <h1 className='text-2xl font-bold text-center text-gray-900 dark:text-white'>Dashboard</h1>
       <div className="mb-6">
         <ProjectCreate />
       </div>

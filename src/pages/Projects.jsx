@@ -113,20 +113,20 @@ const Projects = () => {
                             <select
                                 value={sortOrder}
                                 onChange={handleSortOrderChange}
-                                className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all duration-200 ease-in-out"
+                                className="p-2 border rounded-md focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all duration-200 ease-in-out"
                             >
                                 <option value="latest">Latest to Oldest</option>
                                 <option value="oldest">Oldest to Latest</option>
                             </select>
                             <button
-                                className="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 ease-in-out dark:text-white"
+                                className="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none transition-all duration-200 ease-in-out dark:text-white"
                                 onClick={handleViewModeToggle}
                             >
                                 {viewMode === 'grid' ? <FiList className="w-5 h-5" /> : <FiGrid className="w-5 h-5" />}
                             </button>
-                            <button className="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 ease-in-out dark:text-white">
+                            {/* <button className="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 transition-all duration-200 ease-in-out dark:text-white">
                                 <FiCalendar className="w-5 h-5" />
-                            </button>
+                            </button> */}
                         </div>
                     </div>
                     <div className={`grid gap-6 ${viewMode === 'grid' ? 'sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'}`}>

@@ -38,6 +38,7 @@ const BlogPostPage = React.lazy(() => import('./pages/blogs/[slug]/BlogPostPage'
 const SubscriptionList = React.lazy(() => import('@/components/Billing/SubscriptionList'));
 const InvoiceList = React.lazy(() => import('@/components/Billing/InvoiceList'));
 const Notifications = React.lazy(() => import('./pages/settings/notifications/Notifications'));
+const GeneralSettings = React.lazy(() => import('./pages/settings/general/GeneralSettings'));
 const PrivacyPolicy = React.lazy(() => import('./pages/legal/PrivacyPolicy'));
 const TermsnConditions = React.lazy(() => import('./pages/legal/TermsnConditions'));
 const UserList = React.lazy(() => import('./components/user-management/UserList'));
@@ -321,11 +322,21 @@ function App() {
                     <Route
                       path="/settings/notifications"
                       element={
-                        <PageWrapper title="Notifications Settings" description="Manage notification preferences">
+                        <PageWrapper title="Notifications Settings" description="Manage your notifications preferences">
                           <Notifications />
                         </PageWrapper>
                       }
                     />
+
+                    <Route
+                      path="/settings/general"
+                      element={
+                        <PageWrapper title="General Settings" description="Manage your general settings">
+                          <GeneralSettings />
+                        </PageWrapper>
+                      }
+                    />
+                    
                     <Route
                       path="/settings/organization"
                       element={

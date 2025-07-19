@@ -10,10 +10,10 @@ function Notifications() {
             </p>
 
             <p className="text-gray-500 dark:text-gray-400 mt-2">
-                For more information, please refer to our <a href="https://docs.authmate.xyz" className="text-blue-500 hover:underline">documentation</a>.
+                For more information, please refer to our <a href="https://docs.authmate.xyz" className="text-blue-500 hover:text-blue-600">documentation</a>.
             </p>
         </div>
     )
 }
 
-export default Notifications
+export default Notifications;

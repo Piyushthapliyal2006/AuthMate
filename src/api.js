@@ -30,7 +30,7 @@ export const getInvoices = async () =>
 export const cancelSubscription = async (subscription_id) =>
   axios.post(
     `${conf.prodBaseUrl}/api/subscription/cancel/`,
-    { subscription_id },
+    {  },
     { headers: getAuthHeaders() }
   ).then(res => res.data);
 

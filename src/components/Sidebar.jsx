@@ -70,8 +70,8 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       link: '#',
       items: [
         { title: 'User List', link: '/user-management' },
-        { title: 'User Roles', link: '/roles' },
-        { title: 'Permissions', link: '/permissions' },
+        // { title: 'User Roles', link: '/roles' },
+        // { title: 'Permissions', link: '/permissions' },
       ],
     },
     {
@@ -89,7 +89,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       link: '#',
       items: [
         { title: 'General', link: '/settings/general' },
-        { title: 'Security', link: '/settings/security' },
+        // { title: 'Security', link: '/settings/security' },
         { title: 'Notifications', link: '/settings/notifications' },
         { title: 'Organization', link: '/settings/organization' },
         { title: 'Billing', link: '/settings/billing' },
@@ -125,6 +125,4 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     </div>
   );
 };
-
 export default Sidebar;
-
