@@ -17,7 +17,7 @@ export default function Hero() {
   const handleModalClose = () => setShowModal(false);
 
   return (
-    <div className="relative isolate pt-24 min-h-screen flex items-center overflow-hidden">
+    <div className="relative isolate min-h-screen flex items-center overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 -z-10">
         <div className="relative h-full w-full overflow-hidden">
@@ -48,9 +48,9 @@ export default function Hero() {
                 variants={fadeInUp}
                 className="rounded-full px-4 py-1.5 text-sm font-medium backdrop-blur-lg border border-gray-800 bg-gray-900/30 text-gray-100"
               >
-                This site is currently in Beta Mode
-                <Link to="/beta" className="font-semibold text-primary ml-2 text-gray-100">
-                  Read more <span aria-hidden="true">→</span>
+                View docs site to
+                <Link to="https://docs.authmate.xyz" className="font-semibold text-primary ml-2 dark:text-gray-100">
+                  Learn more <span aria-hidden="true">→</span>
                 </Link>
               </motion.div>
             </div>
@@ -69,7 +69,7 @@ export default function Hero() {
               variants={fadeInUp}
               className="mt-10 flex items-center justify-center gap-x-6"
             >
-              <Button to="/auth/login">Get Started Free</Button>
+              <Button to="/auth/login" size="sm" variant="primary">Get Started Free</Button>
               <SecondaryButton onClick={handleModalOpen}>Watch Demo</SecondaryButton>
             </motion.div>
           </motion.div>

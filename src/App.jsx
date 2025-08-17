@@ -24,7 +24,6 @@ const NotFound = React.lazy(() => import('./pages/NotFound'));
 const BetaAnnouncementPage = React.lazy(() => import('./pages/beta/Beta'));
 const Dashboard = React.lazy(() => import('./pages/Dashboard'));
 const Projects = React.lazy(() => import('./pages/Projects'));
-const Archived = React.lazy(() => import('./pages/Archived'));
 const Profile = React.lazy(() => import('./pages/Profile'));
 const Contact = React.lazy(() => import('./pages/Contact'));
 const ProjectDetails = React.lazy(() => import('./pages/ProjectDetails'));
@@ -273,14 +272,6 @@ function App() {
                       element={
                         <PageWrapper title="Projects" description="Manage your projects">
                           <Projects />
-                        </PageWrapper>
-                      }
-                    />
-                    <Route
-                      path="/projects/archived"
-                      element={
-                        <PageWrapper title="Archived Projects" description="View archived projects">
-                          <Archived />
                         </PageWrapper>
                       }
                     />
