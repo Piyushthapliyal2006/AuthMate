@@ -8,6 +8,7 @@ import { conf } from "@/conf/conf.js";
 export const ProjectCreate = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [projectName, setProjectName] = useState('');
+  const [projectUrl, setProjectUrl] = useState('');
   const [projectType, setProjectType] = useState('');
   const [description, setDescription] = useState('');
   const [message, setMessage] = useState('');
@@ -58,6 +59,11 @@ export const ProjectCreate = () => {
       setMessageType('error');
       return;
     }
+    if (!projectUrl.trim()) {
+      setMessage('Project URL is required.');
+      setMessageType('error');
+      return;
+    }
 
     setLoading(true); // Set loading state to true while request is in progress
     try {
@@ -66,6 +72,7 @@ export const ProjectCreate = () => {
         url,
         {
           project_name: projectName,
+          project_url: projectUrl,
           project_type: projectType,
           description: description,
         },
@@ -77,7 +84,6 @@ export const ProjectCreate = () => {
         }
       );
 
-      console.log(response.data);
       setData(response.data);// Assuming the response contains the project data
 
       setProjectCreated(true); // ✅ Set this flag
@@ -85,6 +91,7 @@ export const ProjectCreate = () => {
       setMessage('Project created successfully!');
       setMessageType('success');
       setProjectName(''); // Clear the project name input after success
+      setProjectUrl(''); // Clear project URL input
       setProjectType(''); // Reset project type dropdown
       setDescription(''); // Clear description
     } catch (error) {
@@ -109,6 +116,7 @@ export const ProjectCreate = () => {
 
   const handleCancel = () => {
     setProjectName(''); // Clear project name
+    setProjectUrl(''); // Clear project URL input
     setProjectType(''); // Reset project type dropdown
     setDescription(''); // Clear description
     setMessage(''); // Clear any message
@@ -127,7 +135,6 @@ export const ProjectCreate = () => {
     }
   }, [message]);
 
-  console.log('ProjectCreate component rendered');
 
   return (
     <>
@@ -202,8 +209,24 @@ export const ProjectCreate = () => {
                     <input
                       type="text"
                       id="projectName"
+                      placeholder='E-Commerce Website'
                       value={projectName}
                       onChange={(e) => setProjectName(e.target.value)}
+                      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all duration-200 ease-in-out"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="projectType" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Project Url
+                    </label>
+                    <input
+                      type="url"
+                      id="projectUrl"
+                      placeholder='https://example.com or http://localhost:8000'
+                      value={projectUrl}
+                      onChange={(e) => setProjectUrl(e.target.value)}
                       className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all duration-200 ease-in-out"
                       required
                     />
@@ -247,19 +270,7 @@ export const ProjectCreate = () => {
                     >
                       Cancel
                     </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setProjectName('');
-                        setProjectType('');
-                        setDescription('');
-                        setMessage('');
-                        setMessageType('');
-                      }}
-                      className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-all duration-200 ease-in-out"
-                    >
-                      Reset
-                    </button>
+                    
                     <button
                       type="submit"
                       disabled={loading}

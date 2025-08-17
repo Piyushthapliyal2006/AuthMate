@@ -66,7 +66,7 @@ const Layout = () => {
         className="p-4 transition-all duration-300 ease-in-out"
         style={{ marginLeft: isSidebarOpen ? "240px" : "60px" }}
       >
-        <div className="mt-16 container mx-auto">
+        <div className="p-8 container mx-auto">
           <Outlet /> {/* This is where the nested routes will render */}
         </div>
       </main>
