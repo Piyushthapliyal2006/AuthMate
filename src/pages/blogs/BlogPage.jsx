@@ -6,7 +6,7 @@ export default function BlogPage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-white dark:bg-gray-900 pt-24">
+      <main className="min-h-screen bg-white dark:bg-gray-900">
         <BlogList />
       </main>
       <Footer />

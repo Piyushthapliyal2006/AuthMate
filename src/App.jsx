@@ -161,7 +161,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/blog/:slug"
+                    path="/blogs/:slug"
                     element={
                       <PageWrapper title="Blog Post" description="Detailed blog post">
                         <BlogPostPage />
@@ -292,7 +292,7 @@ function App() {
                         </PageWrapper>
                       }
                     />
-                    
+
 
                     <Route
                       path="/profile"
@@ -327,7 +327,7 @@ function App() {
                         </PageWrapper>
                       }
                     />
-                    
+
                     <Route
                       path="/settings/organization"
                       element={

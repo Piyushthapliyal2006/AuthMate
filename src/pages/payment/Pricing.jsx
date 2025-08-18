@@ -17,7 +17,7 @@ export default function PricingPage() {
       </motion.div>
 
       {/* Main page content */}
-      <main className="min-h-screen pt-20 bg-white dark:bg-gray-900 content-container">
+      <main className="min-h-screen bg-white dark:bg-gray-900 content-container">
         <PricingSection />
 
         {/* FAQ Section */}
