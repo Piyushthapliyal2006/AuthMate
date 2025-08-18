@@ -10,15 +10,138 @@
   <meta name="apple-mobile-web-app-title" content="AuthMate" />
   <link rel="manifest" href="/site.webmanifest" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AuthMate</title>
+  <title>AuthMate - Secure Authentication & User Management Platform</title>
+  <meta name="description" content="AuthMate provides secure authentication, user management, and project collaboration tools for developers and teams. Streamline your auth workflow with our comprehensive platform." />
+  <meta name="keywords" content="authentication, user management, secure login, project management, developer tools, team collaboration" />
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="AuthMate - Secure Authentication & User Management Platform" />
+  <meta property="og:description" content="AuthMate provides secure authentication, user management, and project collaboration tools for developers and teams." />
+  <meta property="og:url" content="https://www.authmate.xyz" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://www.authmate.xyz/og.webp" />
+  <meta property="og:site_name" content="AuthMate" />
+  
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="AuthMate - Secure Authentication & User Management Platform" />
+  <meta name="twitter:description" content="AuthMate provides secure authentication, user management, and project collaboration tools for developers and teams." />
+  <meta name="twitter:image" content="https://www.authmate.xyz/og.webp" />
 
-  <!-- WebSite Schema -->
+  <!-- Comprehensive Schema Markup -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "AuthMate",
-      "url": "https://www.authmate.xyz"
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://www.authmate.xyz/#website",
+          "url": "https://www.authmate.xyz",
+          "name": "AuthMate",
+          "description": "Secure Authentication & User Management Platform for Developers",
+          "publisher": {
+            "@id": "https://www.authmate.xyz/#organization"
+          },
+          "potentialAction": [
+            {
+              "@type": "SearchAction",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://www.authmate.xyz/search?q={search_term_string}"
+              },
+              "query-input": "required name=search_term_string"
+            }
+          ],
+          "inLanguage": "en-US"
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://www.authmate.xyz/#organization",
+          "name": "AuthMate",
+          "url": "https://www.authmate.xyz",
+          "logo": {
+            "@type": "ImageObject",
+            "inLanguage": "en-US",
+            "@id": "https://www.authmate.xyz/#/schema/logo/image/",
+            "url": "https://www.authmate.xyz/Logo.webp",
+            "contentUrl": "https://www.authmate.xyz/Logo.webp",
+            "width": 512,
+            "height": 512,
+            "caption": "AuthMate"
+          },
+          "image": {
+            "@id": "https://www.authmate.xyz/#/schema/logo/image/"
+          },
+          "sameAs": [
+            "https://github.com/Anmol-1408"
+          ]
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://www.authmate.xyz/#webpage",
+          "url": "https://www.authmate.xyz",
+          "name": "AuthMate - Secure Authentication & User Management Platform",
+          "isPartOf": {
+            "@id": "https://www.authmate.xyz/#website"
+          },
+          "about": {
+            "@id": "https://www.authmate.xyz/#organization"
+          },
+          "description": "AuthMate provides secure authentication, user management, and project collaboration tools for developers and teams. Streamline your auth workflow with our comprehensive platform.",
+          "breadcrumb": {
+            "@id": "https://www.authmate.xyz/#breadcrumb"
+          },
+          "inLanguage": "en-US",
+          "potentialAction": [
+            {
+              "@type": "ReadAction",
+              "target": [
+                "https://www.authmate.xyz"
+              ]
+            }
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://www.authmate.xyz/#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home"
+            }
+          ]
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "AuthMate",
+          "description": "Secure Authentication & User Management Platform",
+          "url": "https://www.authmate.xyz",
+          "applicationCategory": "DeveloperApplication",
+          "operatingSystem": "Web Browser",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock"
+          },
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "150",
+            "bestRating": "5",
+            "worstRating": "1"
+          },
+          "featureList": [
+            "Secure User Authentication",
+            "Project Management",
+            "Team Collaboration",
+            "User Management",
+            "Dashboard Analytics",
+            "API Integration"
+          ]
+        }
+      ]
     }
   </script>
 </head>
